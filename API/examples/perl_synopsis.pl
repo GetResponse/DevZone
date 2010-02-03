@@ -22,11 +22,11 @@ http://dev.getresponse.com
 use Data::Dumper;
 
 # JSON::RPC module is required
-# check 'Getting started with PERL' page in API documentation
+# available at http://search.cpan.org/perldoc?JSON%3A%3ARPC
 use JSON::RPC::Client;
 
 # your API key
-# check 'How to get API key' page in API documentation
+# available at http://www.getresponse.com/my_api_key.html
 my $api_key = 'ENTER_YOUR_API_KEY_HERE';
 
 # API 2.x URL
@@ -63,7 +63,6 @@ die $response->error_message if $response->is_error;
 my $CAMPAIGN_ID = [keys %{$response->result}]->[0];
 
 # add contact to 'sample_marketing' campaign
-
 $response = $client->call(
     $api_url,
     {   'method' => 'add_contact',
