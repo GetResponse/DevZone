@@ -46,7 +46,10 @@ require_once(DIR_FS_CATALOG.'includes/classes/jsonRPCClient.php');
                 );
 
                 if (empty($result)) {
-                    die('Missing GetResponse campaign: ' . MODULE_ORDER_TOTAL_GETRESPONSE_CAMPAIGN);
+                    throw new Exception(
+                        'Missing GetResponse campaign: ' .
+                        MODULE_ORDER_TOTAL_GETRESPONSE_CAMPAIGN
+                    );
                 }
 
                 $client->add_contact(

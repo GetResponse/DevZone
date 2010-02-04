@@ -1,6 +1,6 @@
 Add contact to your GetResponse campaign when order is made.
 
-Version: 0.1
+Version: 0.2
 
 Author:  Pawel Pabian
          http://implix.com
@@ -8,7 +8,7 @@ Author:  Pawel Pabian
 
 Installation:
 
-    1. Copy content of this directory to osCommerce top level.
+    1. Copy content of this archive to osCommerce top level.
     2. In the administration panel
        (located under catalog/admin/index.php by default)
        go to "Modules"=>"Order total" setting.
@@ -26,3 +26,7 @@ Effect:
     City, country and telephone values are added as contact custom fields.
     Contact is also placed at the beginning of the follow-up cycle.
 
+Changelog:
+
+    0.2
+    Fixed exception on missing campaign.
