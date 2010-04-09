@@ -97,7 +97,7 @@ class jsonRPCClient
         $this->debug( 'Response: ' . $response . "\r\n", true );
 
         // decode and create array ( can be object, just set to false )
-        $response = json_decode( $response, true );
+        $response = json_decode( utf8_encode($response), true );
 
         // if this was just is_notification
         if ( true === $this->is_notification )
