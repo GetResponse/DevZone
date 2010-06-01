@@ -1,5 +1,8 @@
 Repository content:
 
 API/lib/jsonRPCClient.php - JSON-RPC library for PHP
-
 API/examples/ - Implementation of sample scenarios in popular languages
+
+Plugins/ - code for various integrations
+Plugins/WordPress/ - wordpress.org
+Plugins/osCommerce/ - oscommerce.com
