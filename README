@@ -1,8 +1,25 @@
 Repository content:
 
-API/lib/jsonRPCClient.php - JSON-RPC library for PHP
-API/examples/ - Implementation of sample scenarios in popular languages
+******************************** API ********************************
 
-Plugins/ - code for various integrations
-Plugins/WordPress/ - wordpress.org
-Plugins/osCommerce/ - oscommerce.com
+    Communicate with GetResponse
+    through Application Programming Interface.
+    ( http://dev.getresponse.com/api-doc/ )
+
+    API/lib/jsonRPCClient.php - JSON-RPC library for PHP
+    API/examples/ - use cases implemented in popular languages
+
+******************************** DC ********************************
+
+    Customize your email content
+    using GetResponse Dynamic Content language.
+    ( http://dev.getresponse.com/dc-doc/ )
+
+    DC/lib/GetResponse/DynamicContent/Grammar.pm - reference grammar
+
+******************************** Plugins ********************************
+
+    Integrate GetResponse with various services.
+
+    Plugins/WordPress/ - wordpress.org
+    Plugins/osCommerce/ - oscommerce.com
