@@ -1,9 +1,9 @@
 === GetResponse Integration ===
-Contributors: Kacper Rowiński
+Contributors: Kacper Rowiński, Grzegorz Struczyński
 Tags: getresponse, email, newsletter, signup, marketing, plugin, widget, mailing list, subscriber, contacts, subscribe form
 Requires at least: 2.8.6
-Tested up to: 3.0-beta2
-Stable tag: 1.0
+Tested up to: 3.0.1
+Stable tag: 1.1
 
 The GetResponse Integration plugin allows you to quickly and easily add a signup form for your site.
 
@@ -35,4 +35,9 @@ link the last number after the ?id= code id you web from id.
 = v1.0 =
 
 * Inital release.
+
+= v1.1 =
+
+* Added possiblity to use Wordpress styles,
+* Added integration with new WebForms.
 

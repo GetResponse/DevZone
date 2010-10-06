@@ -2,8 +2,8 @@
 /*
 Plugin Name: GetResponse Integration Plugin
 Description: This plugin will add configurable GetResponse form to add contacts from your site. 
-Version: 1.0
-Author: Kacper Rowiński
+Version: 1.1
+Author: Kacper Rowiński, Grzegorz Struczyński
 License: GPL2
 */
 
@@ -23,6 +23,11 @@ License: GPL2
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+/*  Changelog:
+
+1.1 - Added possiblity to use Wordpress styles,
+    - Added integration with new WebForms.
+*/
 class Gr_Integration
 {
     // plugin db prefix
@@ -126,16 +131,18 @@ class Gr_Integration
 	 */
 	function AdminOptionsPage() 
 	{
-	    if ( isset($_POST['web_from_id']) )
+	    if ( isset($_POST['web_from_id']) or isset($_POST['new_web_from_id']) and isset($_POST['style_id']))
 	    {
-	        update_option($this->GrOptionDbPrefix . 'web_from_id', $_POST['web_from_id']); 
+	        update_option($this->GrOptionDbPrefix . 'web_from_id', $_POST['web_from_id']);
+                update_option($this->GrOptionDbPrefix . 'new_web_from_id', $_POST['new_web_from_id']);
+                update_option($this->GrOptionDbPrefix . 'style_id', $_POST['style_id']);
 			?>
 				<div id="message" class="updated fade">
 					<p><strong><?php _e('Settings saved', 'Gr_Integration'); ?></strong></p>
 				</div>
 			<?php
 	    }
-	    
+
 	    ?>
 		<div class="wrap">
 		
@@ -146,8 +153,8 @@ class Gr_Integration
     	        <?php printf(__('The GetResponse widget(s) are available on <a href="%s">widgets management page</a>.', 'Gr_Integration'), admin_url('widgets.php')); ?>
     		</p>
     		
-    		<h3><?php _e('LightBox options', 'Gr_Integration'); ?></h3>
-        		<p>
+    		<h3><?php _e('LightBox options*', 'Gr_Integration'); ?></h3>
+        	<p>
         		<form method="post" action="<?php echo admin_url( 'options-general.php?page=' . $this->PluginName() ); ?>">
                 	<table class="form-table">
         				<tr valign="top">
@@ -166,9 +173,32 @@ class Gr_Integration
         							<a href="http://www.getresponse.com/create_webform.html"><?php _e('account', 'Gr_Integration'); ?></a> 
         							<?php _e('( login requierd )', 'Gr_Integration'); ?> 
         						</p>
-        					</td>
-                		</tr>
+                                                        <h5><?php _e('*(Option is only available for webforms created before September 1st)', 'Gr_Integration'); ?></h5>
+        				</td>
+                                </tr>  
                 	</table>
+                        <p>
+                           <h3><?php _e('New WebForm', 'Gr_Integration'); ?></h3>
+                           <label for="new_web_from_id"><?php _e('Web from id:', 'Gr_Integration'); ?>&#160</label>
+                           <input type="text" name="new_web_from_id" value="<?php echo get_option($this->GrOptionDbPrefix . 'new_web_from_id') ?>"/>
+
+                           <?php
+                            if (get_option($this->GrOptionDbPrefix . 'style_id') == 1)
+                            {
+                            $webform = "selected";
+                            }
+                            else
+                            {
+                            $wordpress = "selected";
+                            }
+                           ?>
+
+                            <select name="style_id">
+        			<option value="1" name="webform" <?php echo $webform;?> >Use Webform styles </option>
+        			<option value="0" name="wordpress" <?php echo $wordpress;?> >Use Wordpress styles </option>
+                           </select>
+        		</p>
+                        
                 	<p class="submit">
                 		<input type="submit" name="Submit" value="<?php _e('Save', 'Gr_Integration'); ?>" class="button-primary" />
                 	</p>
@@ -295,7 +325,7 @@ class Gr_Integration
         $form .= '</div>';		
 
         // customs form hadnler
-		if ( isset($options[$number]['customs']) and is_array($options[$number]['customs']) and count($options[$number]['customs']) > 0 )
+            if ( isset($options[$number]['customs']) and is_array($options[$number]['customs']) and count($options[$number]['customs']) > 0 )
 	    {
 	        foreach ( $options[$number]['customs'] as $values )
 	        {
@@ -318,19 +348,33 @@ class Gr_Integration
         $form .= '</div>';
 
         $form .= '<div class="GRf-info">';
-        $form .= 'GetResponse <a href="http://www.getresponse.com/" title="Email Marketing">Email Marketing</a></div>';
-        $form .= '</div>';                
+        $form .= 'GetResponse <a href="http://www.getresponse.com/" title="Email Marketing">Email Marketing</a>';
+        $form .= '</div>';
 
         $form .= '</form>';        		      
-
-	    if ( 'yes' === $options[$number]['show_counter'] )
+ 
+	if ( 'yes' === $options[$number]['show_counter'] )
         {
             $form .= '<div>';
-            $form .= '<script type="text/javascript" src="http://www.getresponse.com/display_subscribers_count.js?campaign_name='. $options[$number]['campaign_name'] .'"><!--empty--></script>';
+            $form .= '<script type="text/javascript" src="http://www.getresponse.com/display_subscribers_count.js?campaign_name='. $options[$number]['campaign_name'] .'"><!--empty--></script>';           
             $form .= '</div>';
 
-        }  
-        
+        }
+
+        $form .= '<P>';
+        $new_id = get_option($this->GrOptionDbPrefix . 'new_web_from_id');
+        $style_id = get_option($this->GrOptionDbPrefix . 'style_id');
+
+        if($style_id == 0)
+        {
+        $form .= '<script type="text/javascript" src=http://www.getresponse.com/view_webform.js?wid='. $new_id .'&css=1"></script>';
+        }
+        elseif($style_id == 1)
+        {
+        $form .= '<script type="text/javascript" src="http://www.getresponse.com/view_webform.js?wid='. $new_id .'"></script>';
+        }
+        $form .= '</P>';
+
         echo $form;
 	}
 	
@@ -448,7 +492,7 @@ class Gr_Integration
 			<br />		
     		<br /> 
 
-    		<?php _e('<b>You Getresponse Campaign Name</b> (Required)', 'Gr_Integration'); ?>
+    		<?php _e('<b>Your Getresponse Campaign Name</b> (Required)', 'Gr_Integration'); ?>
     		<br />
     		<?php _e('(eg. best_campaign)', 'Gr_Integration'); ?>
     		<br />
