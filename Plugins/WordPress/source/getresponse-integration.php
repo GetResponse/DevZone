@@ -2,7 +2,7 @@
 /*
 Plugin Name: GetResponse Integration Plugin
 Description: This plugin will add configurable GetResponse form to add contacts from your site. 
-Version: 1.1
+Version: 1.1.1
 Author: Kacper Rowiński, Grzegorz Struczyński
 License: GPL2
 */
@@ -24,7 +24,8 @@ License: GPL2
 */
 
 /*  Changelog:
-
+1.1.1
+	- Fixed integration with new WebForms,
 1.1 - Added possiblity to use Wordpress styles,
     - Added integration with new WebForms.
 */
@@ -222,32 +223,41 @@ class Gr_Integration
 	/**
 	 * Register the Getresponse widget on wp
 	 */
-	function WidgetRegister() 
+	function WidgetRegister()
 	{	    
 		$widget_options = get_option( $this->GrOptionDbPrefix . 'widget' );
 
-		// if there is no options load defaults
-		if (empty($widget_options))
-		{
-		    $widget_options[1] = $this->GrDefaultWidgetOptions;
-		}
-		
+                if (empty($widget_options))
+                {
+                    $widget_options[1] = $this->GrDefaultWidgetOptions;
+                }
+
+                $check_form = get_option($this->GrOptionDbPrefix . 'new_web_from_id');
+                if ( empty($check_form) )
+                {
+                    $display = 'DisplaySidebarWidget';
+                }
+                elseif(!empty($check_form))
+                {
+                    $display = 'DisplaySidebar2Widget';
+                }
+
 		$name = __( 'GetResponse Subscription Form', 'Gr_Integration' );
 		$prefix = 'getresponse-widget';
-		
+	
 		foreach ( array_keys($widget_options) as $widget_number ) 
 		{
 			wp_register_sidebar_widget(
 			    $prefix . '-' . $widget_number, 
 			    $name, 
-			    array( &$this, 'DisplaySidebarWidget' ), 
+			    array( &$this, $display ),
 			    array( 
 			    	'classname' => 'widget_getresponse', 
 			    	'description' => __( 'Add GetResponse widget subscription form to your site.', 'Gr_Integration' ),
 			    ),
 			    array( 'number' => $widget_number )
 			);
-			
+
 			wp_register_widget_control(
 			    $prefix . '-' . $widget_number, 
 			    $name,
@@ -255,14 +265,31 @@ class Gr_Integration
 			    array( 'width' => 200, 'height' => 400, 'id_base' => $prefix ),
 			    array( 'number' => $widget_number )
             );
-		}
+		}               
 	}
-	
+
+        function DisplaySidebar2Widget()
+        {
+        $form .= '<P>';
+        $new_id = get_option($this->GrOptionDbPrefix . 'new_web_from_id');
+        $style_id = get_option($this->GrOptionDbPrefix . 'style_id');
+
+        if($style_id == 0)
+        {
+        $form .= '<script type="text/javascript" src=http://www.getresponse.com/view_webform.js?wid='. $new_id .'&css=1"></script>';
+        }
+        elseif($style_id == 1)
+        {
+        $form .= '<script type="text/javascript" src="http://www.getresponse.com/view_webform.js?wid='. $new_id .'"></script>';
+        }
+        $form .= '</P>';
+        echo $form;
+        }
 	/**
 	 * Display the widget on page
 	 */
 	function DisplaySidebarWidget( $args, $widget_args = null ) 
-	{	    	
+	{
 	    $number = isset($widget_args['number']) ? $widget_args['number'] : null;
 	    
 		$options = get_option( $this->GrOptionDbPrefix . 'widget' );
@@ -273,7 +300,7 @@ class Gr_Integration
 		}
 		
 		// GR Form, generate form from given options
-		
+                
 		$form .= '<div id="GRform">';
        	$form .= '<form accept-charset="utf-8" action="http://www.getresponse.com/cgi-bin/add.cgi">';
         $form .= '<input type="hidden" name="custom_http_referer" id="custom_http_referer" value="'. $_SERVER['REQUEST_URI'] .'"/>';
@@ -361,21 +388,8 @@ class Gr_Integration
 
         }
 
-        $form .= '<P>';
-        $new_id = get_option($this->GrOptionDbPrefix . 'new_web_from_id');
-        $style_id = get_option($this->GrOptionDbPrefix . 'style_id');
-
-        if($style_id == 0)
-        {
-        $form .= '<script type="text/javascript" src=http://www.getresponse.com/view_webform.js?wid='. $new_id .'&css=1"></script>';
-        }
-        elseif($style_id == 1)
-        {
-        $form .= '<script type="text/javascript" src="http://www.getresponse.com/view_webform.js?wid='. $new_id .'"></script>';
-        }
-        $form .= '</P>';
-
         echo $form;
+
 	}
 	
 	/**
