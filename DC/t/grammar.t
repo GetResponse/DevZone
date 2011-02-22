@@ -10,10 +10,13 @@ my %good = (
     'empty content' => '',
     'plain text' => 'test',
 
+    'predefined' => '{{PREDEFINED "test"}}',
+
+    'contact' => '{{CONTACT "subscriber_name"}}',
+    'contact with beautifulizer' => '{{CONTACT "lc(subscriber_name)"}}',
+
     'custom' => '{{CUSTOM "test"}}',
     'custom with default value' => '{{CUSTOM "test" "test"}}',
-
-    'predefined' => '{{PREDEFINED "test"}}',
 
     'geo' => '{{GEO "city"}}',
 

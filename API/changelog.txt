@@ -1,6 +1,12 @@
 GetResponse API changelog
 =========================
 
+version 1.7.3, 2011-02-22
+
+- possibility to choose From header
+  in send_newsletter() and add_follow_up() methods
+
+
 version 1.7.2, 2011-02-11
 
 - send_newsletter() limited to 128 calls daily
