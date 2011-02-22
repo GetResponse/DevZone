@@ -1,0 +1,28 @@
+GetResponse API changelog
+=========================
+
+version 1.7.2, 2011-02-11
+
+- send_newsletter() limited to 128 calls daily
+  to prevent client-side customization antipattern 
+  explained in method description
+
+
+version 1.7.1, 2011-02-11
+
+- added methods to check amount of contacts
+  get_contacts_amount_per_account()
+  get_contacts_amount_per_campaign()
+
+
+version 1.7.0, 2010-11-25
+
+- added domains management methods
+  get_account_domains()
+  get_account_domain()
+  get_campaign_domain()
+  set_campaign_domain()
+  delete_campaign_domain()
+- added postal address management methods
+  get_campaign_postal_address()
+  set_campaign_postal_address()
