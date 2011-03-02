@@ -1,6 +1,10 @@
 GetResponse API changelog
 =========================
 
+version 1.7.4, 2011-03-02
+
+- blacklist masks accept local@ and MD5 formats
+
 version 1.7.3, 2011-02-22
 
 - possibility to choose From header
