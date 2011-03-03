@@ -1,6 +1,18 @@
 GetResponse API changelog
 =========================
 
+version 1.8.0, 2011-03-03
+
+- added methods to manage suppression lists
+  get_suppressions()
+  get_suppression()
+  add_suppression()
+  delete_suppression()
+  get_suppression_skiplist()
+  add_suppression_skiplist()
+  delete_suppression_skiplist()
+- method send_newsletter() accepts suppression lists
+
 version 1.7.4, 2011-03-02
 
 - blacklist masks accept local@ and MD5 formats
