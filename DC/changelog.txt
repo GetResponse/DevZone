@@ -1,6 +1,11 @@
 GetResponse Dynamic Content changelog
 =====================================
 
+version 1.4.0, 2011-03-10
+
+- added tag {{TRANSLATE}} for automatic translation of text
+  based on their GeoIP country code
+
 version 1.3.2, 2011-03-07
 
 - {{CONTACT}} tag has tokens campaign_id, message_id and subscriber_id
