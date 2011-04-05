@@ -1,6 +1,10 @@
 GetResponse Dynamic Content changelog
 =====================================
 
+version 1.5.0, 2011-04-05
+
+- added support for qrcode links
+
 version 1.4.0, 2011-03-10
 
 - added tag {{TRANSLATE}} for automatic translation of text
