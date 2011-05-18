@@ -1,6 +1,13 @@
 GetResponse API changelog
 =========================
 
+version 1.8.1, 2011-05-18
+- added methods to manage drafts
+  add_draft()
+  get_messages() method can work in draft mode
+- possibility to delete scheduled newsletter using
+  delete_newsletter()
+
 version 1.8.0, 2011-03-03
 
 - added methods to manage suppression lists
