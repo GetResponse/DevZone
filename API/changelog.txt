@@ -1,6 +1,9 @@
 GetResponse API changelog
 =========================
 
+version 1.8.2, 2011-07-05
+- added description param to campaign methods
+
 version 1.8.1, 2011-05-18
 - added methods to manage drafts
   add_draft()
