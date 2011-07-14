@@ -1,6 +1,25 @@
 GetResponse Dynamic Content changelog
 =====================================
 
+version 1.6.0, 2011-07-14
+
+- nested beautifulizers are allowed
+- added declension beautifulizers (for polish users)
+- beautifulizers are multivalue aware
+- added _TRANSLATED tokens to {{DATE}} and {{ADDED_ON}} tags
+- percent char allowed in {{DATE}} and {{ADDED_ON}} tag params
+- fixed arity checks for {{LINK}} tags
+- fixed interpolated tags of {{CUSTOM}}, {{GEO}} and {{PREDEFINED}}
+  in {{LINK}} tag when message is not clicktracked
+- in {{IF}} and {{ELSIF}} tag conditions multivalue variables
+  are treated with junction any, other junctions are removed
+- in {{IF}} and {{ELSIF}} tag conditions variable must be on the left side
+  and constant must be on the right side
+- in {{IF}} and {{ELSIF}} tag conditions variable must be lowercased
+- in {{IF}} and {{ELSIF}} tag conditions {{CONTACT}} mangling is added for variables
+- in {{IF}} and {{ELSIF}} tag conditions operator STRING_NEQI is available
+- longitude and latitude added in {{GEO}} tags
+
 version 1.5.0, 2011-04-05
 
 - added support for qrcode links
