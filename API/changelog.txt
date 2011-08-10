@@ -1,6 +1,9 @@
 GetResponse API changelog
 =========================
 
+version 1.8.3, 2011-08-10
+- reasons in get_contacts_deleted() method changed
+
 version 1.8.2, 2011-07-05
 - added description param to campaign methods
 
