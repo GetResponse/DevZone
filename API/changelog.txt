@@ -1,6 +1,10 @@
 GetResponse API changelog
 =========================
 
+version 1.8.4, 2011-08-22
+- send_newsletter() and add_follow_up methods
+  can detect Dynamic Content errors in subject and contents
+
 version 1.8.3, 2011-08-10
 - reasons in get_contacts_deleted() method changed
 
