@@ -1,6 +1,11 @@
 GetResponse API changelog
 =========================
 
+version 1.8.5, 2011-09-20
+- get_contacts_deleted() can narrow down result
+  to contacts removed from specific messages
+  and from specific reason
+
 version 1.8.4, 2011-08-22
 - send_newsletter() and add_follow_up methods
   can detect Dynamic Content errors in subject and contents
