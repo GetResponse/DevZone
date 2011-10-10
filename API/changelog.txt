@@ -1,6 +1,10 @@
 GetResponse API changelog
 =========================
 
+version 1.8.7, 2011-10-10
+- added get_messages_amount_per_account() method
+- added get_messages_amount_per_campaign() method
+
 version 1.8.6, 2011-10-10
 - get_contacts_subscription_stats() allows to narrow results
   by campaigns / get_campaigns params
