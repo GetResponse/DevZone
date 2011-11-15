@@ -1,6 +1,9 @@
 GetResponse API changelog
 =========================
 
+version 1.8.9, 2011-11-15
+- contact name is optional in add_contact()
+
 version 1.8.8, 2011-10-10
 - following response fields that were previously JSON-string
   has now more narrow typing to JSON-number:
