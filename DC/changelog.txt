@@ -1,6 +1,9 @@
 GetResponse Dynamic Content changelog
 =====================================
 
+version 1.6.1, 2011-11-15
+- {{CONTACT}} accepts default fallback value
+
 version 1.6.0, 2011-07-14
 
 - nested beautifulizers are allowed
