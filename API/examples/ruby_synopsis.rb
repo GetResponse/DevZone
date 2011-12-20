@@ -19,7 +19,7 @@ require 'json'
 api_key = 'ENTER_YOUR_API_KEY_HERE'
 
 # API 2.x URL
-api_url = 'http://api2.getresponse.com'
+api_url = 'http://api2.getresponse.com/'
 
 # initialize JSON-RPC client
 uri = URI.parse(api_url)
@@ -27,7 +27,7 @@ client = Net::HTTP.start(uri.host, uri.port)
 
 # get CAMPAIGN_ID of 'sample_marketing' campaign
 response = client.post(
-    '/', {
+    uri.path, {
         'method' => 'get_campaigns',
         'params' => [
             api_key, {
