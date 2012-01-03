@@ -9,6 +9,13 @@
 # @author Sebastain Nowak, Pawel Pabian
 # http://implix.com
 # http://dev.getresponse.com
+#
+# It is highly recommended to use 'getresponse' rubygem for dealing with GetResponse API.
+# Rubygem is far better solution than this sample scenario. 'getresponse' rubygem is created
+# by Sebastian Nowak, but any other contributors are welcome.
+# Source code: https://github.com/seban/ruby-getresponse
+# Gem page: https://rubygems.org/gems/getresponse
+# Some auto-generated docs: http://rubydoc.info/gems/getresponse/frames
 
 require 'rubygems'
 require 'net/http'
