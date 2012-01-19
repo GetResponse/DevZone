@@ -1,6 +1,9 @@
 GetResponse API changelog
 =========================
 
+version 1.8.10, 2012-01-19
+- get_contact_geoip returns continent_code and time_zone
+
 version 1.8.9, 2011-11-15
 - contact name is optional in add_contact()
 

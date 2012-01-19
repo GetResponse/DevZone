@@ -1,6 +1,10 @@
 GetResponse Dynamic Content changelog
 =====================================
 
+version 1.6.2, 2012-01-19
+- {{GEO}} got new continent_code and time_zone tokens
+  also usable in {{IF}} conditions
+
 version 1.6.1, 2011-11-15
 - {{CONTACT}} accepts default fallback value
 
