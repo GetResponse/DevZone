@@ -15,8 +15,6 @@ Repository content:
     using GetResponse Dynamic Content language.
     ( http://dev.getresponse.com/dc-doc/ )
 
-    DC/lib/GetResponse/DynamicContent/Grammar.pm - reference grammar
-
 ******************************** Plugins ********************************
 
     Integrate GetResponse with various services.
