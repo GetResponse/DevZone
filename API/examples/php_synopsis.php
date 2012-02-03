@@ -52,7 +52,8 @@ catch (Exception $e) {
 
 # since there can be only one campaign of this name
 # first key is the CAMPAIGN_ID you need
-$CAMPAIGN_ID = array_pop(array_keys($result));
+$campaigns = array_keys($result);
+$CAMPAIGN_ID = array_pop($campaigns);
 
 # add contact to 'sample_marketing' campaign
 try {
