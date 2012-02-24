@@ -372,30 +372,21 @@ Countdown to/since given timestamp or contact subscription date.
 *	MINUTES
 *	SECONDS
 
-**Hint**: If you want unit name along with numeric value suffix token with _UNIT, for example:
+**Hint**: If you want unit name along with numeric value suffix token with `_UNIT`, for example:
 
-```json
-{{TIMER "2010-01-01 00:00:00" "HOURS_UNIT" ""}}
-``` – Will insert 8 hours.
+`{{TIMER "2010-01-01 00:00:00" "HOURS_UNIT" ""}}`– Will insert 8 hours.
 
 **Hint**: Tokens are greedy. It means that you don’t have to use all of them in formats. Tokens you use will “consume” amount of time in a smart way, for example:
 
-```json
-{{TIMER "2010-01-01 00:00:00" "HOURS_UNIT" ""}}
-``` – Will insert 49 hours.
-```json
-{{TIMER "2001-01-01 00:00:00" "DAYS_UNIT and HOURS_UNIT" ""}}
-``` – Will insert 2 days and 1 hour because DAYS part “consumed” 48 hours.
+`{{TIMER "2010-01-01 00:00:00" "HOURS_UNIT" ""}}` – Will insert 49 hours.
+
+`{{TIMER "2001-01-01 00:00:00" "DAYS_UNIT and HOURS_UNIT" ""}}` – Will insert 2 days and 1 hour because DAYS part “consumed” 48 hours.
 
 #####Examples:
 
-```json
-{{TIMER "2012-01-01 00:00:00" "DAYS_UNIT HOURS_UNIT to the end of the world" "World ended DAYS days ago"}}
-``` – will insert 705 days 12 hours to the end of the world (at the moment this doc was created) and will insert World ended 32 days ago when it is 32 days after the timestamp date.
+`{{TIMER "2012-01-01 00:00:00" "DAYS_UNIT HOURS_UNIT to the end of the world" "World ended DAYS days ago"}}` – will insert 705 days 12 hours to the end of the world (at the moment this doc was created) and will insert World ended 32 days ago when it is 32 days after the timestamp date.
 
-```json
-{{TIMER "added_on" "" "You signed up DAYS_UNIT ago"}}
-``` – will insert You signed up 35 days ago.
+`{{TIMER "added_on" "" "You signed up DAYS_UNIT ago"}}` – will insert You signed up 35 days ago.
 
 ####randoms<a name="randoms"/>
 Inserts random text from a provided list.
@@ -422,9 +413,7 @@ Target currency is determined by 2-letters `{{CUSTOM "country_code"}}` value or 
 
 #####Example:
 
-```json
-{{CURRENCY "1000" "USD"}}
-``` – Will insert 1000 USD if contact’s country code is US (or not defined) and will insert 2100 PLN if contact’s country code is PL.
+`{{CURRENCY "1000" "USD"}}` – Will insert 1000 USD if contact’s country code is US (or not defined) and will insert 2100 PLN if contact’s country code is PL.
 
 ####conditions<a name="conditions"/>
 
