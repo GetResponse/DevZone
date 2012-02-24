@@ -214,7 +214,7 @@ Nested tag cannot contain default value param or beautifulizer!
 
 Splitting allows to show many links with the same URL under different names. It may be useful for statistical purposes like creating a “click heat map” of your message, for example:
 
-```html
+```json
 Hello
 {{LINK "http://mysite.com" "My page at the beginning of the message"}}
 Some message body
@@ -229,7 +229,7 @@ Merging is opposite to splitting – many links with different URLs will be show
 ```json
 {{LINK "http://mysite.com/shop/main" "Main shop page"}}
 {{LINK "http://myoldsite.com/redirect/shop" "Main shop page"}}
-```json
+```
 
 ####system links<a name="system_links"/>
 Links that allow to perform some system actions.
@@ -329,8 +329,8 @@ Ordination respects all exceptions.
 
 Subscription date can be shifted by given amount of time using modifiers. Modifier must be written as + or - sign, value of time shift and unit of time shift, for example:
 
-+1 DAY
--2 YEARS
+*	+1 DAY
+*	-2 YEARS
 
 #####Allowed units are:
 
@@ -343,9 +343,9 @@ Subscription date can be shifted by given amount of time using modifiers. Modifi
 
 #####Examples:
 
-`{{DATE "YEAR-MONTH-DAY"}}` – Will insert 2008-06-24.
-`{{DATE "DAY_ORDINATED of MONTH_NAME"}}` – Will insert 11th of July.
-`{{DATE "DAY_ORDINATED of MONTH_NAME" "+1 DAY"}}` – Will insert 12th of July.
+*	```json{{DATE "YEAR-MONTH-DAY"}}``` – Will insert 2008-06-24.
+*	```json{{DATE "DAY_ORDINATED of MONTH_NAME"}}``` – Will insert 11th of July.
+*	```json{{DATE "DAY_ORDINATED of MONTH_NAME" "+1 DAY"}}``` – Will insert 12th of July.
 
 ####timers<a name="timers"/>
 Countdown to/since given timestamp or contact subscription date.
@@ -374,25 +374,25 @@ Countdown to/since given timestamp or contact subscription date.
 
 **Hint**: If you want unit name along with numeric value suffix token with _UNIT, for example:
 
-`{{TIMER "2010-01-01 00:00:00" "HOURS_UNIT" ""}}` – Will insert 8 hours.
+```json{{TIMER "2010-01-01 00:00:00" "HOURS_UNIT" ""}}``` – Will insert 8 hours.
 
 **Hint**: Tokens are greedy. It means that you don’t have to use all of them in formats. Tokens you use will “consume” amount of time in a smart way, for example:
 
-`{{TIMER "2010-01-01 00:00:00" "HOURS_UNIT" ""}}` – Will insert 49 hours.
-`{{TIMER "2001-01-01 00:00:00" "DAYS_UNIT and HOURS_UNIT" ""}}` – Will insert 2 days and 1 hour because DAYS part “consumed” 48 hours.
+```json{{TIMER "2010-01-01 00:00:00" "HOURS_UNIT" ""}}``` – Will insert 49 hours.
+```json{{TIMER "2001-01-01 00:00:00" "DAYS_UNIT and HOURS_UNIT" ""}}``` – Will insert 2 days and 1 hour because DAYS part “consumed” 48 hours.
 
 #####Examples:
 
-`{{TIMER "2012-01-01 00:00:00" "DAYS_UNIT HOURS_UNIT to the end of the world" "World ended DAYS days ago"}}` – will insert 705 days 12 hours to the end of the world (at the moment this doc was created) and will insert World ended 32 days ago when it is 32 days after the timestamp date.
+```json{{TIMER "2012-01-01 00:00:00" "DAYS_UNIT HOURS_UNIT to the end of the world" "World ended DAYS days ago"}}``` – will insert 705 days 12 hours to the end of the world (at the moment this doc was created) and will insert World ended 32 days ago when it is 32 days after the timestamp date.
 
-`{{TIMER "added_on" "" "You signed up DAYS_UNIT ago"}}` – will insert You signed up 35 days ago.
+```json{{TIMER "added_on" "" "You signed up DAYS_UNIT ago"}}``` – will insert You signed up 35 days ago.
 
 ####randoms<a name="randoms"/>
 Inserts random text from a provided list.
 
 #####Usage:
 
-`{{RANDOM "Hi" "Hello" "Hey"}}`
+```json{{RANDOM "Hi" "Hello" "Hey"}}```
 
 ####currency conversions<a name="currency_conversions"/>
 
@@ -400,7 +400,7 @@ Convert between price currencies in your email depending on which country is you
 
 #####Usage:
 
-`{{CURRENCY "amount" "source_currency"}}`
+```json{{CURRENCY "amount" "source_currency"}}```
 
 Source currency must be given as 3-letters code defined in ISO 4217 table.
 
@@ -408,7 +408,7 @@ Target currency is determined by 2-letters `{{CUSTOM "country_code"}}` value or 
 
 #####Example:
 
-`{{CURRENCY "1000" "USD"}}` – Will insert 1000 USD if contact’s country code is US (or not defined) and will insert 2100 PLN if contact’s country code is PL.
+```json{{CURRENCY "1000" "USD"}}``` – Will insert 1000 USD if contact’s country code is US (or not defined) and will insert 2100 PLN if contact’s country code is PL.
 
 ####conditions<a name="conditions"/>
 
@@ -438,13 +438,13 @@ Every condition must obey atomic syntax (A operator B)where:
 
 #####Order of tags:
 
-`{{IF "..."}}` – Mandatory beginning of conditional statement.
+*	`{{IF "..."}}` – Mandatory beginning of conditional statement.
 
-`{{ELSIF "..."}}` – Optional block, multiple allowed.
+*	`{{ELSIF "..."}}` – Optional block, multiple allowed.
 
-`{{ELSE}}` – Optional default block, one allowed.
+*	`{{ELSE}}` – Optional default block, one allowed.
 
-`{{ENDIF}}` – Mandatory closing of conditional statement.
+*	`{{ENDIF}}` – Mandatory closing of conditional statement.
 
 #####Operators:
 
@@ -493,9 +493,9 @@ Nesting of conditions is allowed.
 {{ENDIF}}
 ```
 
-**Warning**: If you use {{IF "(pet STRING_EQ 'dog')"}} and contact custom field pet is not defined then the statement will evaluate to false. In most cases this is what you mean, but it is better to use additional IS_DEFINED operator to keep logic clean.
+**Warning**: If you use `{{IF "(pet STRING_EQ 'dog')"}}` and contact custom field pet is not defined then the statement will evaluate to false. In most cases this is what you mean, but it is better to use additional `IS_DEFINED` operator to keep logic clean.
 
-**Warning**: If you apply NUMBER_* operator to not numeric value it will evaluate to false.
+**Warning**: If you apply `NUMBER_*` operator to not numeric value it will evaluate to false.
 
 **Warning**: If custom field in condition is multivalue then condition will evaluate to true if any element matches it. So if custom pet has values mouse and hamster then
 
@@ -521,16 +521,16 @@ For polish users declensions are available for names.
 
 Beautifulizers can be nested. For example if
 
-`{{CONTACT "subscriber_first_name"}}`
+```json{{CONTACT "subscriber_first_name"}}```
 inserts paweł then
 
-`{{CONTACT "ucfw(vocative(subscriber_first_name))"}}`
+```json{{CONTACT "ucfw(vocative(subscriber_first_name))"}}```
 will insert Paweł.
 
 Beautifulizers are multivalue-aware. For example if
 
-`{{CUSTOM "car"}}`
+```json{{CUSTOM "car"}}```
 inserts honda, toyota, dodge then
 
-`{{CUSTOM "ucfw(car)"}}`
+```json{{CUSTOM "ucfw(car)"}}```
 will insert Honda, Toyota, Dodge.
