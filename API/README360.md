@@ -29,6 +29,7 @@ Error Owner privilege missing will be returned on attempt to access account mana
 Add new account to server.
 
 JSON Request:
+
 ```json
     {
         "method" : "add_account",
@@ -92,6 +93,7 @@ JSON Request:
 *	confirmation_subject / confirmation_body (mandatory, even if optin is single) – Those IDs are global for every account on server and can be obtained using owner API key.
 
 JSON Response:
+
 ```json
     {
         "result" : {
@@ -114,7 +116,7 @@ JSON Request:
             "your_api_key_here",
         ]
     }
-    ```
+```
     
 JSON Response:
 
