@@ -159,17 +159,17 @@ Format can also contain every other character except (double quotes) and (backti
 
 **Hint**: You can get rid of leading zeroes by suffixing numeric token with _NONZERO, for example:
 
-HOUR_NONZERO – 0, 1, 2, 3, ..., 22, 23
+`HOUR_NONZERO – 0, 1, 2, 3, ..., 22, 23`
 
 **Hint**: You can ordinate numeric token value by suffixing it with _ORDINATED, for example:
 
-HOUR_ORDINATED – 0th, 1st, 2nd, 3rd, ... , 21st
+`HOUR_ORDINATED – 0th, 1st, 2nd, 3rd, ... , 21st`
 
 Ordinated values are stripped of leading zeros.
 
 Ordination respects all exceptions.
 
-**Warning**: You cannot use_NONZERO or _ORDINATED with naming tokens.
+**Warning**: You cannot `use_NONZERO` or `_ORDINATED` with naming tokens.
 
 #####Examples:
 
@@ -313,17 +313,17 @@ Format can also contain every other character except " (double quotes),  ` (back
 
 **Hint**: You can get rid of leading zeros by suffixing token with _NONZERO, for example:
 
-HOUR_NONZERO – 0, 1, 2, 3, ..., 22, 23
+`HOUR_NONZERO – 0, 1, 2, 3, ..., 22, 23`
 
-**Hint**: You can ordinate token values by suffixing them with _ORDINATED, for example:
+**Hint**: You can ordinate token values by suffixing them with `_ORDINATED`, for example:
 
-HOUR_ORDINATED – 0th, 1st, 2nd, 3rd, ... , 21st
+`HOUR_ORDINATED – 0th, 1st, 2nd, 3rd, ... , 21st`
 
 Ordinated values are stripped of leading zeros.
 
 Ordination respects all exceptions.
 
-**Warning**: You cannot use_NONZERO or _ORDINATED with naming tokens.
+**Warning**: You cannot `use_NONZERO` or `_ORDINATED` with naming tokens.
 
 #####Modifiers:
 
@@ -343,9 +343,9 @@ Subscription date can be shifted by given amount of time using modifiers. Modifi
 
 #####Examples:
 
-*	```json{{DATE "YEAR-MONTH-DAY"}}``` – Will insert 2008-06-24.
-*	```json{{DATE "DAY_ORDINATED of MONTH_NAME"}}``` – Will insert 11th of July.
-*	```json{{DATE "DAY_ORDINATED of MONTH_NAME" "+1 DAY"}}``` – Will insert 12th of July.
+*	```{{DATE "YEAR-MONTH-DAY"}}``` – Will insert 2008-06-24.
+*	```{{DATE "DAY_ORDINATED of MONTH_NAME"}}``` – Will insert 11th of July.
+*	```{{DATE "DAY_ORDINATED of MONTH_NAME" "+1 DAY"}}``` – Will insert 12th of July.
 
 ####timers<a name="timers"/>
 Countdown to/since given timestamp or contact subscription date.
@@ -374,25 +374,37 @@ Countdown to/since given timestamp or contact subscription date.
 
 **Hint**: If you want unit name along with numeric value suffix token with _UNIT, for example:
 
-```json{{TIMER "2010-01-01 00:00:00" "HOURS_UNIT" ""}}``` – Will insert 8 hours.
+```json
+{{TIMER "2010-01-01 00:00:00" "HOURS_UNIT" ""}}
+``` – Will insert 8 hours.
 
 **Hint**: Tokens are greedy. It means that you don’t have to use all of them in formats. Tokens you use will “consume” amount of time in a smart way, for example:
 
-```json{{TIMER "2010-01-01 00:00:00" "HOURS_UNIT" ""}}``` – Will insert 49 hours.
-```json{{TIMER "2001-01-01 00:00:00" "DAYS_UNIT and HOURS_UNIT" ""}}``` – Will insert 2 days and 1 hour because DAYS part “consumed” 48 hours.
+```json
+{{TIMER "2010-01-01 00:00:00" "HOURS_UNIT" ""}}
+``` – Will insert 49 hours.
+```json
+{{TIMER "2001-01-01 00:00:00" "DAYS_UNIT and HOURS_UNIT" ""}}
+``` – Will insert 2 days and 1 hour because DAYS part “consumed” 48 hours.
 
 #####Examples:
 
-```json{{TIMER "2012-01-01 00:00:00" "DAYS_UNIT HOURS_UNIT to the end of the world" "World ended DAYS days ago"}}``` – will insert 705 days 12 hours to the end of the world (at the moment this doc was created) and will insert World ended 32 days ago when it is 32 days after the timestamp date.
+```json
+{{TIMER "2012-01-01 00:00:00" "DAYS_UNIT HOURS_UNIT to the end of the world" "World ended DAYS days ago"}}
+``` – will insert 705 days 12 hours to the end of the world (at the moment this doc was created) and will insert World ended 32 days ago when it is 32 days after the timestamp date.
 
-```json{{TIMER "added_on" "" "You signed up DAYS_UNIT ago"}}``` – will insert You signed up 35 days ago.
+```json
+{{TIMER "added_on" "" "You signed up DAYS_UNIT ago"}}
+``` – will insert You signed up 35 days ago.
 
 ####randoms<a name="randoms"/>
 Inserts random text from a provided list.
 
 #####Usage:
 
-```json{{RANDOM "Hi" "Hello" "Hey"}}```
+```json
+{{RANDOM "Hi" "Hello" "Hey"}}
+```
 
 ####currency conversions<a name="currency_conversions"/>
 
@@ -400,7 +412,9 @@ Convert between price currencies in your email depending on which country is you
 
 #####Usage:
 
-```json{{CURRENCY "amount" "source_currency"}}```
+```json
+{{CURRENCY "amount" "source_currency"}}
+```
 
 Source currency must be given as 3-letters code defined in ISO 4217 table.
 
@@ -408,7 +422,9 @@ Target currency is determined by 2-letters `{{CUSTOM "country_code"}}` value or 
 
 #####Example:
 
-```json{{CURRENCY "1000" "USD"}}``` – Will insert 1000 USD if contact’s country code is US (or not defined) and will insert 2100 PLN if contact’s country code is PL.
+```json
+{{CURRENCY "1000" "USD"}}
+``` – Will insert 1000 USD if contact’s country code is US (or not defined) and will insert 2100 PLN if contact’s country code is PL.
 
 ####conditions<a name="conditions"/>
 
@@ -521,16 +537,24 @@ For polish users declensions are available for names.
 
 Beautifulizers can be nested. For example if
 
-```json{{CONTACT "subscriber_first_name"}}```
+```json
+{{CONTACT "subscriber_first_name"}}
+```
 inserts paweł then
 
-```json{{CONTACT "ucfw(vocative(subscriber_first_name))"}}```
+```json
+{{CONTACT "ucfw(vocative(subscriber_first_name))"}}
+```
 will insert Paweł.
 
 Beautifulizers are multivalue-aware. For example if
 
-```json{{CUSTOM "car"}}```
+```json
+{{CUSTOM "car"}}
+```
 inserts honda, toyota, dodge then
 
-```json{{CUSTOM "ucfw(car)"}}```
+```json
+{{CUSTOM "ucfw(car)"}}
+```
 will insert Honda, Toyota, Dodge.
