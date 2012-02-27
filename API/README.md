@@ -571,7 +571,7 @@ _JSON result:_
 
 _JSON error messages (if any):_ `Missing campaign`.
 
-**Hint**: This does not delete domain from account. Domain is still visible in get_account domain result.
+**Hint**: This does not delete domain from account. Domain is still visible in [get_account](#get_account) domain result.
 
 **Warning**: Any messages sent from now on from this campaign will not use this domain in links, even if message was scheduled before domain assignment was deleted.
 
@@ -720,7 +720,7 @@ Array `flags` may be present with following items:<a name="message_flags"/>
 
 **Hint**: If type is follow-up then `day_of_cycle` is returned and if type is newsletter then `send_on` is returned. Those fields are not present in draft mode.
 
-**Hint**: If you need plain and HTML contents of your message use get_message_contents method.
+**Hint**: If you need plain and HTML contents of your message use [get_message_contents](#get_message_contents) method.
 
 ---
 
@@ -881,7 +881,7 @@ _JSON params:_
 
 Conditions:
 
-* `campaign` (mandatory) – `CAMPAIGN_ID` obtained from [get_campaigns](#get_campaigns). Newsletter will be saved in this campaign. Note that it is not the same as selecting contacts – check contacts / get_contacts params for that.
+* `campaign` (mandatory) – `CAMPAIGN_ID` obtained from [get_campaigns](#get_campaigns). Newsletter will be saved in this campaign. Note that it is not the same as selecting contacts – check `contacts` / `get_contacts` params for that.
 * `from_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It affects From header (name and email) in message. This value will be taken from campaign if not given.
 * `subject` (mandatory) – Subject value, all merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
 * `contents` (mandatory) – Allowed keys are `plain` and `html`, at least one is mandatory. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
@@ -1048,7 +1048,7 @@ _JSON result:_
 
 _JSON error messages (if any):_ `Missing campaign`, `Missing From field`, `Missing contents`.
 
-**Hint**: Drafts can be obtained by using get_messages in draft mode.
+**Hint**: Drafts can be obtained by using [get_messages](#get_messages) in draft mode.
 
 ---
 
@@ -1081,7 +1081,7 @@ _JSON result:_
 
 _JSON error messages (if any):_ `Missing message`, `Message is not newsletter`, `Message send event already passed`.
 
-**Warning**: You can delete only newsletters that have send_on date in future.
+**Warning**: You can delete only newsletters that have `send_on` date in future.
 
 ---
 
@@ -1283,7 +1283,7 @@ Conditions:
 * `last_click_on` (optional) – Use [time operators](#operators) to narrow down search results to a specific date when a contact clicked the last link. Multiple operators are allowed and logic AND is used so date range can also be expressed.
 * `opens` / `get_opens` (optional) – Use to narrow down search results to contacts that opened specific messages. Uses AND logic. See [IDs in conditions](#ids) for detailed explanation.
 * `last_open_on` (optional) – Use [time operators](#operators) to narrow down search results to the specific date when a contact opened the last message. Multiple operators are allowed and logic AND is used so date range can also be expressed.
-* `segmentation` (optional) – Allows to fetch big results in smaller packs. Split value defines the number of packs to which contacts will be split. Group defines which pack will be returned in results. For example to get all results in 10 packs call get_contacts 10 times. Set split to 10 and increase pack from 1 to 10.
+* `segmentation` (optional) – Allows to fetch big results in smaller packs. Split value defines the number of packs to which contacts will be split. Group defines which pack will be returned in results. For example to get all results in 10 packs call [get_contacts](#get_contacts) 10 times. Set split to 10 and increase pack from 1 to 10.
 
 _JSON result:_
 
@@ -1771,9 +1771,9 @@ _JSON params:_
         "API_KEY",
         {
             "campaigns"     : [ "CAMPAIGN_ID", "CAMPAIGN_ID" ],
-            "get_campaigns" : { get_campaigns Conditions },
+            "get_campaigns" : { get_campaigns conditions },
             "messages"      : [ "MESSAGE_ID", "MESSAGE_ID" ],
-            "get_messages"  : { get_messages Conditions },
+            "get_messages"  : { get_messages conditions },
             "email"         : { "OPERATOR" : "value" },
             "reason"        : "value",
             "created_on"    : {
@@ -1846,7 +1846,7 @@ _JSON params:_
         "API_KEY",
         {
             "campaigns"     : [ "CAMPAIGN_ID", "CAMPAIGN_ID" ],
-            "get_campaigns" : { get_campaigns Conditions },
+            "get_campaigns" : { get_campaigns conditions },
             "created_on"    : {
                 "OPERATOR" : "value",
                 "OPERATOR" : "value"
@@ -1984,7 +1984,7 @@ _JSON params:_
         "API_KEY",
         {
             "messages"      : [ "MESSAGE_ID", "MESSAGE_ID" ],
-            "get_messages"  : { get_messages Conditions },
+            "get_messages"  : { get_messages conditions },
             "url"           : { "OPERATOR" : "value" }
         }
     ]
@@ -2638,7 +2638,7 @@ Time:
 
 ##IDs in conditions<a name="ids"/>
 
-In many methods IDs may be passed to conditions. Method get_messages will be used as an example of how to do it.
+In many methods IDs may be passed to conditions. Method [get_messages](#get_messages) will be used as an example of how to do it.
 
 ```json
     [
@@ -2664,7 +2664,7 @@ Those campaigns may be given as an array of `CAMPAIGN_ID` values obtained from [
 ```
 
 It will return messages from those two specific campaigns.
-But s   ometimes it is faster/easier to nest get_campaigns conditions in get_messages method.
+But sometimes it is faster/easier to nest [get_campaigns](#get_campaigns) conditions in [get_messages](#get_messages) method.
 
 ```json
     [
@@ -2677,11 +2677,11 @@ But s   ometimes it is faster/easier to nest get_campaigns conditions in get_mes
 
 It will return messages from campaigns that have name beginning with my_campaign_. Pretty easy, isn’t it?
 
-**Hint**: Nesting of conditions is also legal. For example send_newsletter conditions may contain get_contacts conditions which may contain get_links conditions which may contain get_messages conditions which may contain get_campaigns conditions. Everything in one request!
+**Hint**: Nesting of conditions is also legal. For example [send_newsletter](#send_newsletter) conditions may contain [get_contacts](#get_contacts) conditions which may contain [get_links](#get_links) conditions which may contain [get_messages](#get_messages) conditions which may contain [get_campaigns](#get_campaigns) conditions. Everything in one request!
 
-**Warning**: Do not use campaigns when you mean get_campaigns. And the other way round. Condition campaigns expects array of `CAMPAIGN_ID` values while condition get_campaigns expects get_campaigns method conditions. Same for messages/get_messages, contacts/get_contacts and others.
+**Warning**: Do not use `campaigns` when you mean `get_campaigns`. And the other way round. Condition `campaigns` expects array of `CAMPAIGN_ID` values while condition `get_campaigns` expects [get_campaigns](#get_campaigns) method conditions. Same for `messages`/`get_messages`, `contacts`/`get_contacts` and others.
 
-**Warning**: Do not provide text where ID is expected. This is incorrect.
+**Warning**: Do not provide text where `ID` is expected. This is incorrect.
 
 ```json
     "campaigns" : [ "my_campaign_1" ]
