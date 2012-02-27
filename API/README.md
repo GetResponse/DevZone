@@ -1,6 +1,5 @@
-##GetResponse API Documentation
-version 1.8.10, 2012-01-19 
-[changelog](https://github.com/GetResponse/DevZone/blob/master/API/changelog.txt "changelog")
+#GetResponse API Documentation
+version 1.8.10, 2012-01-19 [changelog](#changelog)
 
 ##AUTHORS
 The GetResponse API Documentation is created and maintained by the 
@@ -2071,7 +2070,7 @@ _JSON result:_
     }
 ```
 
-Format of mask can be:<a name="#mask_format">
+Format of mask can be:<a name="mask_format"/>
 
 * whole email  – xxx@yyy.zz
 * local part of email- xxx@
@@ -2686,3 +2685,128 @@ It will return messages from campaigns that have name beginning with my_campaign
 ```json
     "campaigns" : [ "my_campaign_1" ]
 ```
+
+##ERRORS
+
+Field `error` format is compatible with [JSON-RPC 2.0 spec](http://www.jsonrpc.org/spec.html).
+
+Errors not included in spec:
+
+* Invalid API key.
+
+```json
+    {
+        "code"      : -1,
+        "message"   : "API key verification failed",
+    }
+```
+
+* Method error, list of `message` values in this error is provided in method documentation.
+
+```json
+    {
+        "code"      : -2,
+        "message"   : "...",
+    }
+```
+
+
+##CHANGELOG<a name="changelog"/>
+
+version 1.8.10, 2012-01-19
+
+* [get_contact_geoip](#get_contact_geoip) returns `continent_code` and `time_zone`
+
+version 1.8.9, 2011-11-15
+
+* contact `name` is optional in [add_contact](#add_contact)
+
+version 1.8.8, 2011-10-10
+
+* following response fields that were previously JSON-string has now more narrow typing to JSON-number:
+  [get_messages](#get_messages) - `day_of_cycle`,
+  [get_message](#get_message) - `day_of_cycle`,
+  [get_message_stats](#get_message_stats) - `sent`, `opened`, `clicked`, `bounces_*`, `complaints_*`,
+  [get_contacts](#get_contacts) - `cycle_day`,
+  [get_contact](#get_contact) - `cycle_day`,
+  [get_contacts_deleted](#get_contacts_deleted) - `cycle_day`,
+  [get_contacts_subscription_stats](#get_contacts_subscription_stats) - `import`, `email`, `www`, `panel`, `leads`, `sale`, `api`, `forward`, `survey`, `iphone`,
+  [get_contacts_amount_per_account](#get_contacts_amount_per_account) - calculated amount,
+  [get_contacts_amount_per_campaign](#get_contacts_amount_per_campaign) - calculated amounts,
+  [get_links](#get_links) - `clicks`,
+  [get_link](#get_link) - `clicks`,
+* online documentation fixes to respect difference between JSON-string and JSON-number types
+
+version 1.8.7, 2011-10-10
+
+* added [get_messages_amount_per_account](#get_messages_amount_per_account) method
+* added [get_messages_amount_per_campaign](#get_messages_amount_per_campaign) method
+
+version 1.8.6, 2011-10-10
+
+* [get_contacts_subscription_stats](#get_contacts_subscription_stats) allows to narrow results by `campaigns` / `get_campaigns` params
+
+version 1.8.5, 2011-09-20
+
+* [get_contacts_deleted](#get_contacts_deleted) can narrow down result to contacts removed from specific messages and from specific reason
+
+version 1.8.4, 2011-08-22
+
+* [send_newsletter](#send_newsletter) and [add_follow_up](#add_follow_up) methods can detect [Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) errors in subject and contents
+
+version 1.8.3, 2011-08-10
+
+* reasons in [get_contacts_deleted](#get_contacts_deleted) method changed
+
+version 1.8.2, 2011-07-05
+
+* added `description` param to [add_campaign](#add_campaign) and [get_campaigns](#get_campaigns) methods
+
+version 1.8.1, 2011-05-18
+
+* added [add_draft](#add_draft) method to manage drafts, [get_messages](#get_messages) method can work in draft mode
+* possibility to delete scheduled newsletter using [delete_newsletter](#delete_newsletter)
+
+version 1.8.0, 2011-03-03
+
+* added methods to manage suppression lists: 
+  [get_suppressions](#get_suppressions),
+  [get_suppression](#get_suppression),
+  [add_suppression](#add_suppression),
+  [delete_suppression](#delete_suppression),
+  [get_suppression_skiplist](#get_suppression_skiplist),
+  [add_suppression_skiplist](#add_suppression_skiplist),
+  [delete_suppression_skiplist](#delete_suppression_skiplist)
+* method [send_newsletter](#send_newsletter) accepts suppression lists
+
+version 1.7.4, 2011-03-02
+
+* blacklist masks accept [local@ and MD5 formats](#mask_formats)
+
+version 1.7.3, 2011-02-22
+
+* possibility to choose From header in [send_newsletter](#send_newsletter) and [add_follow_up](#add_follow_up) methods
+
+version 1.7.2, 2011-02-11
+
+* [send_newsletter](#send_newsletter) limited to 128 calls daily to prevent client-side customization anti-pattern explained in method description
+
+version 1.7.1, 2011-02-11
+
+* added methods to check amount of contacts:
+  [get_contacts_amount_per_account](#get_contacts_amount_per_account),
+  [get_contacts_amount_per_campaign](#get_contacts_amount_per_campaign),
+
+version 1.7.0, 2010-11-25
+
+* added domains management methods:
+  [get_account_domains](#get_account_domains),
+  [get_account_domain](#get_account_domain),
+  [get_campaign_domain](#get_campaign_domain),
+  [set_campaign_domain](#set_campaign_domain),
+  [delete_campaign_domain](#delete_campaign_domain)
+* added postal address management methods:
+  [get_campaign_postal_address](#get_campaign_postal_address),
+  [set_campaign_postal_address](#set_campaign_postal_address)
+
+    
