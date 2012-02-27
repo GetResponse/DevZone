@@ -2,30 +2,54 @@
 
 version 1.8.10, 2012-01-19 [changelog](#changelog)
 
-##AUTHORS
+##GETTING STARTED
 
-The GetResponse API Documentation is created and maintained by the *GetResponse DevZone Team*. If you wish to contact the authors, please use the following contact form at [GetResponse DevZone](http://dev.getresponse.com).
+####Authentication
 
-##DESCRIPTION
+![API KEY](https://app.getresponse.com/images/core/dashboard-icons/use-getresponse-api.png)
 
-This document describes the syntax and usage of all API methods. 
-GetResponse API is [JSON-RPC](http://www.jsonrpc.org/) based, server is located at `http://api2.getresponse.com`.
+In order to use GetResponse API the API KEY is required.
 
-If you are the **GetResponse360** user please be aware that your API URL is unique and it will be provided to you by your Account Manager.
-
-##API KEY
-
-In order to use GetResponse API the unique API KEY is required. The API KEY key is assigned to every **paid** account and you can obtain it from [my account](https://app.getresponse.com/my_api_key.html) section after logging in, to your GetResponse account.
+* GetResponse users can obtain it from [my account](https://app.getresponse.com/my_api_key.html) section after logging to your GetResponse account.
+* GetResponse360 users should login to server with owner privileges and visit "My account" → "Use GetResponse API".
 
 **Warning**: Please note that the API KEY unambiguously identifies your account and allows all who know the API KEY to manage contacts, messages etc. Please keep your API KEY safe and do not share it with any unauthorized persons.
 
+---
+
+####Protocol
+
+GetResponse API is [JSON-RPC](http://www.jsonrpc.org/) based and supports both 1.0 and 2.0 specifications.
+
+---
+
+####Location
+
+* GetResponse users should use `http://api2.getresponse.com` URL.
+* GetResponse360 users have unique URL and it will be provided to them by Account Manager.
+
+---
+
+####Examples
+
+<img src="http://upload.wikimedia.org/wikipedia/commons/7/72/Logo_C_Sharp.png" height="64" alt="C#"/>
+<img src="http://upload.wikimedia.org/wikipedia/en/thumb/3/39/Java_logo.svg/300px-Java_logo.svg.png" height="64" alt="Java"/>
+<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/JavaScript-logo.png/600px-JavaScript-logo.png" height="64" alt="JavaScript"/>
+<img src="http://upload.wikimedia.org/wikipedia/en/0/00/Perl-camel-small.png" height="64" alt="Perl"/>
+<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/2/27/PHP-logo.svg/220px-PHP-logo.svg.png" height="64" alt="PHP"/>
+<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/110px-Python-logo-notext.svg.png" height="64" alt="Python"/>
+<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Ruby_logo.svg/198px-Ruby_logo.svg.png" height="64" alt="Ruby"/>
+<img src="http://upload.wikimedia.org/wikipedia/en/7/70/Flexicon.png" height="64" alt="Adobe Flex"/>
+
+Check how to [use API in those programming languages](https://github.com/mgorski/DevZone/tree/master/API/examples).
+
+
 ##SUPPORT
 
-If you run into an error or you will have difficulties with using the API, you may easily report it in the Issues section here in GetResponse GitHub Organization profile and we will provide all the support we can to solve your problems.
+The GetResponse API is created and maintained by the *GetResponse DevZone Team*.
 
-##GETTING STARTED
+If you run into an error or you have difficulties with using the API you may easily report it in the Issues section here in GetResponse GitHub Organization profile and we will provide all the support we can to solve your problems.
 
-Examples in popular programing languages are available on [GetResponse GitHub](https://github.com/mgorski/DevZone/tree/master/API/examples) including: C#, Java, JavaScript, Perl, PHP, Python, Ruby and Flex.
 
 ##METHODS
 
