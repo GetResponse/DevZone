@@ -108,7 +108,7 @@ class jsonRPCClient
         // check if response is correct
         $validateParams = array
         (
-            !is_null($response['error']) => 'Request have return error: ' . $response['error'],
+            !is_null($response['error']) => 'Request have return error: ' . $response['error']['message'],
             $response['id'] != $requestId => 'Request id: '.$requestId.'is different from Response id: ' . $response['id'],
 
         );
