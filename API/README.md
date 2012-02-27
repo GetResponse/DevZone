@@ -1,41 +1,31 @@
-#GetResponse API Documentation
+#GETRESPONSE API
+
 version 1.8.10, 2012-01-19 [changelog](#changelog)
 
 ##AUTHORS
-The GetResponse API Documentation is created and maintained by the 
-*GetResponse DevZone Team*. If you wish to contact the authors, please use the 
-following contact form at [GetResponse DevZone](http://dev.getresponse.com "GetResponse DevZone").
+
+The GetResponse API Documentation is created and maintained by the *GetResponse DevZone Team*. If you wish to contact the authors, please use the following contact form at [GetResponse DevZone](http://dev.getresponse.com).
 
 ##DESCRIPTION
+
 This document describes the syntax and usage of all API methods. 
-GetResponse API is JSON-RPC based, server is located at 
-`http://api2.getresponse.com`.
-If you are the ***GetResponse360*** user please be aware that your `API URL` 
-is unique and it will be provided to you by your Account Manager.
+GetResponse API is [JSON-RPC](http://www.jsonrpc.org/) based, server is located at `http://api2.getresponse.com`.
+
+If you are the **GetResponse360** user please be aware that your API URL is unique and it will be provided to you by your Account Manager.
 
 ##API KEY
-In order to use GetResponse API, the unique `API KEY` is required. The key 
-is assigned to every pro account and you can obtain it in **My Account** section
-after logging in, to your GetResponse account.
 
-**Warning**: Please note that the `API KEY` unambiguously identifies your account 
-and allows all who know the `API KEY` to manage contacts, messages etc. Please 
-keep your `API KEY` safe and do not share it with any unauthorized persons.
+In order to use GetResponse API the unique API KEY is required. The API KEY key is assigned to every **paid** account and you can obtain it from [my account](https://app.getresponse.com/my_api_key.html) section after logging in, to your GetResponse account.
 
-If you are a developer and you want to utilize our API with a free account 
-please use the contact form, provide us with your free account name and briefly 
-describe the purpose of your project (requests without project description will 
-be rejected)- we will assign the `API KEY` for you.
+**Warning**: Please note that the API KEY unambiguously identifies your account and allows all who know the API KEY to manage contacts, messages etc. Please keep your API KEY safe and do not share it with any unauthorized persons.
 
 ##SUPPORT
-If you run into an error or you will have difficulties with using the API, you 
-may easily report it in the Issues section here in GetResponse GitHub Organization 
-profile and we will provide all the support we can to solve your problems.
+
+If you run into an error or you will have difficulties with using the API, you may easily report it in the Issues section here in GetResponse GitHub Organization profile and we will provide all the support we can to solve your problems.
 
 ##GETTING STARTED
-Examples in popular programing languages are available here on 
-[GetResponse GitHub](https://github.com/mgorski/DevZone/tree/master/API/examples "Examples of use") 
-Including: C#, Java, JavaScript, Perl, PHP, Python, Ruby, Flex.
+
+Examples in popular programing languages are available on [GetResponse GitHub](https://github.com/mgorski/DevZone/tree/master/API/examples) including: C#, Java, JavaScript, Perl, PHP, Python, Ruby and Flex.
 
 ##METHODS
 
