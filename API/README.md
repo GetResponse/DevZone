@@ -40,94 +40,94 @@ Including: C#, Java, JavaScript, Perl, PHP, Python, Ruby, Flex.
 
 ##METHODS
 
-####Connection testing<a name="Connection_testing"/>
+####Connection testing
 
-*   [ping](#ping)
+* [ping](#ping)
 
-####Account<a name="Account"/>
+####Account
 
-*   [get_account_info](#get_account_info)
-*   [get_account_from_fields](#get_account_from_fields)
-*   [get_account_from_field](#get_account_from_field)
-*   [add_account_from_field](#add_account_from_field)
-*   [get_account_domains](#get_account_domains)
-*   [get_account_domain](#get_account_domain)
+* [get_account_info](#get_account_info)
+* [get_account_from_fields](#get_account_from_fields)
+* [get_account_from_field](#get_account_from_field)
+* [add_account_from_field](#add_account_from_field)
+* [get_account_domains](#get_account_domains)
+* [get_account_domain](#get_account_domain)
 
-####Campaigns<a name="Campaigns"/>
+####Campaigns
 
-*   [get_campaigns](#get_campaigns)
-*   [get_campaign](#get_campaign)
-*   [add_campaign](#add_campaign)
-*   [get_campaign_domain](#get_campaign_domain)
-*   [set_campaign_domain](#set_campaign_domain)
-*   [delete_campaign_domain](#delete_campaign_domain)
-*   [get_campaign_postal_address](#get_campaign_postal_address)
-*   [set_campaign_postal_address](#set_campaign_postal_address)
+* [get_campaigns](#get_campaigns)
+* [get_campaign](#get_campaign)
+* [add_campaign](#add_campaign)
+* [get_campaign_domain](#get_campaign_domain)
+* [set_campaign_domain](#set_campaign_domain)
+* [delete_campaign_domain](#delete_campaign_domain)
+* [get_campaign_postal_address](#get_campaign_postal_address)
+* [set_campaign_postal_address](#set_campaign_postal_address)
 
-####Messages<a name="Messages"/>
+####Messages
 
-*   [get_messages](#get_messages)
-*   [get_message](#get_message)
-*   [get_message_contents](#get_message_contents)
-*   [get_message_stats](#get_message_stats)
-*   [send_newsletter](#send_newsletter)
-*   [add_follow_up](#add_follow_up)
-*   [add_draft](#add_draft)
-*   [delete_newsletter](#delete_newsletter)
-*   [delete_follow_up](#delete_follow_up)
-*   [set_follow_up_cycle](#set_follow_up_cycle)
-*   [get_messages_amount_per_account](#get_messages_amount_per_account)
-*   [get_messages_amount_per_campaign](#get_messages_amount_per_campaign)
+* [get_messages](#get_messages)
+* [get_message](#get_message)
+* [get_message_contents](#get_message_contents)
+* [get_message_stats](#get_message_stats)
+* [send_newsletter](#send_newsletter)
+* [add_follow_up](#add_follow_up)
+* [add_draft](#add_draft)
+* [delete_newsletter](#delete_newsletter)
+* [delete_follow_up](#delete_follow_up)
+* [set_follow_up_cycle](#set_follow_up_cycle)
+* [get_messages_amount_per_account](#get_messages_amount_per_account)
+* [get_messages_amount_per_campaign](#get_messages_amount_per_campaign)
 
-####Contacts<a name="Contacts"/>
+####Contacts
 
-*   [get_contacts](#get_contacts)
-*   [get_contact](#get_contact)
-*   [set_contact_name](#set_contact_name)
-*   [get_contact_customs](#get_contact_customs)
-*   [set_contact_customs](#set_contact_customs)
-*   [get_contact_geoip](#get_contact_geoip)
-*   [get_contact_opens](#get_contact_opens)
-*   [get_contact_clicks](#get_contact_clicks)
-*   [set_contact_cycle](#set_contact_cycle)
-*   [add_contact](#add_contact)
-*   [move_contact](#move_contact)
-*   [delete_contact](#delete_contact)
-*   [get_contacts_deleted](#get_contacts_deleted)
-*   [get_contacts_subscription_stats](#get_contacts_subscription_stats)
-*   [get_contacts_amount_per_account](#get_contacts_amount_per_account)
-*   [get_contacts_amount_per_campaign](#get_contacts_amount_per_campaign)
+* [get_contacts](#get_contacts)
+* [get_contact](#get_contact)
+* [set_contact_name](#set_contact_name)
+* [get_contact_customs](#get_contact_customs)
+* [set_contact_customs](#set_contact_customs)
+* [get_contact_geoip](#get_contact_geoip)
+* [get_contact_opens](#get_contact_opens)
+* [get_contact_clicks](#get_contact_clicks)
+* [set_contact_cycle](#set_contact_cycle)
+* [add_contact](#add_contact)
+* [move_contact](#move_contact)
+* [delete_contact](#delete_contact)
+* [get_contacts_deleted](#get_contacts_deleted)
+* [get_contacts_subscription_stats](#get_contacts_subscription_stats)
+* [get_contacts_amount_per_account](#get_contacts_amount_per_account)
+* [get_contacts_amount_per_campaign](#get_contacts_amount_per_campaign)
 
-####Links<a name="Links"/>
+####Links
 
-*   [get_links](#get_links)
-*   [get_link](#get_link)
+* [get_links](#get_links)
+* [get_link](#get_link)
 
-####Blacklists<a name="Blacklists"/>
+####Blacklists
 
-*   [get_account_blacklist](#get_account_blacklist)
-*   [add_account_blacklist](#add_account_blacklist)
-*   [delete_account_blacklist](#delete_account_blacklist)
-*   [get_campaign_blacklist](#get_campaign_blacklist)
-*   [add_campaign_blacklist](#add_campaign_blacklist)
-*   [delete_campaign_blacklist](#delete_campaign_blacklist)
+* [get_account_blacklist](#get_account_blacklist)
+* [add_account_blacklist](#add_account_blacklist)
+* [delete_account_blacklist](#delete_account_blacklist)
+* [get_campaign_blacklist](#get_campaign_blacklist)
+* [add_campaign_blacklist](#add_campaign_blacklist)
+* [delete_campaign_blacklist](#delete_campaign_blacklist)
 
-####Suppressions<a name="Suppressions"/>
+####Suppressions
 
-*   [get_suppressions](#get_suppressions)
-*   [get_suppression](#get_suppression)
-*   [add_suppression](#add_suppression)
-*   [delete_suppression](#delete_suppression)
-*   [get_suppression_skiplist](#get_suppression_skiplist)
-*   [add_suppression_skiplist](#add_suppression_skiplist)
-*   [delete_suppression_skiplist](#delete_suppression_skiplist)
+* [get_suppressions](#get_suppressions)
+* [get_suppression](#get_suppression)
+* [add_suppression](#add_suppression)
+* [delete_suppression](#delete_suppression)
+* [get_suppression_skiplist](#get_suppression_skiplist)
+* [add_suppression_skiplist](#add_suppression_skiplist)
+* [delete_suppression_skiplist](#delete_suppression_skiplist)
 
-####Confirmation<a name="Confirmation"/>
+####Confirmation
 
-*   [get_confirmation_subjects](#get_confirmation_subjects)
-*   [get_confirmation_subject](#get_confirmation_subject)
-*   [get_confirmation_bodies](#get_confirmation_bodies)
-*   [get_confirmation_body](#get_confirmation_body)
+* [get_confirmation_subjects](#get_confirmation_subjects)
+* [get_confirmation_subject](#get_confirmation_subject)
+* [get_confirmation_bodies](#get_confirmation_bodies)
+* [get_confirmation_body](#get_confirmation_body)
  
 ---
 
@@ -348,7 +348,7 @@ _JSON params:_
 
 Conditions:
 
-* `name` (optional) – Use text operators to narrow down search results to specific campaign names.
+* `name` (optional) – Use [text operators](#operators) to narrow down search results to specific campaign names.
 
 _JSON result:_
 
@@ -450,11 +450,11 @@ Conditions:
 
 * `name` (mandatory) – Value of name must be composed of lowercase letters, digits and underscores only.
 * `description` (optional) – User friendly name of campaign.
-* `from_field` (mandatory) – `FROM_FIELD_ID` obtained from get_account_from_fields. It affects From header (name and email) in messages sent from this campaign.
-* `reply_to_field` (mandatory) – `FROM_FIELD_ID` obtained from get_account_from_fields. It affects Reply-To header (email) in messages sent from this campaign.
-* `confirmation_subject` (mandatory) – `CONFIRMATION_SUBJECT_ID` obtained from get_confirmation_subjects. Used in confirmation messages sent from this campaign if double-optin is set for given subscription method.
-* `confirmation_body` (mandatory) – `CONFIRMATION_BODY_ID` obtained from get_confirmation_bodies. Used in confirmation messages sent from this campaign if double-optin is set for given subscription method.
-* `language_code` (optional) – Language of subscription reminder and change details / unsubscribe footer. List of available ISO 639-1 (2-letter) codes is available here: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes . If we don’t have version in requested language then English version will be used.
+* `from_field` (mandatory) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It affects From header (name and email) in messages sent from this campaign.
+* `reply_to_field` (mandatory) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It affects Reply-To header (email) in messages sent from this campaign.
+* `confirmation_subject` (mandatory) – `CONFIRMATION_SUBJECT_ID` obtained from [get_confirmation_subjects](#get_confirmation_subjects). Used in confirmation messages sent from this campaign if double-optin is set for given subscription method.
+* `confirmation_body` (mandatory) – `CONFIRMATION_BODY_ID` obtained from [get_confirmation_bodies](#get_confirmation_bodies). Used in confirmation messages sent from this campaign if double-optin is set for given subscription method.
+* `language_code` (optional) – Language of subscription reminder and change details / unsubscribe footer. List of available ISO 639-1 (2-letter) codes is available [here](http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes). If we don’t have version in requested language then English version will be used.
 
 _JSON result:_
 
@@ -467,7 +467,7 @@ _JSON result:_
 
 _JSON error messages (if any):_ `Invalid email syntax`, `Name already taken`, `Missing From field`, `Missing Reply-To field`, `Missing confirmation subject`, `Missing confirmation body`.
 
-**Warning**: Campaign added through API will be visible/usable on www interface after next log-in.
+**Warning**: Campaign added through API will be visible on www interface after next log-in.
 
 ---
 
@@ -488,7 +488,7 @@ _JSON params:_
 
 Conditions:
 
-* `campaigns` (mandatory) – `CAMPAIGN_ID` obtained from get_campaigns.
+* `campaigns` (mandatory) – `CAMPAIGN_ID` obtained from [get_campaigns](#get_campaigns).
 
 _JSON result:_
 
@@ -525,8 +525,8 @@ _JSON params:_
 
 Conditions:
 
-* `campaigns` (mandatory) – `CAMPAIGN_ID` obtained from get_campaigns.
-* `account_domain` (mandatory) – `ACCOUNT_DOMAIN_ID` obtained from get_account_domains.
+* `campaigns` (mandatory) – `CAMPAIGN_ID` obtained from [get_campaigns](#get_campaigns).
+* `account_domain` (mandatory) – `ACCOUNT_DOMAIN_ID` obtained from [get_account_domains](#get_account_domains).
 
 _JSON result:_
 
@@ -544,7 +544,7 @@ _JSON error messages (if any):_ `Missing campaign`, `Missing account domain`.
 
 ####delete_campaign_domain<a name="delete_campaign_domain"/>
 
-Unassign account domain from campaign. Unassigned domain will no longer be used in links in messages sent from this campaign.
+Detach account domain from campaign. Unassigned domain will no longer be used in links in messages sent from this campaign.
 
 _JSON params:_
 
@@ -559,7 +559,7 @@ _JSON params:_
 
 Conditions:
 
-* `campaigns` (mandatory) – `CAMPAIGN_ID` obtained from get_campaigns.
+* `campaigns` (mandatory) – `CAMPAIGN_ID` obtained from [get_campaigns](#get_campaigns).
 
 _JSON result:_
 
@@ -572,6 +572,7 @@ _JSON result:_
 _JSON error messages (if any):_ `Missing campaign`.
 
 **Hint**: This does not delete domain from account. Domain is still visible in get_account domain result.
+
 **Warning**: Any messages sent from now on from this campaign will not use this domain in links, even if message was scheduled before domain assignment was deleted.
 
 ---
@@ -593,7 +594,7 @@ _JSON params:_
 
 Conditions:
 
-* `campaigns` (mandatory) – `CAMPAIGN_ID` obtained from get_campaigns.
+* `campaigns` (mandatory) – `CAMPAIGN_ID` obtained from [get_campaigns](#get_campaigns).
 
 _JSON result:_
 
@@ -639,7 +640,7 @@ _JSON params:_
 
 Conditions:
 
-* `campaigns` (mandatory) – `CAMPAIGN_ID` obtained from get_campaigns.
+* `campaigns` (mandatory) – `CAMPAIGN_ID` obtained from [get_campaigns](#get_campaigns).
 * `name` (optional) - Name of you or your company.
 * `address` (mandatory) – Street and number.
 * `city` (mandatory) – City.
@@ -681,9 +682,9 @@ _JSON params:_
 
 Conditions:
 
-* `campaigns` / `get_campaigns` (optional) – Search only in given campaigns. Uses OR logic. If those params are not given search, is performed in all campaigns in the account. Check IDs in Conditions for detailed explanation.
+* `campaigns` / `get_campaigns` (optional) – Search only in given campaigns. Uses OR logic. If those params are not given search, is performed in all campaigns in the account. Check [IDs in conditions](#ids) for detailed explanation.
 * `type` (optional) – Use "newsletter" or "follow-up" to narrow down search results to specific message types.
-* `subject` (optional) – Use text operators to narrow down search results to specific message subjects.
+* `subject` (optional) – Use [text operators](#operators) to narrow down search results to specific message subjects.
 * `draft_mode` (optional) – Use true or false, default is false. Switches between regular messages and drafts. Draft mode can be combined with other conditions, for example with `type` condition to get newsletter drafts only.
 
 _JSON result:_
@@ -708,14 +709,14 @@ _JSON result:_
     }
 ```
 
-Array `flags` may be present with following items:
+Array `flags` may be present with following items:<a name="message_flags"/>
 
-* `clicktrack` – Clicks on links in message are counted.  Note that for the link to be clicktracked it must be also wrapped in Dynamic Content `{{LINK}}` tag. This behaves differently than WWW interface, where (for simplicity) all links are clicktracked when clicktrack checkbox is set.
+* `clicktrack` – Clicks on links in message are counted.  Note that for the link to be click-tracked it must be also wrapped in Dynamic Content `{{LINK}}` tag. This behaves differently than WWW interface, where (for simplicity) all links are click-tracked when click-track checkbox is set.
 * `subscription_reminder` – Short disclaimer is added to the message content to make sure that subscriber know why they are receiving the messages.
 * `openrate` – Opened messages are counted (only if html content is present).
 * `google_analytics` – Google Analytics code is appended to every link in message.
 
-**Hint**: All merge-words in subject are returned as GetResponse Dynamic Content syntax.
+**Hint**: All merge-words in subject are returned as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
 
 **Hint**: If type is follow-up then `day_of_cycle` is returned and if type is newsletter then `send_on` is returned. Those fields are not present in draft mode.
 
@@ -789,7 +790,7 @@ _JSON result:_
 
 **Hint**: Result may contain only `plain`, only `html` or both.
 
-**Hint**: All merge-words in contents are GetResponse Dynamic Content syntax.
+**Hint**: All merge-words in contents are [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
 
 ---
 
@@ -880,13 +881,13 @@ _JSON params:_
 
 Conditions:
 
-* `campaign` (mandatory) – `CAMPAIGN_ID` obtained from get_campaigns. Newsletter will be saved in this campaign. Note that it is not the same as selecting contacts – check contacts / get_contacts params for that.
-* `from_field` (optional) – `FROM_FIELD_ID` obtained from get_account_from_fields. It affects From header (name and email) in message. This value will be taken from campaign if not given.
-* `subject` (mandatory) – Subject value, all merge-words should be written as GetResponse Dynamic Content syntax.
-* `contents` (mandatory) – Allowed keys are `plain` and `html`, at least one is mandatory. All merge-words should be written as GetResponse Dynamic Content syntax.
-* `flags` (optional) – Enables extra functionality for a message, see message flags for available values.
-* `contacts` / `get_contacts` (at least one mandatory)- Contacts that should receive a newsletter. See IDs in Conditions for detailed explanation.
-* `suppressions` / `get_suppressions` (optional) – Suppressions to use with that message. Any contact email address that matches any of the masks in those suppressions will be skipped when sending. See IDs in Conditions for detailed explanation.
+* `campaign` (mandatory) – `CAMPAIGN_ID` obtained from [get_campaigns](#get_campaigns). Newsletter will be saved in this campaign. Note that it is not the same as selecting contacts – check contacts / get_contacts params for that.
+* `from_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It affects From header (name and email) in message. This value will be taken from campaign if not given.
+* `subject` (mandatory) – Subject value, all merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
+* `contents` (mandatory) – Allowed keys are `plain` and `html`, at least one is mandatory. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
+* `flags` (optional) – Enables extra functionality for a message, see [message_flags](#message_flags) for available values.
+* `contacts` / `get_contacts` (at least one mandatory) - Contacts that should receive a newsletter. See [IDs in conditions](#ids) for detailed explanation.
+* `suppressions` / `get_suppressions` (optional) – Suppressions to use with that message. Any contact email address that matches any of the masks in those suppressions will be skipped when sending. See [IDs in conditions](#ids) for detailed explanation.
 
 _JSON result:_
 
@@ -984,11 +985,11 @@ _JSON params:_
 
 Conditions:
 
-* `campaign` (mandatory) – `CAMPAIGN_ID` obtained from get_campaigns. Follow-up will be saved in this campaign.
-* `from_field` (optional) – `FROM_FIELD_ID` obtained from get_account_from_fields. It affects From header (name and email) in message. This value will be taken from campaign if not given.
-* `subject` (mandatory) – Subject value, all merge-words should be written as GetResponse Dynamic Content syntax.
-* `contents` (mandatory) – Allowed keys are plain and html, at least one is mandatory. All merge-words should be written as GetResponse Dynamic Content syntax.
-* `flags` (optional) – Enables extra functionality for a message, see message flags for available values.
+* `campaign` (mandatory) – `CAMPAIGN_ID` obtained from [get_campaigns](#get_campaigns). Follow-up will be saved in this campaign.
+* `from_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It affects From header (name and email) in message. This value will be taken from campaign if not given.
+* `subject` (mandatory) – Subject value, all merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
+* `contents` (mandatory) – Allowed keys are plain and html, at least one is mandatory. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
+* `flags` (optional) – Enables extra functionality for a message, see [message_flags](#message_flags) for available values.
 * `day_of_cycle` – Number of days between the day when a contact subscribed to a campaign and the day when the follow-up is sent. Must be not used in existing messages and in the range of 0..1000.
 
 _JSON result:_
@@ -1029,11 +1030,11 @@ _JSON params:_
 
 Conditions:
 
-* `campaign` (mandatory) – `CAMPAIGN_ID` obtained from get_campaigns. Draft will be saved in this campaign.
-* `from_field` (optional) – `FROM_FIELD_ID` obtained from get_account_from_fields. It affects From header (name and email) in message. This value will be taken from campaign if not given.
-* `subject` (mandatory) – Subject value, all merge-words should be written as GetResponse Dynamic Content syntax.
-* `contents` (mandatory) – Allowed keys are plain and html, at least one is mandatory. All merge-words should be written as GetResponse Dynamic Content syntax.
-* `flags` (optional) – Enables extra functionality for a message, see message flags for available values.
+* `campaign` (mandatory) – `CAMPAIGN_ID` obtained from [get_campaigns](#get_campaigns). Draft will be saved in this campaign.
+* `from_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It affects From header (name and email) in message. This value will be taken from campaign if not given.
+* `subject` (mandatory) – Subject value, all merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
+* `contents` (mandatory) – Allowed keys are plain and html, at least one is mandatory. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
+* `flags` (optional) – Enables extra functionality for a message, see [message_flags](#message_flags) for available values.
 * `type` – Type of draft, allowed values are newsletter and follow-up.
 
 _JSON result:_
@@ -1068,7 +1069,7 @@ _JSON params:_
 
 Conditions:
 
-* `message` (mandatory) – `MESSAGE_ID` obtained from get_messages or send_newsletter.
+* `message` (mandatory) – `MESSAGE_ID` obtained from [get_messages](#get_messages) or [send_newsletter](#send_newsletter).
 
 _JSON result:_
 
@@ -1101,7 +1102,7 @@ _JSON params:_
 
 Conditions:
 
-* `message` (mandatory) – `MESSAGE_ID` obtained from get_messages or add_follow_up.
+* `message` (mandatory) – `MESSAGE_ID` obtained from [get_messages](#get_messages) or [add_follow_up](#add_follow_up).
 
 _JSON result:_
 
@@ -1133,7 +1134,7 @@ _JSON params:_
 
 Conditions:
 
-* `message` (mandatory) – `MESSAGE_ID` obtained from get_messages or add_follow_up.
+* `message` (mandatory) – `MESSAGE_ID` obtained [get_messages](#get_messages) or [add_follow_up](#add_follow_up).
 * `day_of_cycle` – Number of days between the day when a contact subscribed to a campaign and the day when the follow-up is sent. Must be not used in existing messages and in the range of 0..1000.
 
 _JSON result:_
@@ -1270,18 +1271,18 @@ _JSON params:_
 
 Conditions:
 
-* `campaigns` / `get_campaigns` (optional) – Search only in given campaigns. Uses OR logic. If those params are not given, search is performed in all campaigns within the account. Check IDs in Conditions for detailed explanation.
-* `name` (optional) – Use text operators to narrow down search results to specific contact names.
-* `email` (optional) – Use text operators to narrow down search results to specific contact emails.
-* `created_on` (optional) – Use time operators to narrow down search results to specific contact creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
+* `campaigns` / `get_campaigns` (optional) – Search only in given campaigns. Uses OR logic. If those params are not given, search is performed in all campaigns within the account. Check [IDs in conditions](#ids) for detailed explanation.
+* `name` (optional) – Use [text operators](#operators) to narrow down search results to specific contact names.
+* `email` (optional) – Use [text operators](#operators) to narrow down search results to specific contact emails.
+* `created_on` (optional) – Use [time operators](#operators) to narrow down search results to specific contact creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
 * `origin` (optional) – Narrow down search results by contacts’ origin (subscription method). Allowed values are import, email, www, panel, leads, sale, api, forward, survey, iphone.
-* `cycle_day` (optional) – Use numeric operators to narrow down search results to specific  days of the followup cycles assigned to the contacts. To find contacts that already got day 2 message you have to use `{ "GREATER" : 2 }` as they have already reached that day. To find inactive contacts pass `{ "EQUALS" : null }` condition.
-* `customs` (optional) – Use text operators to narrow down search results to contacts having specific customs. Uses AND logic. Note that if you need OR logic you can use MATCHES operator and use alternative in regular expression. Contacts that don’t have a custom of given name are not returned in results. If custom is multi-value then “any” junction is used: condition is true if any custom value tests true according to the operator used.
-* `geo` (optional) – Use operators to narrow down search results to specific contact geo location. Text operators are allowed for country, country_code, city. Numeric operators are allowed for latitude and longitude (values are decimal numbers, like -54.5). Uses AND logic. Contacts that don’t have a geo location data are not returned in results.
-* `clicks` / `get_clicks` (optional) – Use to narrow down search results to the contacts that clicked specific links. Uses AND logic. See IDs in Conditions for detailed explanation.
-* `last_click_on` (optional) – Use time operators to narrow down search results to a specific date when a contact clicked the last link. Multiple operators are allowed and logic AND is used so date range can also be expressed.
-* `opens` / `get_opens` (optional) – Use to narrow down search results to contacts that opened specific messages. Uses AND logic. See IDs in Conditions for detailed explanation.
-* `last_open_on` (optional) – Use time operators to narrow down search results to the specific date when a contact opened the last message. Multiple operators are allowed and logic AND is used so date range can also be expressed.
+* `cycle_day` (optional) – Use [numeric operators](#operators) to narrow down search results to specific  days of the followup cycles assigned to the contacts. To find contacts that already got day 2 message you have to use `{ "GREATER" : 2 }` as they have already reached that day. To find inactive contacts pass `{ "EQUALS" : null }` condition.
+* `customs` (optional) – Use [text operators](#operators) to narrow down search results to contacts having specific customs. Uses AND logic. Note that if you need OR logic you can use MATCHES operator and use alternative in regular expression. Contacts that don’t have a custom of given name are not returned in results. If custom is multi-value then “any” junction is used: condition is true if any custom value tests true according to the operator used.
+* `geo` (optional) – Use operators to narrow down search results to specific contact geo location. Precisely [text operators](#operators) are allowed for country, country_code, city, [numeric operators](#operators) are allowed for latitude and longitude (values are decimal numbers, like -54.5). Uses AND logic. Contacts that don’t have a geo location data are not returned in results.
+* `clicks` / `get_clicks` (optional) – Use to narrow down search results to the contacts that clicked specific links. Uses AND logic. See [IDs in conditions](#ids) for detailed explanation.
+* `last_click_on` (optional) – Use [time operators](#operators) to narrow down search results to a specific date when a contact clicked the last link. Multiple operators are allowed and logic AND is used so date range can also be expressed.
+* `opens` / `get_opens` (optional) – Use to narrow down search results to contacts that opened specific messages. Uses AND logic. See [IDs in conditions](#ids) for detailed explanation.
+* `last_open_on` (optional) – Use [time operators](#operators) to narrow down search results to the specific date when a contact opened the last message. Multiple operators are allowed and logic AND is used so date range can also be expressed.
 * `segmentation` (optional) – Allows to fetch big results in smaller packs. Split value defines the number of packs to which contacts will be split. Group defines which pack will be returned in results. For example to get all results in 10 packs call get_contacts 10 times. Set split to 10 and increase pack from 1 to 10.
 
 _JSON result:_
@@ -1669,7 +1670,7 @@ _JSON params:_
 
 Conditions:
 
-* `campaign` (mandatory) – `CAMPAIGN_ID` obtained from get_campaigns.
+* `campaign` (mandatory) – `CAMPAIGN_ID` obtained from [get_campaigns](#get_campaigns).
 * `action` (optional) – Allowed modes are standard, insert, update. If standard mode is chosen then a new contact will be added if not already present in a given campaign otherwise existing contact will be updated including name change and customs list merge. If insert mode is chosen then a contact will be added if it doesn’t exist in a given campaign but no updates will be performed otherwise. If update is chosen then a contact will be updated if it exists in a given campaign but no inserts will be performed otherwise. Default is standard.
 * `name` (optional) – Name value.
 * `email` (mandatory) – Email value.
@@ -1789,12 +1790,12 @@ _JSON params:_
 
 Conditions:
 
-* `campaigns` / `get_campaigns` (optional) – Search only in given campaigns. Uses OR logic. If those params are not given search is performed in all campaigns on the account. Check IDs in Conditions for detailed explanation.
-* `messages` / `get_messages` (optional) – Search only contacts removed from given messages, this info is known for example if contact clicked unsubscribe link. Uses OR logic. Check IDs in Conditions for detailed explanation.
-* `email` (optional) – Use text operators to narrow down search results to specific contact emails.
+* `campaigns` / `get_campaigns` (optional) – Search only in given campaigns. Uses OR logic. If those params are not given search is performed in all campaigns on the account. Check [IDs in conditions](#ids) for detailed explanation.
+* `messages` / `get_messages` (optional) – Search only contacts removed from given messages, this info is known for example if contact clicked unsubscribe link. Uses OR logic. Check [IDs in conditions](#ids) for detailed explanation.
+* `email` (optional) – Use [text operators](#operators) to narrow down search results to specific contact emails.
 * `reason` (optional) – Narrow down search results only to contacts removed due to specific reason, allowed values are: unsubscribe, user, support, automation, complaint, blacklisted, api, bounce, other.
-* `created_on` (optional) – Use time operators to narrow down search results to specific contact creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
-* `deleted_on` (optional) – Use time operators to narrow down search results to specific contact deletion date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
+* `created_on` (optional) – Use [time operators](#operators) to narrow down search results to specific contact creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
+* `deleted_on` (optional) – Use [time operators](#operators) to narrow down search results to specific contact deletion date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
 
 _JSON result:_
 
@@ -1856,8 +1857,8 @@ _JSON params:_
 
 Conditions:
 
-* `campaigns` / `get_campaigns` (optional) – Get statistics only for given campaigns. Uses OR logic. If those params are not given statistics are returned from all campaigns on the account. Check IDs in Conditions for detailed explanation.
-* `created_on` (optional) – Use time operators to narrow down search results to specific contact creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
+* `campaigns` / `get_campaigns` (optional) – Get statistics only for given campaigns. Uses OR logic. If those params are not given statistics are returned from all campaigns on the account. Check [IDs in conditions](#ids) for detailed explanation.
+* `created_on` (optional) – Use [time operators](#operators) to narrow down search results to specific contact creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
 
 _JSON result:_
 
@@ -1991,8 +1992,8 @@ _JSON params:_
 
 Conditions:
 
-* `messages` / `get_messages` (optional) – Search only in given messages. Uses OR logic. If those params are not given search is performed in all messages on the account. Check IDs in Conditions for detailed explanation.
-* `url` (optional) – Use text operators to narrow down search results to specific URL addresses.
+* `messages` / `get_messages` (optional) – Search only in given messages. Uses OR logic. If those params are not given search is performed in all messages on the account. Check [IDs in conditions](#ids) for detailed explanation.
+* `url` (optional) – Use [text operators](#operators) to narrow down search results to specific URL addresses.
 
 _JSON result:_
 
@@ -2070,7 +2071,7 @@ _JSON result:_
     }
 ```
 
-Format of mask can be:
+Format of mask can be:<a name="#mask_format">
 
 * whole email  – xxx@yyy.zz
 * local part of email- xxx@
@@ -2078,7 +2079,7 @@ Format of mask can be:
 * MD5 hash of email – d6dba89e8479a7049d2d7b2e5b6528ec
 * ISP name – #yahoo (note the # on the beginning)
 
-**Warning**: According to this FAQ MD5 hash should be generated from lowercased email, check “Why do I have to normalize email addresses prior to encrypting?” section.
+**Warning**: According to [this FAQ](http://www.espcoalition.org/MD5_Suppression_list_encryption_FAQ.pdf) MD5 hash should be generated from lowercased email, check “Why do I have to normalize email addresses prior to encrypting?” section.
 
 ---
 
@@ -2099,7 +2100,7 @@ _JSON params:_
 
 Conditions:
 
-* `mask` (mandatory) – Mask to blacklist, check blacklist mask for available formats.
+* `mask` (mandatory) – Mask to blacklist, check [available formats](#mask_format).
 
 _JSON result:_
 
@@ -2130,7 +2131,7 @@ _JSON params:_
 
 Conditions:
 
-* `mask` (mandatory) – Mask to remove from blacklist, check blacklist masks for available formats.
+* `mask` (mandatory) – Mask to remove from blacklist, check [available formats](#mask_format).
 
 _JSON result:_
 
@@ -2195,7 +2196,7 @@ _JSON params:_
 Conditions:
 
 * `campaign` (mandatory) – `CAMPAIGN_ID`.
-* `mask` (mandatory) – Mask to blacklist, check blacklist masks for available formats.
+* `mask` (mandatory) – Mask to blacklist, check [available formats](#mask_format).
 
 _JSON result:_
 
@@ -2228,7 +2229,7 @@ _JSON params:_
 Conditions:
 
 * `campaign` (mandatory) – `CAMPAIGN_ID`.
-* `mask` (mandatory) – Mask to remove from blacklist, check blacklist masks for available formats.
+* `mask` (mandatory) – Mask to remove from blacklist, check [available formats](#mask_format).
 
 _JSON result:_
 
@@ -2389,7 +2390,7 @@ _JSON params:_
 
 Conditions:
 
-* `suppression` (mandatory) – `SUPPRESSION_ID` obtained from get_suppressions.
+* `suppression` (mandatory) – `SUPPRESSION_ID` obtained from [get_suppressions](#get_suppressions).
 
 _JSON result:_
 
@@ -2427,8 +2428,8 @@ _JSON params:_
 
 Conditions:
 
-* `suppression` (mandatory) – `SUPPRESSION_ID` obtained from get_suppressions.
-* `mask` (mandatory) – Mask to skip, check suppression masks for available formats.
+* `suppression` (mandatory) – `SUPPRESSION_ID` obtained from [get_suppressions](#get_suppressions).
+* `mask` (mandatory) – Mask to skip, check [available formats](#mask_format).
 
 _JSON result:_
 
@@ -2460,8 +2461,8 @@ _JSON params:_
 
 Conditions:
 
-* `suppression` (mandatory) – `SUPPRESSION_ID` obtained from get_suppressions.
-* `mask` (mandatory) – Mask to delete, check suppression masks for available formats.
+* `suppression` (mandatory) – `SUPPRESSION_ID` obtained from [get_suppressions](#get_suppressions).
+* `mask` (mandatory) – Mask to delete, check [available formats](#mask_format).
 
 _JSON result:_
 
@@ -2494,7 +2495,7 @@ _JSON params:_
 
 Conditions:
 
-* `language_code` (optional) – Use text operators to narrow down search results to specific languages. List of available ISO 639-1 (2-letter) codes is available here: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes .
+* `language_code` (optional) – Use [text operators](#operators) to narrow down search results to specific languages. List of available ISO 639-1 (2-letter) codes is available [here](http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes).
 
 _JSON result:_
 
@@ -2562,7 +2563,7 @@ _JSON params:_
 
 Conditions:
 
-* `language_code` (optional) – Use text operators to narrow down search results to specific languages. List of available ISO 639-1 (2-letter) codes is available here: [http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes .
+* `language_code` (optional) – Use [text operators](#operators) to narrow down search results to specific languages. List of available ISO 639-1 (2-letter) codes is available [here](http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes).
 
 _JSON result:_
 
@@ -2616,7 +2617,7 @@ _JSON result:_
 
 ---
 
-##OPERATORS
+##OPERATORS<a name="operators"/>
 
 There may be several types of operators in method conditions.
 
@@ -2635,7 +2636,7 @@ Time:
 
 **Warning**: Operators must be UPPERCASED.
 
-##IDs IN conditions
+##IDs in conditions<a name="ids"/>
 
 In many methods IDs may be passed to conditions. Method get_messages will be used as an example of how to do it.
 
@@ -2651,7 +2652,7 @@ In many methods IDs may be passed to conditions. Method get_messages will be use
 ```
 
 Method expects a list of campaigns in conditions to narrow down search results.
-Those campaigns may be given as an array of `CAMPAIGN_ID` values obtained from get_campaigns.
+Those campaigns may be given as an array of `CAMPAIGN_ID` values obtained from [get_campaigns](#get_campaigns).
 
 ```json
     [
