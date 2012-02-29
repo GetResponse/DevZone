@@ -1,189 +1,192 @@
-##Dynamic Content Documentation
-version 1.6.2, 2012-01-19 
-[changelog](#)
+#GetResponse Dynamic Content
 
-##AUTHORS
-If you wish to contact GetResponse Developer Zone team, please use the following contact form.
+version 1.6.2, 2012-01-19 [changelog](#changelog)
 
-##DESCRIPTION
-Dynamic Content is a message composing language that allows GetResponse users to create personalized messages as the content may depend on various conditions (custom fields, GeoIP data). With Dynamic Content you can also work on dates and time frames, present them in many different formats – that’s a powerful feature for all marketers who promote time-sensitive offers.
+##INFO
+
+Dynamic Content allows to personalize emails.
 
 ##TAGS
-*	[campaign predefined values](#campaign_predefined_values)
-*	[campaign or contact or message info](#campaign_or_contact_or_message_info)
-*	[contact custom fields](#contact_custom_fields)
-*	[contact geo location](#contact_geo_location)
-*	[contact subscription date](#contact_subscription_date)
-*	[clicktracked links](#clicktracked_links)
-*	[system links](#system_links)
-*	[social links](#social_links)
-*	[qrcode links](#qrcode_links)
-*	[dates](#dates)
-*	[timers](#timers)
-*	[randoms](#randoms)
-*	[currency conversions](#currency_conversions)
-*	[conditions](#conditions)
+
+* [campaign predefined values](#campaign_predefined_values)
+* [campaign or contact or message info](#campaign_or_contact_or_message_info)
+* [contact custom fields](#contact_custom_fields)
+* [contact geo location](#contact_geo_location)
+* [contact subscription date](#contact_subscription_date)
+* [clicktracked links](#clicktracked_links)
+* [system links](#system_links)
+* [social links](#social_links)
+* [qrcode links](#qrcode_links)
+* [dates](#dates)
+* [timers](#timers)
+* [randoms](#randoms)
+* [currency conversions](#currency_conversions)
+* [conditions](#conditions)
+* [externals](#externals)
 
 ##GENERAL RULES
+
 Dynamic Content is a programing language, and so it requires strict syntax:
 
 There can be only one instruction per tag.
 Syntax is case-sensitive, casing is like in the examples.
-Backticks can be used instead of double quotes when composing HTML messages
+Back-ticks can be used instead of double quotes when composing HTML messages.
+
+##TAGS
 
 ####campaign predefined values<a name="campaign_predefined_values"/>
-Common values for your campaign that can be set using www interface.
 
-(this is also replacement for old [[pre_xyz]] syntax)
+Merge-words that are constant in your campaign.
 
-#####Usage:
-
-```json
-{{PREDEFINED "home_url"}}
-{{PREDEFINED "lc(home_url)"}}
+```
+{{PREDEFINED "my_shop_name"}}
 ```
 
-Empty string will be inserted into the message on missing value.
+[Beautifulizers](#beautifulizers) are allowed.
 
-Beautifulizers are allowed.
+Predefined values can be defined on [GetResponse WWW](https://app.getresponse.com/campaigns_predefined_variables.html). Empty string is inserted into the message on undefined value.
+
+---
 
 ####campaign or contact or message info<a name="campaign_or_contact_or_message_info"/>
-Basic info about campaign or contact or message
 
-(this is also a replacement for old [[name]], [[first_name]], [[list]], … syntax)
+Basic merge-words providing info about campaign, contact or message. Please note that "contact" is called a "subscriber" in tokens due to backward compatibility.
 
-#####Usage:
-
-```json
+```
 {{CONTACT "subscriber_name"}}
-{{CONTACT "ucfw(subscriber_name)" "My friend"}}
 ```
 
-#####Supported items:
+Supported tokens:
 
-*	subscriber_name
-*	subscriber_first_name – Everything up to first space.
-*	subscriber_last_name – Empty if name doesn’t consist of two parts separated by space.
-*	subscriber_email
-*	subscriber_ip
-*	subscriber_origin
-*	campaign_name
-*	campaign_description
-*	campaign_from_name
-*	campaign_from_email
-*	campaign_reply_to_email
-*	message_from_name
-*	message_from_email
-*	campaign_id
-*	message_id
-*	subscriber_id
+* `subscriber_name`
+* `subscriber_first_name` – Everything up to first space.
+* `subscriber_last_name` – Empty if name doesn’t consist of two parts separated by space.
+* `subscriber_email`
+* `subscriber_ip`
+* `subscriber_origin`
+* `campaign_name`
+* `campaign_description`
+* `campaign_from_name`
+* `campaign_from_email`
+* `campaign_reply_to_email`
+* `message_from_name`
+* `message_from_email`
+* `campaign_id`
+* `message_id`
+* `subscriber_id`
 
-Beautifulizers are allowed.
+[Beautifulizers](#beautifulizers) are allowed.
 
-Empty string will be inserted into the message on missing value. This behavior can be changed by providing default value like in second example.
+Empty string is inserted into the message on undefined value. This behavior can be changed by providing default value.
 
-**Hint**: Items campaign_id, message_id, and subscriber_id returns the same IDs as in API.
-**Warning**: “Contact” is called a “subscriber” here for backward compatibility.
+```
+{{CONTACT "subscriber_name" "My friend"}}
+```
+
+**Hint**: Tokens `campaign_id`, `message_id`, and `subscriber_id` return the same `IDs` as in [API](https://github.com/GetResponse/DevZone/tree/master/API). For example you can pass `subscriber_id` token in [link](#clicktracked_links):
+
+```
+{{LINK "http://myshop.com/index.html?visitor={{CONTACT "subscriber_id"}}"}}
+```
+
+After receiving click on your server use this `ID` to get additional info about visitor from API using [get_contact](https://github.com/GetResponse/DevZone/tree/master/API#get_contact) or [get_contact_customs](https://github.com/GetResponse/DevZone/tree/master/API#get_contact_customs) methods.
+
+---
 
 ####contact custom fields<a name="contact_custom_fields"/>
-Additional contact fields that can be set using www interface or using API call.
 
-(this is also a replacement for old [[cus_xyz]] syntax)
+Merge-words for contact custom (additional) fields.
 
-#####Usage:
-
-```json
+```
 {{CUSTOM "car"}}
-{{CUSTOM "car" "your car"}}
-{{CUSTOM "uc(car)"}}
 ```
 
-Empty string will be inserted into the message on missing value. This behavior can be changed by providing default value like in second example.
+[Beautifulizers](#beautifulizers) are allowed.
 
-Beautifulizers are allowed.
+Contact custom fields can be defined on [GetResponse WWW](https://app.getresponse.com/custom_fields_list.html) or by [GetResponse API](https://github.com/GetResponse/DevZone/tree/master/API#set_contact_customs). Empty string is inserted into the message on undefined value. This behavior can be changed by providing default value.
+
+```
+{{CUSTOM "car" "your car"}}
+```
+
+---
 
 ####contact geo location<a name="contact_geo_location"/>
-Geo location info based on subscription IP.
 
-#####Usage:
+Geo location info based on contact IP (if available).
 
-```json
+```
 {{GEO "country"}}
-{{GEO "uc(country_code)"}}
 ```
 
-#####Supported tokens:
+Supported tokens:
 
-*	latitude
-*	longitude
-*	country_code
-*	country
-*	city
-*	region
-*	postal_code
-*	dma_code
-*	continent_code
-*	time_zone
+* `latitude`
+* `longitude`
+* `country_code`
+* `country`
+* `city`
+* `region`
+* `postal_code`
+* `dma_code`
+* `continent_code`
+* `time_zone` - Given as name, not as offset. For example "Europe/Warsaw".
 
-Empty string will be inserted into the message on missing value.
+[Beautifulizers](#beautifulizers) are allowed.
 
-Beautifulizers are allowed.
+Empty string is inserted into the message on undefined value. This behavior can be changed by providing default value.
+
+```
+{{GEO "city" "Your city"}}
+```
+
+---
 
 ####contact subscription date<a name="contact_subscription_date"/>
+
 Contact subscription date that can be presented in various formats.
 
-#####Usage:
-
-```json
-{{ADDED_ON "format"}}
 ```
-
-#####Format part can contain special tokens (listed below) that will be replaced with date parts.
-
-*	CENTURY – For example 21.
-*	YEAR – For example 2010.
-*	YEAR_SHORT – For example 10.
-*	MONTH – From 01 to 12.
-*	MONTH_NAME – From January to December.
-*	MONTH_NAME_SHORT – From Jan to Dec.
-*	DAY – From 01 to 31.
-*	DAY_NAME – From Monday to Sunday.
-*	DAY_NAME_SHORT – From Mon to Sun.
-*	HOUR – From 00 to 23.
-*	MINUTE – From 00 to 59.
-*	SECOND – From 00 to 59.
-
-Warning: Tokens above are case-sensitive.
-
-Format can also contain every other character except (double quotes) and (backtick) to format date.
-
-**Hint**: You can get rid of leading zeroes by suffixing numeric token with _NONZERO, for example:
-
-`HOUR_NONZERO – 0, 1, 2, 3, ..., 22, 23`
-
-**Hint**: You can ordinate numeric token value by suffixing it with _ORDINATED, for example:
-
-`HOUR_ORDINATED – 0th, 1st, 2nd, 3rd, ... , 21st`
-
-Ordinated values are stripped of leading zeros.
-
-Ordination respects all exceptions.
-
-**Warning**: You cannot `use_NONZERO` or `_ORDINATED` with naming tokens.
-
-#####Examples:
-
-```json
-{{ADDED_ON "YEAR-MONTH-DAY"}} – Will insert 2008-06-24.
-{{ADDED_ON "DAY_ORDINATED of MONTH_NAME"}} – Will insert 11th of July.
+{{ADDED_ON "you subscribed on DAY_ORDINATED of MONTH_NAME, it was DAY_NAME"}}
 ```
+(will insert "you subscribed on 11th of July, it was Friday")
+
+Format part can contain special tokens (uppercased!) that will be replaced with date parts.
+
+* `CENTURY` – For example "21".
+* `YEAR` – For example "2012".
+* `YEAR_SHORT` – For example "10".
+* `MONTH` – From "01" to "12".
+* `MONTH_NAME` – From "January" to "December".
+* `MONTH_NAME_SHORT` – From "Jan" to "Dec".
+* `DAY` – From "01" to "31".
+* `DAY_NAME` – From "Monday" to "Sunday".
+* `DAY_NAME_SHORT` – From "Mon" to "Sun".
+* `HOUR` – From "00" to "23".
+* `MINUTE` – From "00" to "59".
+* `SECOND` – From "00" to "59".
+
+Format can also contain every other character except double quotes and back-tick to format date.
+
+**Hint**: You can get rid of leading zeroes by suffixing numeric token with `_NONZERO`.
+
+* `HOUR_NONZERO` – From "0" to "23".
+
+**Hint**: You can ordinate numeric token value by suffixing it with `_ORDINATED`.
+
+* `DAY_ORDINATED` – From "1st", "2nd", "3rd" to "31st".
+
+Ordinated values are always stripped of leading zeros.
+
+**Warning**: You cannot use `_NONZERO` or `_ORDINATED` with naming tokens like `DAY_NAME`.
+
+---
 
 ####clicktracked links<a name="clicktracked_links"/>
-Mark links for tracking and assign optional description.
 
-#####Usage:
+Mark links for tracking and assign optional description for statistics.
 
-```json
+```
 {{LINK "http://mysite.com"}}
 {{LINK "http://mysite.com/products/1234" "Bone for dog"}}
 ```
@@ -203,7 +206,7 @@ must be provided to enable clicktracking.
 
 **Hint**: You can use campaign predefined values, campaign or contact or message_info, contact custom fields or contact geo location tags inside your URL (but not inside the description), for example:
 
-```json
+```
 {{LINK "http://mysite.com/login?id={{CUSTOM "ref"}}"}}
 {{LINK "{{PREDEFINED "my_home_page"}}/shop"}}
 ```
@@ -214,7 +217,7 @@ Nested tag cannot contain default value param or beautifulizer!
 
 Splitting allows to show many links with the same URL under different names. It may be useful for statistical purposes like creating a “click heat map” of your message, for example:
 
-```json
+```
 Hello
 {{LINK "http://mysite.com" "My page at the beginning of the message"}}
 Some message body
@@ -226,7 +229,7 @@ Now you know which link was clicked more often because (despite common URL) thos
 
 Merging is opposite to splitting – many links with different URLs will be shown under one name on performance stats. This is helpful if you don’t need to distinguish them, for example:
 
-```json
+```
 {{LINK "http://mysite.com/shop/main" "Main shop page"}}
 {{LINK "http://myoldsite.com/redirect/shop" "Main shop page"}}
 ```
@@ -235,7 +238,7 @@ Merging is opposite to splitting – many links with different URLs will be show
 Links that allow to perform some system actions.
 
 #####Usage:
-```json
+```
 {{LINK "name"}}
 ```
 
@@ -253,7 +256,7 @@ Links that allow to post info on social media:
 
 #####Usage:
 
-```json
+```
 {{LINK "social_*"}}
 ```
 
@@ -270,7 +273,7 @@ Links that allow to post info on social media:
 Links that allow to place QR Code into your message.
 
 #####Usage:
-```json
+```
 {{LINK "qrcode" "1234"}}
 ```
 
@@ -285,7 +288,7 @@ Current date that can be presented in various formats and be time-shifted.
 
 #####Usage:
 
-```json
+```
 {{DATE "format"}}
 {{DATE "format" "modifier"}}
 ```
@@ -352,7 +355,7 @@ Countdown to/since given timestamp or contact subscription date.
 
 #####Usage:
 
-```json
+```
 {{TIMER "when" "format_future" "format_past"}}
 ```
 
@@ -374,31 +377,31 @@ Countdown to/since given timestamp or contact subscription date.
 
 **Hint**: If you want unit name along with numeric value suffix token with `_UNIT`, for example:
 
-```json
+```
 {{TIMER "2010-01-01 00:00:00" "HOURS_UNIT" ""}}
 ```
 Will insert 8 hours.
 
 **Hint**: Tokens are greedy. It means that you don’t have to use all of them in formats. Tokens you use will “consume” amount of time in a smart way, for example:
 
-```json
+```
 {{TIMER "2010-01-01 00:00:00" "HOURS_UNIT" ""}}
 ```
 Will insert 49 hours.
 
-```json
+```
 {{TIMER "2001-01-01 00:00:00" "DAYS_UNIT and HOURS_UNIT" ""}}
 ```
 Will insert 2 days and 1 hour because DAYS part “consumed” 48 hours.
 
 #####Examples:
 
-```json
+```
 {{TIMER "2012-01-01 00:00:00" "DAYS_UNIT HOURS_UNIT to the end of the world" "World ended DAYS days ago"}}
 ```
 will insert 705 days 12 hours to the end of the world (at the moment this doc was created) and will insert World ended 32 days ago when it is 32 days after the timestamp date.
 
-```json
+```
 {{TIMER "added_on" "" "You signed up DAYS_UNIT ago"}}
 ```
 will insert You signed up 35 days ago.
@@ -408,7 +411,7 @@ Inserts random text from a provided list.
 
 #####Usage:
 
-```json
+```
 {{RANDOM "Hi" "Hello" "Hey"}}
 ```
 
@@ -418,7 +421,7 @@ Convert between price currencies in your email depending on which country is you
 
 #####Usage:
 
-```json
+```
 {{CURRENCY "amount" "source_currency"}}
 ```
 
@@ -428,7 +431,7 @@ Target currency is determined by 2-letters `{{CUSTOM "country_code"}}` value or 
 
 #####Example:
 
-```json
+```
 {{CURRENCY "1000" "USD"}}
 ```
 Will insert 1000 USD if contact’s country code is US (or not defined) and will insert 2100 PLN if contact’s country code is PL.
@@ -438,7 +441,7 @@ Will insert 1000 USD if contact’s country code is US (or not defined) and will
 Allows to display various parts of message depending on contact custom fields, contact geo location, campaign or contact or message_info, or dates values.
 
 #####Usage:
-```json
+```
 {{IF "conditions"}}
     text one
 {{ELSIF "conditions"}}
@@ -490,7 +493,7 @@ Nesting of conditions is allowed.
 
 #####Examples:
 
-```json
+```
 {{IF "(pet IS_DEFINED)"}}
     {{IF "(pet STRING_EQ 'dog')"}}
         Buy a bone for your dog!
@@ -530,38 +533,40 @@ is true because mouse value meets the condition, but
 
 is also true because hamster value meets the condition.
 
-##BEAUTIFULIZERS
+##BEAUTIFULIZERS<a name="beautifulizers"/>
+
 Several beautifulizers are allowed in some tags:
 
-*	lc() – Lowercase all characters. ComPUTer will be inserted into message as computer.
-*	uc() – Uppercase all characters. coMPuTEr will be inserted into message as COMPUTER.
-*	ucfw() – Uppercase first letters in each word and lowercase other. o'reilly bOOk PUBLISHING will be inserted into message as O'Reilly Book Publishing. Note that this beautifulizer also recognizes parts that should not be uppercased. Ludwig VAN beethoven Jr will be inserted as Ludwig van Beethoven jr. Current list of exceptions consists of: von, van, bin, ibn, mgr, dr, prof, imc, jr and may be extended if needed.
-*	ucfs() – Uppercase first letter of every sentence and lowercase other letters. how ARE you? i'm FINE. will be inserted into message as How are you? I'm fine..
+* `lc()` – Lowercase all characters. ComPUTer will be inserted into message as computer.
+* `uc()` – Uppercase all characters. coMPuTEr will be inserted into message as COMPUTER.
+* `ucfw()` – Uppercase first letters in each word and lowercase other. o'reilly bOOk PUBLISHING will be inserted into message as O'Reilly Book Publishing. Note that this beautifulizer also recognizes parts that should not be uppercased. Ludwig VAN beethoven Jr will be inserted as Ludwig van Beethoven jr. Current list of exceptions consists of: von, van, bin, ibn, mgr, dr, prof, imc, jr and may be extended if needed.
+* `ucfs()` – Uppercase first letter of every sentence and lowercase other letters. how ARE you? i'm FINE. will be inserted into message as How are you? I'm fine..
 
 For polish users declensions are available for names.
 
-*	vocative() – Create vocative form of name, Tomek will be inserted into message as Tomku.
+*	`vocative()` – Create vocative form of name, Tomek will be inserted into message as Tomku.
 
 Beautifulizers can be nested. For example if
 
-```json
+```
 {{CONTACT "subscriber_first_name"}}
 ```
 inserts paweł then
 
-```json
+```
 {{CONTACT "ucfw(vocative(subscriber_first_name))"}}
 ```
-will insert Paweł.
+will insert Pawle.
 
-Beautifulizers are multivalue-aware. For example if
+Beautifulizers are multi-value aware. For example if
 
-```json
+```
 {{CUSTOM "car"}}
 ```
 inserts honda, toyota, dodge then
 
-```json
+```
 {{CUSTOM "ucfw(car)"}}
 ```
+
 will insert Honda, Toyota, Dodge.
