@@ -22,7 +22,7 @@ Dynamic Content allows to personalize emails.
 * [randoms](#randoms)
 * [currency conversions](#currency_conversions)
 * [conditions](#conditions)
-* [externals](#externals)
+* [external content](#external_content)
 
 ##GENERAL RULES
 
@@ -217,7 +217,7 @@ Note that you can use back-ticks instead of double quotes and remove white space
 Nested tags have following restrictions:
 
 * Can not contain default value - `{{CONTACT "subscriber_name" "Friend"}}` is forbidden.
-* Can not use beautifulizers - `{{CONTACT "uc(subscriber_name)"}}` is forbidden.
+* Can not use [beautifulizers](#beautifulizers) - `{{CONTACT "uc(subscriber_name)"}}` is forbidden.
 * Are encoded in UTF-8 as as URL param, so if `{{CONTACT "subscriber_name"}}` is "Pabian Paweł" it will be inserted into link as "Pabian%20Pawe%C5%82" to make link valid. Please note that "/" character will also be encoded as "%2F" so do not use nested tag as part of your link path.
 
 **Hint**: You can give links a custom description.
@@ -228,7 +228,7 @@ Nested tags have following restrictions:
 
 If description is given link is shown under this name instead of URL on performance stats. It makes stats easier to read and allows to do two tricks – splitting and merging.
 
-Splitting allows to show many links with the same URL under different names. It may be useful for statistical purposes like creating a “click heat map” of your message.
+Splitting allows to show many links with the same URL under different names. It may be useful for statistical purposes like creating a "click heat map" of your message.
 
 ```
 Hello
@@ -410,7 +410,7 @@ Second / third params (both are mandatory, even if empty) are future / past form
 ```
 {{TIMER "2001-01-01 00:00:00" "DAYS_UNIT and HOURS_UNIT" ""}}
 ```
-(will insert "2 days and 1 hour" because `DAYS` token “consumed” 48 hours)
+(will insert "2 days and 1 hour" because `DAYS` token "consumed" 48 hours)
 
 ---
 
@@ -561,6 +561,96 @@ Mangling allows you to use contact custom field name or token name as left opera
 3. Conditional statement is false if not yet resolved.
 
 Presence of custom of given name is always checked before presence of such named token in other tags.
+
+---
+
+####external content<a name="external_content"/>
+
+Include content from any WWW server in message.
+
+```
+{{EXTERNAL "http://realestate.com/index.html?location={{GEO "city"}}&type={{CUSTOM "interested_in"}}&"}}
+```
+
+When message is sent
+
+1.	Link is evaluated.
+2.	External content is downloaded from this link.
+3.	Content in placed in message instead of tag.
+
+**Hint**: External content can be provided as plain link. But this may not be enough when you want to personalize it and serve different content for every contact. Luckily you can parametrize link with [campaign predefined values](#campaign_predefined_values), [contact custom field](#contact_custom_fields), [campaign or contact or message_info](#campaign_or_contact_or_message_info) or [contact geo location](#contact_geo_location) tags inside URL.
+Just nest corresponding tags in your external link (they cannot have default values or beautifulizers).
+
+For example if you want to serve different product of the day offer for ladies and gentlemen and your contacts have custom field "sex" with values "F" and "M" then place in your message.
+
+```
+Hello, this is our product of the day for you:
+{{EXTERNAL "http://mypage.com/product_of_the_day.htm?who={{CUSTOM "sex"}}"}}
+```
+
+Ladies will get offer obtained from `http://mypage.com/product_of_the_day.htm?who=F` while gentlemen will get offer obtained from `http://mypage.com/product_of_the_day.htm?who=M`.
+
+Nested tags have following restrictions:
+
+* Can not contain default value - `{{CONTACT "subscriber_name" "Friend"}}` is forbidden.
+* Can not use [beautifulizers](#beautifulizers) - `{{CONTACT "uc(subscriber_name)"}}` is forbidden.
+* Are encoded in UTF-8 as as URL param, so if `{{CONTACT "subscriber_name"}}` is "Pabian Paweł" it will be inserted into link as "Pabian%20Pawe%C5%82" to make link valid. Please note that "/" character will also be encoded as "%2F" so do not use nested tag as part of your link path.
+
+
+**Hint**: You can include many external tags in single message.
+
+```
+Hi
+
+This is what you may need for your pet
+{{EXTERNAL "http://pet.store.com/?animal={{CUSTOM"pet"}}&limit=1"}}
+
+And you may check our other products
+{{EXTERNAL "http://pet.store.com/general_offer"}}
+```
+
+**Hint**: You can use every Dynamic Content tag in content returned from your server.
+
+For external `{{EXTERNAL "http://me.com/info"}}` your server can return 
+
+```
+Hi {{CONTACT "ucfw(subscriber_first_name)"}}!
+
+We are international company.
+
+{{LINK "http://company.com"}}
+```
+
+This response will be re-evaluated (including click tracking), so following content will be inserted into the message.
+
+```
+Hi Paweł!
+
+We are international company.
+
+http://getresponse.com/click.html?x=a62a&..
+```
+
+**Warning**: If nested Dynamic Content tag value is missing then empty string will be used in link. This may in rare cases result in incorrect link. For example if you queue message with external `{{EXTERNAL "http://{{PREDEFINED "my_business_domain"}}/offer.html"}}` and then remove my_domain predefine before message is sent it will break the link causing `http:///offer.html` to be external source content instead of `http://my_business.com/offer.html`.
+
+**Warning**: Be aware of message content type. If you send combo (plain and HTML) messages your external content source should also be able to return plain and HTML. For example use in plain part of the message `{{EXTERNAL "http://about.me/main?type=plain"}}` and in HTML part of the message use `{{EXTERNAL "http://about.me/main?type=html"}}` and serve different content from your server depending on type param value.
+
+**Warning**: Do not return www pages from your server, only content to be inserted into the message! This is very important! If you return whole www page with CSS styles, <head> and <body> section and <javascript> code then this probably will not work because of broken message structure and limited capabilities of email clients.
+
+Limitations:
+
+* External content maximum size is 64KB per one tag.
+* External content download timeout is 4s.
+
+Error handling:
+
+What may go wrong when using external content?
+
+* Link is not responding (timeout or response code 4xx/5xx).
+* Link is incorrect after evaluation (explained above).
+* Downloaded content has incorrect Dynamic Content syntax.
+
+In such cases evaluated link will be inserted into the message.
 
 ##BEAUTIFULIZERS<a name="beautifulizers"/>
 
