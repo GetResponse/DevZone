@@ -184,38 +184,51 @@ Ordinated values are always stripped of leading zeros.
 
 ####clicktracked links<a name="clicktracked_links"/>
 
-Mark links for tracking and assign optional description for statistics.
+Mark links for click counting tracking and assign optional description for statistics.
 
 ```
 {{LINK "http://mysite.com"}}
-{{LINK "http://mysite.com/products/1234" "Bone for dog"}}
 ```
 
-**Warning**: If you edit message using www editor then
+For messages composed on [GetResponse WWW](https://app.getresponse.com/choose_html_or_plain.html?msg_type=broadcast) editor all links are marked for tracking automatically and tracking takes place if "Track click-through's of your links" on editor window is chosen.
 
-Track click-throughs of your links
-must be checked to enable clicktracking.
-
-**Warning**: If you send message through API then
+For messages sent using [GetResponse API](https://github.com/GetResponse/DevZone/tree/master/API#send_newsletter) links must be wrapped in `{{LINK}}` tag on clients side to mark it for tracking. Also
 
 ```json
-    "flag" : [ "clicktrack" ]
+    "flag"  : [ "clicktrack" ]
 ```
 
-must be provided to enable clicktracking.
+must be passed to method.
 
-**Hint**: You can use campaign predefined values, campaign or contact or message_info, contact custom fields or contact geo location tags inside your URL (but not inside the description), for example:
+**Warning:** Tracking is not the same as wrapping links in HTML tags. To make tracked link clickable in HTML you still need to use anchor.
+
+```html
+<a href="{{LINK`http://mysite.com`}}">My site</a>
+```
+
+Note that you can use back-ticks instead of double quotes and remove white spaces to avoid trouble with HTML editors.
+
+**Hint**: You can use [campaign predefined values](#campaign_predefined_values), [campaign or contact or message_info](#campaign_or_contact_or_message_info), [contact custom fields](#contact_custom_fields) or [contact geo location](#contact_geo_location) tags inside your URL.
 
 ```
-{{LINK "http://mysite.com/login?id={{CUSTOM "ref"}}"}}
-{{LINK "{{PREDEFINED "my_home_page"}}/shop"}}
+{{LINK "http://mysite.com/login?email={{CONTACT "subscriber_email"}}&from_where={{GEO "city"}}"}}
 ```
 
-Nested tag cannot contain default value param or beautifulizer!
+Nested tags have following restrictions:
 
-**Hint**: You can give links a custom description (second param). If description is given it will be shown under this name instead of URL on performance stats. It not only makes stats easier to read, but also makes two tricks possible – splitting and merging.
+* Can not contain default value - `{{CONTACT "subscriber_name" "Friend"}}` is forbidden.
+* Can not use beautifulizers - `{{CONTACT "uc(subscriber_name)"}}` is forbidden.
+* Are encoded in UTF-8 as as URL param, so if `{{CONTACT "subscriber_name"}}` is "Pabian Paweł" it will be inserted into link as "Pabian%20Pawe%C5%82" to make link valid. Please note that "/" character will also be encoded as "%2F" so do not use nested tag as part of your link path.
 
-Splitting allows to show many links with the same URL under different names. It may be useful for statistical purposes like creating a “click heat map” of your message, for example:
+**Hint**: You can give links a custom description.
+
+```
+{{LINK "http://mysite.com" "My site"}}
+```
+
+If description is given link is shown under this name instead of URL on performance stats. It makes stats easier to read and allows to do two tricks – splitting and merging.
+
+Splitting allows to show many links with the same URL under different names. It may be useful for statistical purposes like creating a “click heat map” of your message.
 
 ```
 Hello
@@ -225,273 +238,210 @@ Some message body
 Sincerely
 ```
 
-Now you know which link was clicked more often because (despite common URL) those links will be shown under separate names on performance stats.
+Now you know which link was clicked more often because - despite common URL - those links will be shown under separate names on performance stats.
 
-Merging is opposite to splitting – many links with different URLs will be shown under one name on performance stats. This is helpful if you don’t need to distinguish them, for example:
+Merging is opposite to splitting – many links with different URLs will be shown under one name on performance stats. This is helpful if you do not need to distinguish them.
 
 ```
 {{LINK "http://mysite.com/shop/main" "Main shop page"}}
 {{LINK "http://myoldsite.com/redirect/shop" "Main shop page"}}
 ```
 
+---
+
 ####system links<a name="system_links"/>
-Links that allow to perform some system actions.
 
-#####Usage:
+Links that allow contact to perform actions.
+
 ```
-{{LINK "name"}}
+{{LINK "unsubscribe"}}
 ```
 
-#####Supported names and message types those links may be used in:
+Supported tokens and message types they can be used in:
 
-*	change_details (newsletter, follow-up) – Change contact details. This is the same link as in footer.
-*	unsubscribe (newsletter, follow-up) – Allow contact to unsubscribe. This is the same link as in footer.
-*	view (newsletter, follow-up) – View message on website. May be useful if contact is using email client that blocks content, for example images.
-*	forward (newsletter, follow-up) – Forwards message to a friend.
-*	next (follow-up) – Get next message in follow-up cycle without waiting.
-*	play (newsletter, follow-up) – Play message using Email 2 Speech feature.
+* `change_details` (newsletter, follow-up) – Change contact details. This is the same link as in footer.
+* `unsubscribe` (newsletter, follow-up) – Allow contact to unsubscribe. This is the same link as in footer.
+* `view` (newsletter, follow-up) – View message on website. May be useful if contact is using email client that blocks content, for example images.
+* `forward` (newsletter, follow-up) – Forward message to a friend.
+* `next` (follow-up) – Get next message in follow-up cycle without waiting.
+* `play` (newsletter, follow-up) – Play message using Email 2 Speech feature.
+* `confirm` (confirmation) - Confirm subscription in double optin mode.
+
+---
 
 ####social links<a name="social_links"/>
-Links that allow to post info on social media:
 
-#####Usage:
+Links that allow contact to share info about message on social media.
 
 ```
-{{LINK "social_*"}}
+{{LINK "social_facebook"}}
 ```
 
-#####Where * can be:
+Allowed tokens:
 
-*	buzz  
-*	digg
-*	facebook
-*	linkedin 
-*	myspace 
-*	twitter 
+* `social_buzz`
+* `social_digg`
+* `social_facebook`
+* `social_linkedin`
+* `social_myspace`
+* `social_twitter`
+
+**Warning**: If you want your newsletter to be shared on social media you must select "Publish in RSS" on last step of creating newsletter process.
+
+---
 
 ####qrcode links<a name="qrcode_links"/>
+
 Links that allow to place QR Code into your message.
 
-#####Usage:
 ```
 {{LINK "qrcode" "1234"}}
 ```
 
-QR Codes can be defined here. Use value from ID column as second tag param.
+QR Codes can be defined on [GetResponse WWW](https://app.getresponse.com/manage_multimedia.html?type=qrcodes). Use number from target png file as param.
 
-**Hint**: You can use campaign predefined values, campaign or contact info, contact custom fields or contact geo location tags inside your QR Code content. This way you can generate different QR Code tags for every email sent and create promotions based on pool of defined promo codes.
+**Hint**: You can use [campaign predefined values](#campaign_predefined_values), [campaign or contact or message_info](#campaign_or_contact_or_message_info), [contact custom fields](#contact_custom_fields) or [contact geo location](#contact_geo_location) tags inside your QR Code content. This way you can generate different QR codes for every email sent and create promotions based on pool of defined promo codes.
 
-Nested tag cannot contain default value param or beautifulizer!
+Nested tags have following restrictions:
+
+* Can not contain default value - `{{CONTACT "subscriber_name" "Friend"}}` is forbidden.
+* Can not use beautifulizers - `{{CONTACT "uc(subscriber_name)"}}` is forbidden.
+
+---
 
 ####dates<a name="dates"/>
-Current date that can be presented in various formats and be time-shifted.
 
-#####Usage:
+Date of email delivery that can be presented in various formats and be time-shifted.
 
 ```
-{{DATE "format"}}
-{{DATE "format" "modifier"}}
+{{DATE "this email was sent on DAY_ORDINATED of MONTH_NAME, it was DAY_NAME"}}
+```
+(will insert "this email was sent on 11th of July, it was Friday")
+
+Format part can contain special tokens (uppercased!) that will be replaced with date parts.
+
+* `CENTURY` – For example "21".
+* `YEAR` – For example "2012".
+* `YEAR_SHORT` – For example "10".
+* `MONTH` – From "01" to "12".
+* `MONTH_NAME` – From "January" to "December".
+* `MONTH_NAME_SHORT` – From "Jan" to "Dec".
+* `DAY` – From "01" to "31".
+* `DAY_NAME` – From "Monday" to "Sunday".
+* `DAY_NAME_SHORT` – From "Mon" to "Sun".
+* `HOUR` – From "00" to "23".
+* `MINUTE` – From "00" to "59".
+* `SECOND` – From "00" to "59".
+
+Format can also contain every other character except double quotes and back-tick to format date.
+
+**Hint**: You can get rid of leading zeroes by suffixing numeric token with `_NONZERO`.
+
+* `HOUR_NONZERO` – From "0" to "23".
+
+**Hint**: You can ordinate numeric token value by suffixing it with `_ORDINATED`.
+
+* `DAY_ORDINATED` – From "1st", "2nd", "3rd" to "31st".
+
+Ordinated values are always stripped of leading zeros.
+
+**Warning**: You cannot use `_NONZERO` or `_ORDINATED` with naming tokens like `DAY_NAME`.
+
+**Hint**: Date supports time-shift.
+
+```
+{{DATE "YEAR-MONTH-DAY" "+10 DAY"}}
 ```
 
-#####Formats:
+Offset must be given as "+" or "-" sign, value of time shift and unit of time shift. Allowed units are.
 
-Format part can contain special tokens listed below that will be replaced with date parts.
+* `YEAR`(`S`) – 365 days.
+* `MONTH`(`S`) – 30 days.
+* `DAY`(`S`)
+* `HOUR`(`S`)
 
-*	CENTURY – For example 21.
-*	YEAR – For example 2010.
-*	YEAR_SHORT – For example 10.
-*	MONTH – From 01 to 12.
-*	MONTH_NAME – From January to December.
-*	MONTH_NAME_SHORT – From Jan to Dec.
-*	DAY – From 01 to 31.
-*	DAY_NAME – From Monday to Sunday.
-*	DAY_NAME_SHORT – From Mon to Sun.
-*	HOUR – From 00 to 23.
-*	MINUTE – From 00 to 59.
-*	SECOND – From 00 to 59.
+Total amount of time shift cannot exceed +/-16 years. If it does then unmodified date will be inserted into a message.
 
-**Warning**: Tokens above are case-sensitive.
-
-Format can also contain every other character except " (double quotes),  ` (backtick) to format date.
-
-**Hint**: You can get rid of leading zeros by suffixing token with _NONZERO, for example:
-
-`HOUR_NONZERO – 0, 1, 2, 3, ..., 22, 23`
-
-**Hint**: You can ordinate token values by suffixing them with `_ORDINATED`, for example:
-
-`HOUR_ORDINATED – 0th, 1st, 2nd, 3rd, ... , 21st`
-
-Ordinated values are stripped of leading zeros.
-
-Ordination respects all exceptions.
-
-**Warning**: You cannot `use_NONZERO` or `_ORDINATED` with naming tokens.
-
-#####Modifiers:
-
-Subscription date can be shifted by given amount of time using modifiers. Modifier must be written as + or - sign, value of time shift and unit of time shift, for example:
-
-*	+1 DAY
-*	-2 YEARS
-
-#####Allowed units are:
-
-*	YEAR(S) – 365 days.
-*	MONTH(S) – 30 days.
-*	DAY(S)
-*	HOUR(S)
-
-**Warning**: Total amount of time shift cannot exceed +/-16 years. If it does then unmodified date will be inserted into a message.
-
-#####Examples:
-
-*	```{{DATE "YEAR-MONTH-DAY"}}``` – Will insert 2008-06-24.
-*	```{{DATE "DAY_ORDINATED of MONTH_NAME"}}``` – Will insert 11th of July.
-*	```{{DATE "DAY_ORDINATED of MONTH_NAME" "+1 DAY"}}``` – Will insert 12th of July.
+---
 
 ####timers<a name="timers"/>
+
 Countdown to/since given timestamp or contact subscription date.
 
-#####Usage:
-
 ```
-{{TIMER "when" "format_future" "format_past"}}
+{{TIMER "2012-21-12 00:00:00" "DAYS_UNIT HOURS_UNIT to the end of the world" "World ended DAYS days ago"}}
 ```
+(will insert "291 days 7 hours to the end of the world" at the moment this doc was created and will insert "World ended 32 days ago" when it is 32 days after the timestamp date)
 
-#####When can be provided as
+{{TIMER "added_on" "" "You signed up DAYS_UNIT ago"}}
+```
+(will insert "You signed up 35 days ago")
 
-*	date+time: YYYY-MM-DD HH:MM:SS
-*	date: YYYY-MM-DD
-*	contact subscription date: added_on
+First param is timestamp that can be provided as:
 
-#####Future / past formats are used if the message was sent before / after given timestamp. Those formats can contain special tokens listed below that will be replaced with time parts:
+* Date and time - "YYYY-MM-DD HH:MM:SS"
+* Date - "YYYY-MM-DD"
+* Contact subscription date - "added_on"
 
-*	CENTURIES
-*	YEARS
-*	MONTHS – 30 days.
-*	DAYS
-*	HOURS
-*	MINUTES
-*	SECONDS
+Second / third params (both are mandatory, even if empty) are future / past formats. They are displayed if the message was sent before / after given timestamp. Those formats can contain special tokens that will be replaces with amounts of those units.
+
+* `CENTURIES`
+* `YEARS` - 365 days.
+* `MONTHS` – 30 days.
+* `DAYS`
+* `HOURS`
+* `MINUTES`
+* `SECONDS`
 
 **Hint**: If you want unit name along with numeric value suffix token with `_UNIT`, for example:
 
 ```
 {{TIMER "2010-01-01 00:00:00" "HOURS_UNIT" ""}}
 ```
-Will insert 8 hours.
+(will insert "8 hours")
 
-**Hint**: Tokens are greedy. It means that you don’t have to use all of them in formats. Tokens you use will “consume” amount of time in a smart way, for example:
+**Hint**: Tokens are greedy. It means that you do not have to use all of them in formats. Tokens you use can "consume" amount of time in a smart way.
 
 ```
 {{TIMER "2010-01-01 00:00:00" "HOURS_UNIT" ""}}
 ```
-Will insert 49 hours.
+(will insert "49 hours")
 
 ```
 {{TIMER "2001-01-01 00:00:00" "DAYS_UNIT and HOURS_UNIT" ""}}
 ```
-Will insert 2 days and 1 hour because DAYS part “consumed” 48 hours.
+(will insert "2 days and 1 hour" because `DAYS` token “consumed” 48 hours)
 
-#####Examples:
-
-```
-{{TIMER "2012-01-01 00:00:00" "DAYS_UNIT HOURS_UNIT to the end of the world" "World ended DAYS days ago"}}
-```
-will insert 705 days 12 hours to the end of the world (at the moment this doc was created) and will insert World ended 32 days ago when it is 32 days after the timestamp date.
-
-```
-{{TIMER "added_on" "" "You signed up DAYS_UNIT ago"}}
-```
-will insert You signed up 35 days ago.
+---
 
 ####randoms<a name="randoms"/>
-Inserts random text from a provided list.
 
-#####Usage:
+Inserts random text from provided list.
 
 ```
 {{RANDOM "Hi" "Hello" "Hey"}}
 ```
 
+---
+
 ####currency conversions<a name="currency_conversions"/>
 
 Convert between price currencies in your email depending on which country is your contact from.
 
-#####Usage:
-
-```
-{{CURRENCY "amount" "source_currency"}}
-```
-
-Source currency must be given as 3-letters code defined in ISO 4217 table.
-
-Target currency is determined by 2-letters `{{CUSTOM "country_code"}}` value or `{{GEO "country_code"}}` if custom field value is not present. Conversion rates are taken from European Central Bank when message is sent.
-
-#####Example:
-
 ```
 {{CURRENCY "1000" "USD"}}
 ```
-Will insert 1000 USD if contact’s country code is US (or not defined) and will insert 2100 PLN if contact’s country code is PL.
+(will insert "1000 USD" if contacts country code based on GeoIP is "US" (or not defined) and will insert "3097.20 PLN" if contacts country code is PL)
+
+Source currency must be given as 3-letters code defined in [ISO 4217](http://iso4217.com/).
+
+Target currency is determined by 2-letters `{{CUSTOM "country_code"}}` value or `{{GEO "country_code"}}` if contact custom field value is not present. Conversion rates are taken from [European Central Bank](http://www.ecb.int) when message is sent.
+
+---
 
 ####conditions<a name="conditions"/>
 
-Allows to display various parts of message depending on contact custom fields, contact geo location, campaign or contact or message_info, or dates values.
-
-#####Usage:
-```
-{{IF "conditions"}}
-    text one
-{{ELSIF "conditions"}}
-    text two
-{{ELSIF "conditions"}}
-    text three
-{{ELSE}}
-    text four
-{{ENDIF}}
-```
-#####Syntax rules:
-
-Conditions are defined inside (double quotes).
-Constants are defined inside (single quotes), even numeric ones.
-Every condition must obey atomic syntax (A operator B)where:
-
-*	A is (always lowercased) custom field name or geo location token or date token or contact token and B is constant value and operator is numeric or string type.
-*	A is (always lowercased) custom field name or geo location token or date token or contact token and B does not exists and operator is defined type.
-*	A and B are conditions with logic operator type between them.
-
-#####Order of tags:
-
-*	`{{IF "..."}}` – Mandatory beginning of conditional statement.
-
-*	`{{ELSIF "..."}}` – Optional block, multiple allowed.
-
-*	`{{ELSE}}` – Optional default block, one allowed.
-
-*	`{{ENDIF}}` – Mandatory closing of conditional statement.
-
-#####Operators:
-
-*	NUMBER_LT – Less than.
-*	NUMBER_GT – Greater than.
-*	NUMBER_EQ – Equal.
-*	NUMBER_NEQ – Not equal.
-*	NUMBER_GEQ – Greater or equal.
-*	NUMBER_LEQ – Less or equal.
-*	STRING_EQ – Equal.
-*	STRING_EQI – Equal but case-insensitive.
-*	STRING_NEQ – Not equal.
-*	STRING_NEQI – Not equal case-insensitive.
-*	LOGIC_OR – Union used if A and B are conditions.
-*	LOGIC_AND – Intersection used if A and B are conditions.
-*	IS_DEFINED – Check for variable presence. Only A param is required.
-*	IS_NOT_DEFINED – Check for variable absence. Only A param is required.
-
-Nesting of conditions is allowed.
-
-#####Examples:
+Allows to display various parts of message depending on [campaign or contact or message_info](#campaign_or_contact_or_message_info), [contact custom fields](#contact_custom_fields), [contact geo location](#contact_geo_location) or [dates](#dates).
 
 ```
 {{IF "(pet IS_DEFINED)"}}
@@ -507,6 +457,7 @@ Nesting of conditions is allowed.
 {{ELSE}}
     You don't have a pet yet. Buy one!
 {{ENDIF}}
+
 {{IF "((city STRING_EQI 'Gdańsk') LOGIC_OR (city STRING_EQI 'Gdynia') LOGIC_OR (city STRING_EQI 'Sopot'))"}}
     You can visit our store located in 3City in person!
 {{ELSE}}
@@ -519,19 +470,97 @@ Nesting of conditions is allowed.
 {{ENDIF}}
 ```
 
-**Warning**: If you use `{{IF "(pet STRING_EQ 'dog')"}}` and contact custom field pet is not defined then the statement will evaluate to false. In most cases this is what you mean, but it is better to use additional `IS_DEFINED` operator to keep logic clean.
+Order of tags:
+
+* `{{IF "..."}}` – Mandatory beginning of conditional statement.
+* `{{ELSIF "..."}}` – Optional block, multiple allowed.
+* `{{ELSE}}` – Optional default block, one allowed.
+* `{{ENDIF}}` – Mandatory closing of conditional statement.
+
+Building conditions step by step:
+
+* Take left operand, this can be name of [contact custom field](#contact_custom_fields) or token from [campaign or contact or message_info](#campaign_or_contact_or_message_info), [contact geo location](#contact_geo_location), [dates](#dates).
+
+```
+DAY
+```
+
+* Lowercase this operand.
+
+```
+day
+```
+
+* Take right operand which is constant value you like left operand to be compared against.
+
+```
+8
+```
+
+* Quote this operand in single quotes, this is mandatory even if operand is numeric.
+
+```
+'8'
+```
+
+* Join operands with operator.
+
+```
+day NUMBER_GT '8'
+```
+
+* Wrap this pair in round brackets to get conditional statement.
+
+```
+(day NUMBER_GT '8')
+```
+
+* (optional) If you need more complex logic you can join conditional statements with logic operator. Remember about top round brackets to create conditional statement.
+
+```
+((day NUMBER_GT '8') LOGIC_AND (day NUMBER_LT '16'))
+```
+
+* Use conditional statement in tag param.
+
+```
+{{IF "((day NUMBER_GT '8') LOGIC_AND (day NUMBER_LT '16'))"}}
+    You will see this if message was sent between 8th and 16th day of month.
+{{ENDIF}}
+```
+
+Operators:
+
+* `NUMBER_LT` – Less than.
+* `NUMBER_GT` – Greater than.
+* `NUMBER_EQ` – Equal.
+* `NUMBER_NEQ` – Not equal.
+* `NUMBER_GEQ` – Greater or equal.
+* `NUMBER_LEQ` – Less or equal.
+* `STRING_EQ` – Equal.
+* `STRING_EQI` – Equal but case-insensitive.
+* `STRING_NEQ` – Not equal.
+* `STRING_NEQI` – Not equal case-insensitive.
+* `LOGIC_OR` – Union used if A and B are conditions.
+* `LOGIC_AND` – Intersection used if A and B are conditions.
+* `IS_DEFINED` – Check for value presence. Only left operand is required - `(car IS_DEFINED)`.
+* `IS_NOT_DEFINED` – Check for value absence. Only left operand is required - `(car IS_NOT_DEFINED)`.
+
+**Warning**: If you use `(pet STRING_EQ 'dog')` and contact custom field pet is not defined then the statement will evaluate to false. In most cases this is what you mean, but it is better to use additional `IS_DEFINED` operator to keep logic clean.
 
 **Warning**: If you apply `NUMBER_*` operator to not numeric value it will evaluate to false.
 
-**Warning**: If custom field in condition is multivalue then condition will evaluate to true if any element matches it. So if custom pet has values mouse and hamster then
+**Warning**: If custom field in condition is multi value then conditional statement will evaluate to true if any element matches it. So if custom pet has values "mouse" and "hamster" then `(pet STRING_EQ 'mouse')` is true because "mouse" value meets the condition, but also `(pet STRING_NEQ 'mouse')` is true because "hamster" value meets the condition.
 
-(pet STRING_EQ ‘mouse’)
+Mangling:
 
-is true because mouse value meets the condition, but
+Mangling allows you to use contact custom field name or token name as left operand without having to worry about its tag type. For example if you use `(city STRING_EQI 'Gdańsk')` then:
 
-(pet STRING_NEQ ‘mouse’)
+1. Value of [contact custom field](#contact_custom_fields) city is checked. If it exists conditional statement is resolved to true or false at this stage.
+2. City is also token in [contact geo location](#contact_geo_location). If it exists and conditional statement is not yet resolved then conditional statement is resolved to true or false at this stage.
+3. Conditional statement is false if not yet resolved.
 
-is also true because hamster value meets the condition.
+Presence of custom of given name is always checked before presence of such named token in other tags.
 
 ##BEAUTIFULIZERS<a name="beautifulizers"/>
 
