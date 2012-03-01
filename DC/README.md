@@ -631,7 +631,7 @@ We are international company.
 http://getresponse.com/click.html?x=a62a&..
 ```
 
-**Warning**: If nested Dynamic Content tag value is missing then empty string will be used in link. This may in rare cases result in incorrect link. For example if you queue message with external `{{EXTERNAL "http://{{PREDEFINED "my_business_domain"}}/offer.html"}}` and then remove my_domain predefine before message is sent it will break the link causing `http:///offer.html` to be external source content instead of `http://my_business.com/offer.html`.
+**Warning**: If nested Dynamic Content tag value is missing then empty string will be used in link. This may in rare cases result in incorrect link. For example if you queue message with external `{{EXTERNAL "http://{{PREDEFINED "my_business_domain"}}/offer.html"}}` and then remove my_domain predefine before message is sent it will break the link causing `http:///offer.html` to be external source content instead of `http://my-site.com/offer.html`.
 
 **Warning**: Be aware of message content type. If you send combo (plain and HTML) messages your external content source should also be able to return plain and HTML. For example use in plain part of the message `{{EXTERNAL "http://about.me/main?type=plain"}}` and in HTML part of the message use `{{EXTERNAL "http://about.me/main?type=html"}}` and serve different content from your server depending on type param value.
 
