@@ -599,3 +599,45 @@ inserts honda, toyota, dodge then
 ```
 
 will insert Honda, Toyota, Dodge.
+
+##CHANGELOG<a name="changelog">
+
+version 1.6.2, 2012-01-19
+
+* [contact geo location](#contact_geo_location) got new `continent_code` and `time_zone` tokens, also usable in [conditions](#conditions)
+
+version 1.6.1, 2011-11-15
+
+* [campaign or contact or message info](#campaign_or_contact_or_message_info) accepts default fallback value
+
+version 1.6.0, 2011-07-14
+
+* nested [beautifulizers](#beautifulizers) are allowed
+- added declension [beautifulizers](#beautifulizers) (for polish users)
+- [beautifulizers](#beautifulizers) are multi value aware
+- percent char allowed in [dates](#dates) and [contact subscription date](#contact_subscription_date) tag params
+- fixed arity checks for [clicktracked links](#clicktracked_links) tags
+- fixed nested [campaign predefined values](#campaign_predefined_values), [contact custom fields](#contact_custom_fields) and [contact geo location](#contact_geo_location) behavior in [clicktracked links](#clicktracked_links) when message is not click tracked
+- [conditions](#conditions) are aware of multi value operands and always use junction "any" to evaluate conditional statement, other junctions are removed
+- [conditions](#conditions) always require not constant operand to be on the left side and constant operand on the right side of conditional statement
+- [conditions](#conditions) operand names must be lowercased
+- [campaign or contact or message info](#campaign_or_contact_or_message_info) mangling is added for [conditions](#conditions)
+- operator `STRING_NEQI` is available in [conditions](#conditions)
+- `longitude` and `latitude` tokens added in [contact geo location](#contact_geo_location) tags
+- all translations services are removed, including `{{TRANSLATE}}` tag and `_TRANSLATED` tokens
+
+version 1.5.0, 2011-04-05
+
+- added [qrcode links](#qrcode_links)
+
+version 1.4.0, 2011-03-10
+
+- added tag `{{TRANSLATE}}` for automatic translation of text based on their GeoIP country code
+
+version 1.3.2, 2011-03-07
+
+- [campaign or contact or message info](#campaign_or_contact_or_message_info) tag has new `campaign_id`, `message_id` and `subscriber_id` tokens which return the same `IDs` as obtainable from API
+
+version 1.3.1, 2011-02-22
+
+- [campaign or contact or message info](#campaign_or_contact_or_message_info) tag has new `campaign_reply_to_email`, `message_from_name` and `message_from_email` tokens
