@@ -2098,6 +2098,7 @@ Format of mask can be:<a name="mask_format"/>
 * host part of email – @yyy.zz
 * MD5 hash of email – d6dba89e8479a7049d2d7b2e5b6528ec
 * ISP name – #yahoo (note the # on the beginning)
+* IP address – 1.2.33.44 (IPv4 format only)
 
 **Warning**: According to [this FAQ](http://www.espcoalition.org/MD5_Suppression_list_encryption_FAQ.pdf) MD5 hash should be generated from lowercased email, check “Why do I have to normalize email addresses prior to encrypting?” section.
 
