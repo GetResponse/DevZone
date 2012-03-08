@@ -1,6 +1,6 @@
 #GETRESPONSE API
 
-version 1.8.10, 2012-01-19 [changelog](#changelog)
+version 1.8.11, 2012-03-08 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -2951,6 +2951,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.8.11, 2012-03-08
+
+* [add_account_blacklist](#add_account_blacklist), [add_campaign_blacklist](#add_campaign_blacklist) and [add_suppression_skiplist](#add_suppression_skiplist) support IP address in [mask formats](#mask_format)
 
 version 1.8.10, 2012-01-19
 
