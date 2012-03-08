@@ -2104,7 +2104,7 @@ Format of mask can be:<a name="mask_format"/>
 
 ---
 
-####add_account_blacklist<a name="get_account_blacklist"/>
+####add_account_blacklist<a name="add_account_blacklist"/>
 
 Adds blacklist mask on account level.
 
