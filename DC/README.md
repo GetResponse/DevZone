@@ -1,6 +1,6 @@
 #GetResponse Dynamic Content
 
-version 1.6.2, 2012-01-19 [changelog](#changelog)
+version 1.6.3, 2012-03-09 [changelog](#changelog)
 
 ##INFO
 
@@ -71,6 +71,7 @@ Supported tokens:
 * `campaign_reply_to_email`
 * `message_from_name`
 * `message_from_email`
+* `message_reply_to_email`
 * `campaign_id`
 * `message_id`
 * `subscriber_id`
@@ -691,6 +692,10 @@ inserts honda, toyota, dodge then
 will insert Honda, Toyota, Dodge.
 
 ##CHANGELOG<a name="changelog">
+
+version 1.6.3, 2012-03-09
+
+* [campaign or contact or message info](#campaign_or_contact_or_message_info) accepts `message_reply_to_email` token
 
 version 1.6.2, 2012-01-19
 

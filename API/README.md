@@ -1,6 +1,6 @@
 #GETRESPONSE API
 
-version 1.8.11, 2012-03-08 [changelog](#changelog)
+version 1.8.12, 2012-03-09 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -470,8 +470,8 @@ Conditions:
 
 * `name` (mandatory) – Value of name must be composed of lowercase letters, digits and underscores only.
 * `description` (optional) – User friendly name of campaign.
-* `from_field` (mandatory) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It affects From header (name and email) in messages sent from this campaign.
-* `reply_to_field` (mandatory) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It affects Reply-To header (email) in messages sent from this campaign.
+* `from_field` (mandatory) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It is default From header (name and email) in messages sent from this campaign.
+* `reply_to_field` (mandatory) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields).
 * `confirmation_subject` (mandatory) – `CONFIRMATION_SUBJECT_ID` obtained from [get_confirmation_subjects](#get_confirmation_subjects). Used in confirmation messages sent from this campaign if double-optin is set for given subscription method.
 * `confirmation_body` (mandatory) – `CONFIRMATION_BODY_ID` obtained from [get_confirmation_bodies](#get_confirmation_bodies). Used in confirmation messages sent from this campaign if double-optin is set for given subscription method.
 * `language_code` (optional) – Language of subscription reminder and change details / unsubscribe footer. List of available ISO 639-1 (2-letter) codes is available [here](http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes). If we don’t have version in requested language then English version will be used.
@@ -882,9 +882,10 @@ _JSON params:_
     [
         "API_KEY",
         {
-            "campaign"      : "CAMPAIGN_ID",
-            "from_field"    : "FROM_FIELD_ID",
-            "subject"       : "My newsletter",
+            "campaign"          : "CAMPAIGN_ID",
+            "from_field"        : "FROM_FIELD_ID",
+            "reply_to_field"    : "FROM_FIELD_ID",
+            "subject"   : "My newsletter",
             "contents"  : {
                 "plain" : "Hello there",
                 "html"  : "<h1>Hello</h1>there"
@@ -902,7 +903,8 @@ _JSON params:_
 Conditions:
 
 * `campaign` (mandatory) – `CAMPAIGN_ID` obtained from [get_campaigns](#get_campaigns). Newsletter will be saved in this campaign. Note that it is not the same as selecting contacts – check `contacts` / `get_contacts` params for that.
-* `from_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It affects From header (name and email) in message. This value will be taken from campaign if not given.
+* `from_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It represents From header (name and email) in message and will be taken from campaign if not given.
+* `reply_to_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It represents Reply-To header (email) in message and will not be present if not given.
 * `subject` (mandatory) – Subject value, all merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
 * `contents` (mandatory) – Allowed keys are `plain` and `html`, at least one is mandatory. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
 * `flags` (optional) – Enables extra functionality for a message, see [message_flags](#message_flags) for available values.
@@ -921,7 +923,7 @@ _JSON result:_
 
 Value of `contacts` represents the number of unique email addresses that are set to receive this newsletter.
 
-_JSON error messages (if any):_ `Missing campaign`, `Missing From field`, `Missing contents`, `Contacts list empty`, `Dynamic Content syntax error`, `Daily limit of newsletters exceeded`.
+_JSON error messages (if any):_ `Missing campaign`, `Missing From field`, `Missing Reply-To field`, `Missing contents`, `Contacts list empty`, `Dynamic Content syntax error`, `Daily limit of newsletters exceeded`.
 
 **Hint**: You don’t have to worry about duplicates when sending to multiple campaigns. If the same email exists in my_campaign_1 and my_campaign_2 campaigns then newsletter will be sent only once to this address (chosen randomly).
 
@@ -990,9 +992,10 @@ _JSON params:_
     [
         "API_KEY",
         {
-            "campaign"      : "CAMPAIGN_ID",
-            "from_field"    : "FROM_FIELD_ID",
-            "subject"       : "My follow-up",
+            "campaign"          : "CAMPAIGN_ID",
+            "from_field"        : "FROM_FIELD_ID",
+            "reply_to_field"    : "FROM_FIELD_ID",
+            "subject"   : "My follow-up",
             "contents"  : {
                 "plain" : "Hello there",
                 "html"  : "<h1>Hello</h1>there"
@@ -1006,7 +1009,8 @@ _JSON params:_
 Conditions:
 
 * `campaign` (mandatory) – `CAMPAIGN_ID` obtained from [get_campaigns](#get_campaigns). Follow-up will be saved in this campaign.
-* `from_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It affects From header (name and email) in message. This value will be taken from campaign if not given.
+* `from_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It represents From header (name and email) in message and will be taken from campaign if not given.
+* `reply_to_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It represents Reply-To header (email) in message and will not be present if not given.
 * `subject` (mandatory) – Subject value, all merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
 * `contents` (mandatory) – Allowed keys are plain and html, at least one is mandatory. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
 * `flags` (optional) – Enables extra functionality for a message, see [message_flags](#message_flags) for available values.
@@ -1021,7 +1025,7 @@ _JSON result:_
     }
 ```
 
-_JSON error messages (if any):_ `Missing campaign`, `Missing From field`, `Day of cycle already used`, `Missing contents`, `Dynamic Content syntax error`.
+_JSON error messages (if any):_ `Missing campaign`, `Missing From field`, `Missing Reply-To field`, `Day of cycle already used`, `Missing contents`, `Dynamic Content syntax error`.
 
 ---
 
@@ -1035,9 +1039,10 @@ _JSON params:_
     [
         "API_KEY",
         {
-            "campaign"      : "CAMPAIGN_ID",
-            "from_field"    : "FROM_FIELD_ID",
-            "subject"       : "My follow-up",
+            "campaign"          : "CAMPAIGN_ID",
+            "from_field"        : "FROM_FIELD_ID",
+            "reply_to_field"    : "FROM_FIELD_ID",
+            "subject"   : "My follow-up",
             "contents"  : {
                 "plain" : "Hello there",
                 "html"  : "<h1>Hello</h1>there"
@@ -1051,7 +1056,8 @@ _JSON params:_
 Conditions:
 
 * `campaign` (mandatory) – `CAMPAIGN_ID` obtained from [get_campaigns](#get_campaigns). Draft will be saved in this campaign.
-* `from_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It affects From header (name and email) in message. This value will be taken from campaign if not given.
+* `from_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It represents From header (name and email) in message and will be taken from campaign if not given.
+* `reply_to_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It represents Reply-To header (email) in message and will not be present if not given.
 * `subject` (mandatory) – Subject value, all merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
 * `contents` (mandatory) – Allowed keys are plain and html, at least one is mandatory. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
 * `flags` (optional) – Enables extra functionality for a message, see [message_flags](#message_flags) for available values.
@@ -1066,7 +1072,7 @@ _JSON result:_
     }
 ```
 
-_JSON error messages (if any):_ `Missing campaign`, `Missing From field`, `Missing contents`.
+_JSON error messages (if any):_ `Missing campaign`, `Missing From field`, `Missing Reply-To field`, `Missing contents`.
 
 **Hint**: Drafts can be obtained by using [get_messages](#get_messages) in draft mode.
 
@@ -2951,6 +2957,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.8.12, 2012-03-09
+
+* [send_newsletter](#send_newsletter), [add_follow_up](#add_follow_up) and [add_draft](#add_draft) accept `reply_to_field` param
 
 version 1.8.11, 2012-03-08
 
