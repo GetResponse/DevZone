@@ -1,6 +1,6 @@
 #GETRESPONSE API
 
-version 1.8.12, 2012-03-09 [changelog](#changelog)
+version 1.8.13, 2012-03-12 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -2946,6 +2946,15 @@ Errors not included in spec:
     }
 ```
 
+* Client IP not from trusted network (GetResponse 360 only)
+
+```json
+    {
+        "code"      : -1,
+        "message"   : "API client IP not allowed",
+    }
+```
+
 * Method error, list of `message` values in this error is provided in method documentation.
 
 ```json
@@ -2957,6 +2966,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.8.13, 2012-03-12
+
+* ability to restrict access to trusted networks by IP addresses (GetResponse 360 only)
 
 version 1.8.12, 2012-03-09
 
