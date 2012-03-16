@@ -545,7 +545,7 @@ Operators:
 * `LOGIC_OR` – Union used if A and B are conditions.
 * `LOGIC_AND` – Intersection used if A and B are conditions.
 * `IS_DEFINED` – Check for value presence. Only left operand is required - `(car IS_DEFINED)`.
-* `IS_NOT_DEFINED` – Check for value absence. Only left operand is required - `(car IS_NOT_DEFINED)`.
+* `NOT_DEFINED` – Check for value absence. Only left operand is required - `(car NOT_DEFINED)`.
 
 **Warning**: If you use `(pet STRING_EQ 'dog')` and contact custom field pet is not defined then the statement will evaluate to false. In most cases this is what you mean, but it is better to use additional `IS_DEFINED` operator to keep logic clean.
 
