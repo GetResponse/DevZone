@@ -14,6 +14,8 @@ Pawel Lugowski, Sylwester Okroj
 
 ##INSTALLATION
 
+Download module for your Joomla version from [Downloads](https://github.com/GetResponse/DevZone/downloads) section.
+
 1. To install the downloaded module, go to Extensions tab and choose “Install/Uninstall”.<br/><br/>![Extensions tab](https://github.com/GetResponse/DevZone/raw/master/Plugins/Joomla/screenshot_1.png)
 2. Now upload the module from your hard drive, and wait for the successful installation message.<br/><br/>![Installed successfully](https://github.com/GetResponse/DevZone/raw/master/Plugins/Joomla/screenshot_2.png)
 3. Next go to the Extension tab again and choose Module Manager. Find the new module on the list and click on GetResponse Integration.<br/><br/>![Activate module](https://github.com/GetResponse/DevZone/raw/master/Plugins/Joomla/screenshot_3.png)
