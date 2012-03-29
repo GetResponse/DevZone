@@ -42,11 +42,11 @@ Download module for your osCommerce version from [Downloads](https://github.com/
 
         <!– GetResponse Plugin –>
         <?php
-        if (tep_session_is_registered(‘admin’) AND $_GET['module']==’ot_getresponse’ AND $_GET['action']==’edit’) {
-		    echo ‘<script type=”text/javascript” src=”‘ . tep_catalog_href_link(‘ext/modules/order_total/ot_getresponse_campaign.js’) . ‘”></script>’;
+        if (tep_session_is_registered('admin') AND $_GET['module']=='ot_getresponse' AND $_GET['action']=='edit') {
+		    echo '<script type="text/javascript" src="' . tep_catalog_href_link('ext/modules/order_total/ot_getresponse_campaign.js') . '"></script>';
         }
-        else if (tep_session_is_registered(‘admin’) AND $_GET['module']==’ot_getresponse’) {
-            echo ‘<script type=”text/javascript” src=”‘ . 	tep_catalog_href_link(‘ext/modules/order_total/ot_getresponse_import.js’) . ‘”></script>’;
+        else if (tep_session_is_registered('admin') AND $_GET['module']=='ot_getresponse') {
+            echo '<script type="text/javascript" src="' . 	tep_catalog_href_link('ext/modules/order_total/ot_getresponse_export.js') . '"></script>';
         }
         ?>
         <!– GetResponse Plugin –>
