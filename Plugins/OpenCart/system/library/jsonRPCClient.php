@@ -97,7 +97,7 @@ class jsonRPCClient
         $this->debug( 'Response: ' . $response . "\r\n", true );
 
         // decode and create array ( can be object, just set to false )
-        $response = json_decode( $response, true );
+        $response = json_decode( utf8_encode($response), true );
 
         // if this was just is_notification
         if ( true === $this->is_notification )
@@ -108,7 +108,7 @@ class jsonRPCClient
         // check if response is correct
         $validateParams = array
         (
-            !is_null($response['error']) => 'Request have return error: ' . $response['error'],
+            !is_null($response['error']) => 'Request have return error: ' . $response['error']['message'],
             $response['id'] != $requestId => 'Request id: '.$requestId.'is different from Response id: ' . $response['id'],
 
         );
@@ -132,10 +132,12 @@ class jsonRPCClient
         curl_setopt($ch, CURLOPT_URL, $this->url);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-        curl_setopt($ch, CURLOPT_HEADER, 'Content-type: application/json;');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
         curl_setopt($ch, CURLOPT_ENCODING, 'gzip,deflate');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 8);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 8);
         // send the request
         $response = curl_exec($ch);
         // check http status code
