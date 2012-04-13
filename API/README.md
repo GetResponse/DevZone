@@ -1,6 +1,6 @@
 #GETRESPONSE API
 
-version 1.8.13, 2012-03-12 [changelog](#changelog)
+version 1.9.0, 2012-04-13 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -110,6 +110,7 @@ If you run into an error or you have difficulties with using the API you may eas
 * [get_contacts_subscription_stats](#get_contacts_subscription_stats)
 * [get_contacts_amount_per_account](#get_contacts_amount_per_account)
 * [get_contacts_amount_per_campaign](#get_contacts_amount_per_campaign)
+* [get_segments](#get_segments)
 
 ####Links
 
@@ -893,6 +894,8 @@ _JSON params:_
             "flags" : [ "clicktrack", "openrate" ],
             "contacts"          : [ "CONTACT_ID", "CONTACT_ID" ],
             "get_contacts"      : { get_contacts conditions },
+            "segments"          : [ "SEGMENT_ID", "SEGMENT_ID" ],
+            "get_segments"      : { get_segments conditions },
             "suppressions"      : [ "SUPPRESSION_ID", "SUPPRESSION_ID" ],
             "get_suppressions"  : { get_suppressions conditions }
 
@@ -908,7 +911,7 @@ Conditions:
 * `subject` (mandatory) – Subject value, all merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
 * `contents` (mandatory) – Allowed keys are `plain` and `html`, at least one is mandatory. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
 * `flags` (optional) – Enables extra functionality for a message, see [message_flags](#message_flags) for available values.
-* `contacts` / `get_contacts` (at least one mandatory) - Contacts that should receive a newsletter. See [IDs in conditions](#ids) for detailed explanation.
+* `contacts` / `get_contacts` or `segments` / `get_segments` - Recipients that should receive a newsletter obtained from [get_contacts](#get_contacts) or [get_segments](#get_segments). Only one type of selection can be used at a time. See [IDs in conditions](#ids) for detailed explanation.
 * `suppressions` / `get_suppressions` (optional) – Suppressions to use with that message. Any contact email address that matches any of the masks in those suppressions will be skipped when sending. See [IDs in conditions](#ids) for detailed explanation.
 
 _JSON result:_
@@ -917,13 +920,19 @@ _JSON result:_
     {
         "MESSAGE_ID"    : "abc123",
         "queued"        : 1,
-        "contacts"      : 1024
+        "contacts"      : 1024,
+        "segments"      : 4
     }
 ```
 
-Value of `contacts` represents the number of unique email addresses that are set to receive this newsletter.
+Where:
 
-_JSON error messages (if any):_ `Missing campaign`, `Missing From field`, `Missing Reply-To field`, `Missing contents`, `Contacts list empty`, `Dynamic Content syntax error`, `Daily limit of newsletters exceeded`.
+* `contacts` - Represents the number of unique email addresses that are set to receive this newsletter chosen by `contacts` or `get_contacts` conditions. Presence of contact on suppressions / blacklists does not affect this counter. 
+* `segments` - Represents the number of unique segments that are set to receive this newsletter chosen by `segments` or `get_segments` conditions. Segments are evaluated when message is sent, therefore amount of contacts is unknown during API call.
+
+Those counters are mutually exclusive - only one is present depending on how recipients were chosen.
+
+_JSON error messages (if any):_ `Missing campaign`, `Missing From field`, `Missing Reply-To field`, `Missing contents`, `Missing recipients`, `Cannot mix contact and segment recipients`, `Dynamic Content syntax error`, `Daily limit of newsletters exceeded`.
 
 **Hint**: You don’t have to worry about duplicates when sending to multiple campaigns. If the same email exists in my_campaign_1 and my_campaign_2 campaigns then newsletter will be sent only once to this address (chosen randomly).
 
@@ -1999,6 +2008,42 @@ _JSON result:_
 
 ---
 
+####get_segments<a name="get_segments"/>
+
+Get contact segments saved on web interface to use in [send_newsletter](#send_newsletter).
+
+_JSON params:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "name"  : { "OPERATOR" : "value" }
+        }
+    ]
+```
+
+Conditions:
+
+* `name` (optional) – Use [text operators](#operators) to narrow down search results to specific names.
+
+_JSON result:_
+
+```json
+    {
+        "SEGMENT_ID" : {
+            "name"          : "Females",
+            "created_on"    : "2012-04-12 00:00:00"
+        },
+        "SEGMENT_ID" : {
+            "name"          : "Kids",
+            "created_on"    : "2012-04-13 00:00:00"
+        }
+    }
+```
+
+---
+
 ####get_links<a name="get_links"/>
 
 Get clicktracked links.
@@ -2966,6 +3011,13 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.9.0, 2012-04-13
+
+* added [get_segments](#get_segments) method
+* [send_newsletter](#send_newsletter) accepts segments, also
+  error `Contacts list empty` changed to more generic `Missing recipients`
+  and `Cannot mix contact and segment recipients` error added
 
 version 1.8.13, 2012-03-12
 
