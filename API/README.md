@@ -295,7 +295,7 @@ _JSON error messages (if any):_ `Invalid email syntax`.
 
 ####get_account_domains<a name="get_account_domains"/>
 
-Get domains assigned to account using www interface.
+Get domains assigned to account using web interface.
 
 _JSON params:_
 
@@ -320,13 +320,13 @@ _JSON result:_
     }
 ```
 
-**Warning**: Please note that after you add domain using www interface it takes up to 24h for us to check DNS propagation. So your domain may not be visible in API method output instantly.
+**Warning**: Please note that after you add domain using web interface it takes up to 24h for us to check DNS propagation. So your domain may not be visible in API method output instantly.
 
 ---
 
 ####get_account_domain<a name="get_account_domain"/>
 
-Get single domain assigned to account using www interface. Comes in handy when you need to check which domain has campaign assigned.
+Get single domain assigned to account using web interface. Comes in handy when you need to check which domain has campaign assigned.
 
 _JSON params:_
 
@@ -488,7 +488,7 @@ _JSON result:_
 
 _JSON error messages (if any):_ `Invalid email syntax`, `Name already taken`, `Missing From field`, `Missing Reply-To field`, `Missing confirmation subject`, `Missing confirmation body`.
 
-**Warning**: Campaign added through API will be visible on www interface after next log-in.
+**Warning**: Campaign added through API will be visible on web interface after next log-in.
 
 ---
 
@@ -667,7 +667,7 @@ Conditions:
 * `city` (mandatory) – City.
 * `state` (optional) - State or region.
 * `zip` (mandatory) – Zip / postal code.
-* `country` (mandatory) – Country. Name must be compatible with the one on www interface.
+* `country` (mandatory) – Country. Name must be compatible with the one on web interface.
 * `design` (mandatory) – How your postal address will be formatted. Fields above marked as mandatory must also be present in design! Do not insert HTML tags here, this will be converted in HTML part of messages automatically.
 
 _JSON result:_
@@ -732,7 +732,7 @@ _JSON result:_
 
 Array `flags` may be present with following items:<a name="message_flags"/>
 
-* `clicktrack` – Clicks on links in message are counted.  Note that for the link to be click-tracked it must be also wrapped in Dynamic Content `{{LINK}}` tag. This behaves differently than WWW interface, where (for simplicity) all links are click-tracked when click-track checkbox is set.
+* `clicktrack` – Clicks on links in message are counted.  Note that for the link to be click-tracked it must be also wrapped in Dynamic Content `{{LINK}}` tag. This behaves differently than web interface, where (for simplicity) all links are click-tracked when click-track checkbox is set.
 * `subscription_reminder` – Short disclaimer is added to the message content to make sure that subscriber know why they are receiving the messages.
 * `openrate` – Opened messages are counted (only if html content is present).
 * `google_analytics` – Google Analytics code is appended to every link in message.
