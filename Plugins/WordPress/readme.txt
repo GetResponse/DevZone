@@ -1,5 +1,5 @@
-=== GetResponse Integration ===
-Contributors: Kacper Rowiński, Grzegorz Struczyński, Sylwester Okrój
+﻿=== GetResponse Integration ===
+Contributors: GetResponse
 Tags: getresponse, email, newsletter, signup, marketing, plugin, widget, mailing list, subscriber, contacts, subscribe form
 Requires at least: 3.3.0
 Tested up to: 3.3.1
@@ -14,7 +14,7 @@ This plug-in enables installation of a GetResponse fully customizable sign up fo
 == Installation ==
 = Method 1. =
 
-1. Download the GetResponse plug-in for your WordPress version from  https://github.com/GetResponse/DevZone/downloads
+1. Download the GetResponse plug-in for your WordPress version.
 2. Unzip the downloaded file and extract the code to to your /wp-content/plugins/ folder.
 3. To complete installation you should activate the module in the plug-ins section of your administration panel.
 
