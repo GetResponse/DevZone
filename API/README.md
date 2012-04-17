@@ -486,7 +486,9 @@ _JSON result:_
     }
 ```
 
-_JSON error messages (if any):_ `Invalid email syntax`, `Name already taken`, `Missing From field`, `Missing Reply-To field`, `Missing confirmation subject`, `Missing confirmation body`.
+_JSON error messages (if any):_ `Total limit of campaigns exceeded`, `Invalid email syntax`, `Name already taken`, `Missing From field`, `Missing Reply-To field`, `Missing confirmation subject`, `Missing confirmation body`.
+
+**Warning**: Account has limit of 500 campaigns.
 
 **Warning**: Campaign added through API will be visible on web interface after next log-in.
 
