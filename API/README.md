@@ -1288,16 +1288,8 @@ _JSON params:_
             },
             "clicks"        : [ "LINK_ID", "LINK_ID" ],
             "get_clicks"    : { get_links conditions },
-            "last_click_on" : {
-                "OPERATOR"  : "value",
-                "OPERATOR"  : "value"
-            },
             "opens"         : [ "MESSAGE_ID", "MESSAGE_ID" ],
             "get_opens"     : { get_messages conditions },
-            "last_open_on"  : {
-                "OPERATOR"  : "value",
-                "OPERATOR"  : "value"
-            },
             "segmentation"  : {
                 "split" : split_value,
                 "pack"  : pack_value
@@ -1317,9 +1309,7 @@ Conditions:
 * `customs` (optional) – Use [text operators](#operators) to narrow down search results to contacts having specific customs. Uses AND logic. Note that if you need OR logic you can use MATCHES operator and use alternative in regular expression. Contacts that don’t have a custom of given name are not returned in results. If custom is multi-value then “any” junction is used: condition is true if any custom value tests true according to the operator used.
 * `geo` (optional) – Use operators to narrow down search results to specific contact geo location. Precisely [text operators](#operators) are allowed for country, country_code, city, [numeric operators](#operators) are allowed for latitude and longitude (values are decimal numbers, like -54.5). Uses AND logic. Contacts that don’t have a geo location data are not returned in results.
 * `clicks` / `get_clicks` (optional) – Use to narrow down search results to the contacts that clicked specific links. Uses AND logic. See [IDs in conditions](#ids) for detailed explanation.
-* `last_click_on` (optional) – Use [time operators](#operators) to narrow down search results to a specific date when a contact clicked the last link. Multiple operators are allowed and logic AND is used so date range can also be expressed.
 * `opens` / `get_opens` (optional) – Use to narrow down search results to contacts that opened specific messages. Uses AND logic. See [IDs in conditions](#ids) for detailed explanation.
-* `last_open_on` (optional) – Use [time operators](#operators) to narrow down search results to the specific date when a contact opened the last message. Multiple operators are allowed and logic AND is used so date range can also be expressed.
 * `segmentation` (optional) – Allows to fetch big results in smaller packs. Split value defines the number of packs to which contacts will be split. Group defines which pack will be returned in results. For example to get all results in 10 packs call [get_contacts](#get_contacts) 10 times. Set split to 10 and increase pack from 1 to 10.
 
 _JSON result:_
@@ -3013,6 +3003,11 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.9.1, 2012-04-19
+
+* `last_click_on` and `last_open_on` removed from [get_contacts](#get_contacts) as obsolete,
+  sending to segment has better implementation of this logic
 
 version 1.9.0, 2012-04-13
 
