@@ -6,6 +6,12 @@ version 1.6.3, 2012-03-09 [changelog](#changelog)
 
 Dynamic Content allows to personalize emails.
 
+##SUPPORT
+
+The GetResponse Dynamic Content is created and maintained by the *GetResponse DevZone Team*.
+
+If you run into an error or you have difficulties with using the DC please contact us using [this form](http://www.getresponse.com/feedback.html?devzone=yes) and we will provide all the support we can to solve your problems.
+
 ##TAGS
 
 * [campaign predefined values](#campaign_predefined_values)

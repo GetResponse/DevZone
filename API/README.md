@@ -48,7 +48,7 @@ Check how to [use API in those programming languages](https://github.com/GetResp
 
 The GetResponse API is created and maintained by the *GetResponse DevZone Team*.
 
-If you run into an error or you have difficulties with using the API you may easily report it in the Issues section here in GetResponse GitHub Organization profile and we will provide all the support we can to solve your problems.
+If you run into an error or you have difficulties with using the API please contact us using [this form](http://www.getresponse.com/feedback.html?devzone=yes) and we will provide all the support we can to solve your problems.
 
 
 ##METHODS
@@ -1719,7 +1719,7 @@ _JSON error messages (if any):_ `Invalid email syntax`, `Missing campaign`, `Con
 
 **Hint**: It is legal to add a contact already existing in the campaign (check action param for more details) but it is illegal to have the same email added to queue twice.
 
-**Hint**: Optin setting is locked to double optin by default, if you want to add contacts already confirmed please contact us using this form and provide us with your campaign name and the description of your business model. We will set single optin for this campaign after short verification.
+**Warning**: Optin setting is locked to double optin by default - confirmation email will be sent to newly added contacts. If you want to add contacts already confirmed on your side please contact us using [this form](http://www.getresponse.com/feedback.html?devzone=yes) and provide us with your campaign name and the description of your business model. We will set single optin for this campaign after short verification.
 
 ---
 
