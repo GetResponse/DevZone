@@ -2,8 +2,6 @@
 
 ---
 
-##API
-
 <img src="https://raw.github.com/GetResponse/DevZone/master/API/icon.png"/>
 
 Use our API to easily add the powerful functionality of GetResponse Email Marketing to your favorite applications.
@@ -12,8 +10,6 @@ Use our API to easily add the powerful functionality of GetResponse Email Market
 
 ---
 
-##Dynamic Content
-
 <img src="https://raw.github.com/GetResponse/DevZone/master/DC/icon.png"/>
 
 Use GetResponse advanced mail-merge capabilities to personalize your email messages.
@@ -21,8 +17,6 @@ Use GetResponse advanced mail-merge capabilities to personalize your email messa
 [View documentation](https://github.com/GetResponse/DevZone/tree/master/DC)
 
 ---
-
-##Application center
 
 <img src="https://raw.github.com/GetResponse/DevZone/master/Plugins/icon.png"/>
 
