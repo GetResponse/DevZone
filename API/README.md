@@ -1,6 +1,6 @@
-#GETRESPONSE API
+#GetResponse API
 
-version 1.9.0, 2012-04-13 [changelog](#changelog)
+version 1.9.2, 2012-05-10 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -39,7 +39,7 @@ GetResponse API is [JSON-RPC](http://www.jsonrpc.org/) based and supports both 1
 <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/2/27/PHP-logo.svg/220px-PHP-logo.svg.png" height="64" alt="PHP"/>
 <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/110px-Python-logo-notext.svg.png" height="64" alt="Python"/>
 <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Ruby_logo.svg/198px-Ruby_logo.svg.png" height="64" alt="Ruby"/>
-<img src="http://blogs.adobe.com/flashplatform/files/2011/06/Flex-Logo.png" height="64" alt="Adobe Flex"/>
+<img src="http://upload.wikimedia.org/wikipedia/en/7/70/Flexicon.png" height="64" alt="Adobe Flex"/>
 
 Check how to [use API in those programming languages](https://github.com/GetResponse/DevZone/tree/master/API/examples).
 
@@ -462,7 +462,7 @@ _JSON params:_
             "reply_to_field"        : "FROM_FIELD_ID",
             "confirmation_subject"  : "CONFIRMATION_SUBJECT_ID",
             "confirmation_body"     : "CONFIRMATION_BODY_ID",
-            "language_code"         : "pl"
+            "language_code"         : "PL"
         }
     ]
 ```
@@ -486,7 +486,7 @@ _JSON result:_
     }
 ```
 
-_JSON error messages (if any):_ `Total limit of campaigns exceeded`, `Invalid email syntax`, `Name already taken`, `Missing From field`, `Missing Reply-To field`, `Missing confirmation subject`, `Missing confirmation body`.
+_JSON error messages (if any):_ `Total limit of campaigns exceeded`, `Invalid email syntax`, `Name already taken`, `Missing From field`, `Missing Reply-To field`, `Missing confirmation subject`, `Missing confirmation body`, `Invalid language code`.
 
 **Warning**: Account has limit of 500 campaigns.
 
@@ -2552,7 +2552,7 @@ _JSON params:_
     [
         "API_KEY",
         {
-            "language_code" : { "EQUALS" : "en" },
+            "language_code" : { "EQUALS" : "EN" },
         }
     ]
 ```
@@ -2567,11 +2567,11 @@ _JSON result:_
     {
         "CONFIRMATION_SUBJECT_ID"   : {
             "content"       : "Please confirm subscription",
-            "language_code" : "en"
+            "language_code" : "EN"
         },
         "CONFIRMATION_SUBJECT_ID"   : {
             "content"       : "Proszę potwierdź subskrypcję",
-            "language_code" : "pl"
+            "language_code" : "PL"
         }
     }
 ```
@@ -2603,7 +2603,7 @@ _JSON result:_
     {
         "CONFIRMATION_SUBJECT_ID"   : {
             "content"       : "Please confirm subscription",
-            "language_code" : "en"
+            "language_code" : "EN"
         }
     }
 ```
@@ -2620,7 +2620,7 @@ _JSON params:_
     [
         "API_KEY",
         {
-            "language_code" : { "EQUALS" : "en" },
+            "language_code" : { "EQUALS" : "EN" },
         }
     ]
 ```
@@ -2636,12 +2636,12 @@ _JSON result:_
         "CONFIRMATION_BODY_ID"  : {
             "plain"         : "Please click to confirm ...",
             "html"          : "<p>Please click to confirm ...",
-            "language_code" : "en"
+            "language_code" : "EN"
         },
         "CONFIRMATION_BODY_ID"  : {
             "plain"         : "Prosze kliknij aby potwierdzić ...",
             "html"          : "<p>Proszę kliknij aby potwierdzić ...",
-            "language_code" : "pl"
+            "language_code" : "PL"
         }
     }
 ```
@@ -2674,7 +2674,7 @@ _JSON result:_
         "CONFIRMATION_BODY_ID"  : {
             "plain"         : "Please click to confirm ...",
             "html"          : "<p>Please click to confirm ...",
-            "language_code" : "en"
+            "language_code" : "EN"
         }
     }
 ```
@@ -2714,7 +2714,7 @@ _JSON params:_
                 "description"           : "Fani pociągów.",
                 "confirmation_subject"  : "CONFIRMATION_SUBJECT_ID",
                 "confirmation_body"     : "CONFIRMATION_BODY_ID",
-                "language_code"         : "pl",
+                "language_code"         : "PL",
                 "optin"                 : "single",
             }
         }
@@ -3003,6 +3003,11 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.9.2, 2012-05-10
+
+* error `Invalid language code` added to [add_campaign](#add_campaign),
+  language codes are returned uppercased to be compatible with ISO
 
 version 1.9.1, 2012-04-19
 
