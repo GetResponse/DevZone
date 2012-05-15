@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.9.3, 2012-05-15 [changelog](#changelog)
+version 1.9.4, 2012-05-15 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -809,7 +809,7 @@ _JSON result:_
     }
 ```
 
-**Hint**: Result may contain only `plain`, only `html` or both.
+**Hint**: Result may be empty (draft messages from web interface do not require content) or contain only `plain`, only `html` or both.
 
 **Hint**: All merge-words in contents are [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
 
@@ -2999,6 +2999,12 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.9.4, 2012-05-15
+
+* [get_message_contents](#get_message_contents) result may be empty
+  because new editor on web interface has subject and contents editing on separate steps
+  and it is allowed to save draft message with subject only
 
 version 1.9.3, 2012-05-15
 
