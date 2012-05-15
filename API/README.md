@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.9.2, 2012-05-10 [changelog](#changelog)
+version 1.9.3, 2012-05-15 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -697,8 +697,7 @@ _JSON params:_
             "campaigns"     : [ "CAMPAIGN_ID", "CAMPAIGN_ID" ],
             "get_campaigns" : { get_campaigns conditions },
             "type"          : "value",
-            "subject"       : { "OPERATOR" : "value" },
-            "draft_mode"    : "value"
+            "subject"       : { "OPERATOR" : "value" }
         }
     ]
 ```
@@ -706,9 +705,8 @@ _JSON params:_
 Conditions:
 
 * `campaigns` / `get_campaigns` (optional) – Search only in given campaigns. Uses OR logic. If those params are not given search, is performed in all campaigns in the account. Check [IDs in conditions](#ids) for detailed explanation.
-* `type` (optional) – Use "newsletter" or "follow-up" to narrow down search results to specific message types.
+* `type` (optional) – Use "newsletter", "follow-up" or "draft" to narrow down search results to specific message types. If not given newsletters and follow-ups are returned in the result.
 * `subject` (optional) – Use [text operators](#operators) to narrow down search results to specific message subjects.
-* `draft_mode` (optional) – Use true or false, default is false. Switches between regular messages and drafts. Draft mode can be combined with other conditions, for example with `type` condition to get newsletter drafts only.
 
 _JSON result:_
 
@@ -741,7 +739,7 @@ Array `flags` may be present with following items:<a name="message_flags"/>
 
 **Hint**: All merge-words in subject are returned as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
 
-**Hint**: If type is follow-up then `day_of_cycle` is returned and if type is newsletter then `send_on` is returned. Those fields are not present in draft mode.
+**Hint**: If type is follow-up then `day_of_cycle` is returned and if type is newsletter then `send_on` is returned. Those fields are not present in drafts.
 
 **Hint**: If you need plain and HTML contents of your message use [get_message_contents](#get_message_contents) method.
 
@@ -1058,8 +1056,7 @@ _JSON params:_
                 "plain" : "Hello there",
                 "html"  : "<h1>Hello</h1>there"
             },
-            "flags" : [ "clicktrack", "openrate" ],
-            "type"  : "follow-up"
+            "flags" : [ "clicktrack", "openrate" ]
         }
     ]
 ```
@@ -1072,7 +1069,6 @@ Conditions:
 * `subject` (mandatory) – Subject value, all merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
 * `contents` (mandatory) – Allowed keys are plain and html, at least one is mandatory. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
 * `flags` (optional) – Enables extra functionality for a message, see [message_flags](#message_flags) for available values.
-* `type` – Type of draft, allowed values are newsletter and follow-up.
 
 _JSON result:_
 
@@ -1085,7 +1081,7 @@ _JSON result:_
 
 _JSON error messages (if any):_ `Missing campaign`, `Missing From field`, `Missing Reply-To field`, `Missing contents`.
 
-**Hint**: Drafts can be obtained by using [get_messages](#get_messages) in draft mode.
+**Hint**: Drafts can be obtained by using [get_messages](#get_messages) with `type` param.
 
 ---
 
@@ -3003,6 +2999,13 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.9.3, 2012-05-15
+
+* draft is now separate type instead of variant of newsletter/follow-up
+* [get_messages](#get_messages) has `draft_mode` param removed,
+  drafts can be selected using `type` param and are labeled as 'draft' in result
+* [add_draft](#add_draft) has `type` param removed
 
 version 1.9.2, 2012-05-10
 
