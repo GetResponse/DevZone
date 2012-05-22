@@ -1,6 +1,6 @@
 #osCommerce plugin
 
-version 0.3, 2012-03-29 [changelog](#changelog)
+version 0.4, 2012-05-22 [changelog](#changelog)
 
 ##INFO
 
@@ -65,6 +65,10 @@ From now on it’s all automated: a REF number will be allocated to your osCommerc
 This is all available now with just one click.
 
 ##CHANGELOG<a name="changelog">
+
+version 0.4, 2012-05-22
+
+* Update jsonRPCClient.php API/lib.
 
 version 0.3, 2012-03-29
 

@@ -1,6 +1,6 @@
 #ZenCart plugin
 
-version 1.0, 2012-03-29 [changelog](#changelog)
+version 1.1, 2012-05-22 [changelog](#changelog)
 
 ##INFO
 
@@ -66,6 +66,10 @@ Done!
 From now on when a customer makes an order he/she is automatically added to GetResponse campaign together with their contact details (city, country and telephone values) that will be added as contact custom fields.
  
 ##CHANGELOG<a name="changelog">
+
+version 1.1, 2012-05-22
+
+* Update jsonRPCClient.php API/lib.
 
 version 1.0, 2012-03-29
 

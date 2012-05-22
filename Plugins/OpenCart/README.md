@@ -1,6 +1,6 @@
 #OpenCart plugin
 
-version 1.0, 2012-03-29 [changelog](#changelog)
+version 1.1, 2012-05-22 [changelog](#changelog)
 
 ##INFO
 
@@ -36,6 +36,10 @@ You’ll also be able to export all the new contacts whenever you feel like.
 Note that all subsequent exports will be updates only as contacts don’t get duplicated. Due to the fact that they are imported contact they will all be sent a confirmation email.
 
 ##CHANGELOG<a name="changelog">
+
+version 1.1, 2012-05-22
+
+* Update jsonRPCClient.php API/lib.
 
 version 1.0, 2012-03-29
 
