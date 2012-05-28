@@ -6,7 +6,7 @@
 
 Use our API to easily add the powerful functionality of GetResponse Email Marketing to your favorite applications.
 
-[View documentation](https://github.com/GetResponse/DevZone/tree/master/API)
+[View documentation](https://github.com/GetResponse/DevZone/tree/master/API/README.md)
 
 ---
 
@@ -14,7 +14,7 @@ Use our API to easily add the powerful functionality of GetResponse Email Market
 
 Use GetResponse advanced mail-merge capabilities to personalize your email messages.
 
-[View documentation](https://github.com/GetResponse/DevZone/tree/master/DC)
+[View documentation](https://github.com/GetResponse/DevZone/tree/master/DC/README.md)
 
 ---
 
