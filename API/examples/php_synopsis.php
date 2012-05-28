@@ -16,7 +16,6 @@
 
 # JSON-RPC module is required
 # available at http://github.com/GetResponse/DevZone/blob/master/API/lib/jsonRPCClient.php
-# alternate version available at http://jsonrpcphp.org/
 require_once 'jsonRPCClient.php';
 
 # your API key
