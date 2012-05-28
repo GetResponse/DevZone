@@ -2,27 +2,30 @@
 
 ---
 
-<img src="https://raw.github.com/GetResponse/DevZone/master/API/icon.png"/>
+[![View documentation][2]][1]
 
 Use our API to easily add the powerful functionality of GetResponse Email Marketing to your favorite applications.
 
-[View documentation](https://github.com/GetResponse/DevZone/tree/master/API/README.md)
+[1]: https://github.com/GetResponse/DevZone/tree/master/API/README.md
+[2]: https://raw.github.com/GetResponse/DevZone/master/API/icon.png
 
 ---
 
-<img src="https://raw.github.com/GetResponse/DevZone/master/DC/icon.png"/>
+[![View documentation][4]][3]
 
 Use GetResponse advanced mail-merge capabilities to personalize your email messages.
 
-[View documentation](https://github.com/GetResponse/DevZone/tree/master/DC/README.md)
+[3]: https://github.com/GetResponse/DevZone/tree/master/DC/README.md
+[4]: https://raw.github.com/GetResponse/DevZone/master/DC/icon.png
 
 ---
 
-<img src="https://raw.github.com/GetResponse/DevZone/master/Plugins/icon.png"/>
+[![View GetResponse integrations][6]][5]
 
 Browse the GetResponse App Center to find applications such as CRM, CMS or E-commerce that connect directly with GetResponse.
 
-[View GetResponse integrations](https://github.com/GetResponse/DevZone/tree/master/Plugins)
+[5]: https://github.com/GetResponse/DevZone/tree/master/Plugins
+[6]: https://raw.github.com/GetResponse/DevZone/master/Plugins/icon.png
 
 ---
 
