@@ -380,6 +380,7 @@ Countdown to/since given timestamp or contact subscription date.
 ```
 (will insert "291 days 7 hours to the end of the world" at the moment this doc was created and will insert "World ended 32 days ago" when it is 32 days after the timestamp date)
 
+```
 {{TIMER "added_on" "" "You signed up DAYS_UNIT ago"}}
 ```
 (will insert "You signed up 35 days ago")
