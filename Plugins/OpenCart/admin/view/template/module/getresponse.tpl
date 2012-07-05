@@ -1,6 +1,5 @@
 <?php echo $header; ?>
 
-
 <div id="content">
   <div class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -19,20 +18,6 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
       
      <table class="form">       
-            <?php /* wylaczone funkcje ze wzgledu na brak api
-            <tr>
-              <td><?php echo $entry_enable_module; ?></td>
-              <td><select id="gr_enable_module" name="config_enable_module">
-                  <?php if ($config_enable_module == 1) { ?>
-                  <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                  <option value="0"><?php echo $text_disabled; ?></option>
-                  <?php } else { ?>
-                  <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-                  <option value="1"><?php echo $text_enabled; ?></option>
-                  <?php } ?>
-                </select></td>
-            </tr>
-            */?>
             <tr>
               <td><span class="required">*</span> <?php echo $entry_apikey; ?></td>
               <td><input id="gr_apikey" type="text" name="config_apikey" value="<?php echo $config_apikey; ?>" size="50" /></td>
@@ -40,39 +25,9 @@
             <tr>
               <td><?php echo $entry_campaign; ?></td>
               <td><select id="gr_campaign" name="config_campaign">
-                  <option value="">--- none ---</option>
+                  <option value="">-- none --</option>
                 </select></td>
             </tr>
-            <?php /* wylaczone funkcje ze wzgledu na brak api
-            <tr>
-              <td><?php echo $entry_register_integration; ?></td>
-              <td><?php if ($config_register_integration) { ?>
-                <input type="radio" name="config_register_integration" value="1" checked="checked" />
-                <?php echo $text_yes; ?>
-                <input type="radio" name="config_register_integration" value="0" />
-                <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="config_register_integration" value="1" />
-                <?php echo $text_yes; ?>
-                <input type="radio" name="config_register_integration" value="0" checked="checked" />
-                <?php echo $text_no; ?>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_guest_integration; ?></td>
-              <td><?php if ($config_guest_integration) { ?>
-                <input type="radio" name="config_guest_integration" value="1" checked="checked" />
-                <?php echo $text_yes; ?>
-                <input type="radio" name="config_guest_integration" value="0" />
-                <?php echo $text_no; ?>
-                <?php } else { ?>
-                <input type="radio" name="config_guest_integration" value="1" />
-                <?php echo $text_yes; ?>
-                <input type="radio" name="config_guest_integration" value="0" checked="checked" />
-                <?php echo $text_no; ?>
-                <?php } ?></td>
-            </tr>
-             */?>
             <tr>
             	
             	<td><?php echo $entry_export; ?></td>
@@ -88,12 +43,11 @@
 <script type="text/javascript">
 <!--
 $(function() {
-	// zmienne
+	// variables
 	var api_key_element = $('#gr_apikey');
 	var campaign_element = $('#gr_campaign');
 	var export_element = $('#gr_export');
-	//var enable_module_element = $('#gr_enable_module'); /* wylaczone funkcje ze wzgledu na brak api */
-	// funkcja exportu ajaxem
+	// jquery ajax export function
 	function ajax_export() {
 		var api_key = api_key_element.val();
 		var campaign = campaign_element.val();
@@ -102,17 +56,20 @@ $(function() {
 				beforeSend: function() { $('.gr_info').html(' Loading...') },
 				data : {
 					'api_key' : api_key,
-					'campaign' : campaign,
+					'campaign' : campaign
 				},
 				success : function(data) {
-					$('.gr_info').html(data.response);				
+					$('.gr_info').html(data.response);
+				},
+				error: function (response) {
+					$('.gr_info').html(' Ajax request error.');
 				},
 				type : "POST",
 				async : false,
 				dataType : "json"
 			});
 	}
-	// funkcja sciagniecia listy kampani ajaxem
+	// jquery ajax get list of campaign
 	function ajax_get_campaning() {
 		var api_key = api_key_element.val();
 		  $	.ajax({
@@ -134,47 +91,26 @@ $(function() {
 					$(campaign_element).html(content);
 					
 				},
+				error: function (response) {
+					$('.rollling').html(' Ajax request error.');
+				},
 				type : "POST",
 				async : false,
 				dataType : "json"
 			});
 	}
-	/* wylaczone funkcje ze wzgledu na brak api 
-	// wygaszanie inputow i selectow
-	function enable_disable_module() {
-		$('.rollling, .gr_info').html('');
-		if ($(enable_module_element).val()==1) {
-			console.log('guziki dzialaja');
-			$('input[type=radio], #gr_apikey, #gr_campaign, #gr_export').prop('disabled', false);
-			$(export_element).bind('click', function() {
-					ajax_export();
-			});
-		} else if ($(enable_module_element).val()==0) {
-			console.log('guziki wylaczone');
-			$('input[type=radio], #gr_apikey, #gr_campaign, #gr_export').prop('disabled', true);
-			$(export_element).unbind();
-		}		
-	}
-	*/
-	// ustawienia startowe:
+	// js start settings
 	$(campaign_element).after('<span class="rollling"></span>');
 	$(export_element).after('<span class="gr_info"></span>');
 	ajax_get_campaning();
-	//enable_disable_module();	/* wylaczone funkcje ze wzgledu na brak api */
 
-	// ustawienia po jakiej akcji
+	// actions
 	$(api_key_element).focusout(function() {
 		ajax_get_campaning();
 	});		
 	$(export_element).click(function() {
 		ajax_export();
 	});
-	
-	/* wylaczone funkcje ze wzgledu na brak api 
-	$(enable_module_element).change(function() {
-		enable_disable_module();
-	});
-	*/
 });
 //-->
 </script> 

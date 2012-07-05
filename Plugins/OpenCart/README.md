@@ -1,6 +1,6 @@
 #OpenCart plugin
 
-version 1.1, 2012-05-22 [changelog](#changelog)
+version 1.2, 2012-07-05 [changelog](#changelog)
 
 ##INFO
 
@@ -36,6 +36,10 @@ You’ll also be able to export all the new contacts whenever you feel like.
 Note that all subsequent exports will be updates only as contacts don’t get duplicated. Due to the fact that they are imported contact they will all be sent a confirmation email.
 
 ##CHANGELOG<a name="changelog">
+
+version 1.2, 2012-07-05
+
+* Removed unnecessary comments and fixed ajax request for IE7.
 
 version 1.1, 2012-05-22
 

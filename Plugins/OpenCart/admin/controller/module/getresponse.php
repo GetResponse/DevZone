@@ -4,38 +4,30 @@ class ControllerModuleGetresponse extends Controller {
 	private $error = array(); 
 	private $gr_apikey;
 	private $gr_apikey_url = 'http://api2.getresponse.com';
-	//private $enable_module;
-	//private $register_integration;
-	//private $guest_integration;
 	private $campaign;
 	
 	public function index() {   
 		$this->load->language('module/getresponse');
 		$this->document->setTitle($this->language->get('heading_title'));
 		
-		// uzywam modelu "settings" do odczytu i zapisu ustawien
+		// module settings to read and/or write config 
 		$this->load->model('setting/setting');					
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('getresponse', $this->request->post);				
 			$this->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 				
-		// jezykowe
+		// language
 		$this->data['heading_title'] = $this->language->get('heading_title');		
 		$this->data['text_module'] = $this->language->get('text_module');
 		$this->data['text_success'] = $this->language->get('text_success');
 		$this->data['text_none'] = $this->language->get('text_none');
 		$this->data['text_yes'] = $this->language->get('text_yes');
 		$this->data['text_no'] = $this->language->get('text_no');
-		//$this->data['text_enabled'] = $this->language->get('text_enabled');	/* wylaczone funkcje ze wzgledu na brak api */
-		//$this->data['text_disabled'] = $this->language->get('text_disabled');	/* wylaczone funkcje ze wzgledu na brak api */
 		$this->data['entry_title'] = $this->language->get('entry_title');
 		$this->data['entry_export'] = $this->language->get('entry_export');
-		//$this->data['entry_enable_module'] = $this->language->get('entry_enable_module');	/* wylaczone funkcje ze wzgledu na brak api */
-		$this->data['entry_apikey'] = $this->language->get('entry_apikey');		
-		$this->data['entry_campaign'] = $this->language->get('entry_campaign');		
-		//$this->data['entry_register_integration'] = $this->language->get('entry_register_integration');	/* wylaczone funkcje ze wzgledu na brak api */	
-		//$this->data['entry_guest_integration'] = $this->language->get('entry_guest_integration');	/* wylaczone funkcje ze wzgledu na brak api */
+		$this->data['entry_apikey'] = $this->language->get('entry_apikey');	
+		$this->data['entry_campaign'] = $this->language->get('entry_campaign');
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 		$this->data['button_export'] = $this->language->get('button_export');	
@@ -48,7 +40,7 @@ class ControllerModuleGetresponse extends Controller {
 			$this->data['error_warning'] = '';
 		}
 		
-		// ustawienie danych z postu badz configa
+		// get settings from settins or post
 		if (isset($this->request->post['config_apikey'])) {
 			$this->apikey = $this->request->post['config_apikey'];
 		} else {
@@ -61,31 +53,14 @@ class ControllerModuleGetresponse extends Controller {
 			$this->enable_module = $this->config->get('config_enable_module');
 		}
 		
-		/* wylaczone funkcje ze wzgledu na brak api 
-		if (isset($this->request->post['config_register_integration'])) {
-			$this->register_integration = $this->request->post['config_register_integration'];
-		} else {
-			$this->register_integration = $this->config->get('config_register_integration');
-		}
-		
-		if (isset($this->request->post['config_guest_integration'])) {
-			$this->guest_integration = $this->request->post['config_guest_integration'];
-		} else {
-			$this->guest_integration = $this->config->get('config_guest_integration');
-		}
-		*/
-		
 		if (isset($this->request->post['config_campaign'])) {
 			$this->campaign = $this->request->post['config_campaign'];
 		} else {
 			$this->campaign = $this->config->get('config_campaign');
 		}
 		
-		// przeslanie ustawien do widoku
-		//$this->data['config_enable_module'] = $this->enable_module;	/* wylaczone funkcje ze wzgledu na brak api */
+		// set settings in view
 		$this->data['config_apikey'] = $this->apikey;
-		//$this->data['config_register_integration'] = $this->register_integration;	/* wylaczone funkcje ze wzgledu na brak api */
-		//$this->data['config_guest_integration'] = $this->guest_integration;	/* wylaczone funkcje ze wzgledu na brak api */
 		$this->data['config_campaign'] = $this->campaign;
 		
 		// breadcrumbs
@@ -106,6 +81,7 @@ class ControllerModuleGetresponse extends Controller {
       		'separator' => ' :: '
    		);
 		
+   		// actions
 		$this->data['action'] = $this->url->link('module/getresponse', 'token=' . $this->session->data['token'], 'SSL');		
 		$this->data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 		$this->data['modules'] = array();
@@ -115,10 +91,12 @@ class ControllerModuleGetresponse extends Controller {
 		} elseif ($this->config->get('getresponse_module')) { 
 			$this->data['modules'] = $this->config->get('getresponse_module');
 		}	
-					
+
+		// load lang
 		$this->load->model('localisation/language');		
 		$this->data['languages'] = $this->model_localisation_language->getLanguages();
 
+		// load template
 		$this->template = 'module/getresponse.tpl';
 		$this->children = array(
 			'common/header',
@@ -128,6 +106,7 @@ class ControllerModuleGetresponse extends Controller {
 		$this->response->setOutput($this->render());
 	}
 	
+	// validate permission
 	private function validate() {
 		if (!$this->user->hasPermission('modify', 'module/getresponse')) {
 			$this->error['warning'] = $this->language->get('error_permission');
@@ -140,12 +119,13 @@ class ControllerModuleGetresponse extends Controller {
 		}	
 	}
 	
+	// get list of campaning
 	public function campaning() {
 		
 		$this->gr_apikey = $this->request->post['api_key'];
 		$results[] = array(
 				'id' => 0,
-				'text' => '--- none ---',
+				'text' => '-- none --',
 		);
 		
 		try {
@@ -165,6 +145,7 @@ class ControllerModuleGetresponse extends Controller {
 		$this->response->setOutput(json_encode($results));
 	}
 	
+	// export contacts to campaign
 	public function export() {
 		
 		$this->load->model('module/getresponse');
@@ -215,7 +196,7 @@ class ControllerModuleGetresponse extends Controller {
 				);
 				$contact++;
 				if  (array_key_exists('queued',$r)) {	$queued++;	}
-				else if (array_key_exists('duplicated',$r))  { $duplicated++; }				 
+				else if (array_key_exists('duplicated',$r))  { $duplicated++; }	
 			}
 			
 			$results = array('status' => 1,	'response' =>'  Export completed. Contacts: ' .$contact. '. Queued:' .$queued. '. Updated: ' .$duplicated. '.');
