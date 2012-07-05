@@ -1,6 +1,6 @@
 #GetResponse Dynamic Content
 
-version 1.6.3, 2012-03-09 [changelog](#changelog)
+version 1.6.4, 2012-05-30 [changelog](#changelog)
 
 ##INFO
 
@@ -281,19 +281,20 @@ Supported tokens and message types they can be used in:
 Links that allow contact to share info about message on social media.
 
 ```
-{{LINK "social_facebook"}}
+{{LINK "social_digg"}}
+{{LINK "social_facebook" "like"}}
 ```
 
 Allowed tokens:
 
-* `social_buzz`
 * `social_digg`
-* `social_facebook`
+* `social_facebook` with `post` (default) and `like` actions 
+* `social_googleplus`
 * `social_linkedin`
 * `social_myspace`
-* `social_twitter`
+* `social_twitter` with `tweet` (default) and `retweet` actions
 
-**Warning**: If you want your newsletter to be shared on social media you must select "Publish in RSS" on last step of creating newsletter process.
+**Warning**: If you want your newsletter to be shared on social media you must select "Publish in RSS" on last step of creating newsletter process in old editor.
 
 ---
 
@@ -380,6 +381,7 @@ Countdown to/since given timestamp or contact subscription date.
 ```
 (will insert "291 days 7 hours to the end of the world" at the moment this doc was created and will insert "World ended 32 days ago" when it is 32 days after the timestamp date)
 
+```
 {{TIMER "added_on" "" "You signed up DAYS_UNIT ago"}}
 ```
 (will insert "You signed up 35 days ago")
@@ -698,6 +700,10 @@ inserts honda, toyota, dodge then
 will insert Honda, Toyota, Dodge.
 
 ##CHANGELOG<a name="changelog">
+
+version 1.6.4, 2012-05-30
+
+* [social links](#social_links) allows action to be specified in facebook and twitter services, buzz is replaced with googleplus
 
 version 1.6.3, 2012-03-09
 
