@@ -891,16 +891,16 @@ _JSON params:_
                 "plain" : "Hello there",
                 "html"  : "<h1>Hello</h1>there"
             },
-            'attachments' : [
+            "attachments" : [
                 {
-                'data' : 'WmHFvMOzxYLEhyBnxJnFm2zEhSBqYcW6xYQu==',
-                'name' : 'order.txt',
-                'mime' : 'application/txt'
+                "data" : "WmHFvMOzxYLEhyBnxJnFm2zEhSBqYcW6xYQu==",
+                "name" : "order.txt",
+                "mime" : "application/txt"
                 },
                 {
-                'data' : 'QWxhLGtvdA==',
-                'name' : 'people.csv',
-                'mime' : 'application/csv'
+                "data" : "QWxhLGtvdA==",
+                "name" : "people.csv",
+                "mime" : "application/csv"
                 },
             ],
             "flags" : [ "clicktrack", "openrate" ],
@@ -1022,16 +1022,16 @@ _JSON params:_
                 "plain" : "Hello there",
                 "html"  : "<h1>Hello</h1>there"
             },
-            'attachments' : [
+            "attachments" : [
                 {
-                'data' : 'WmHFvMOzxYLEhyBnxJnFm2zEhSBqYcW6xYQu==',
-                'name' : 'order.txt',
-                'mime' : 'application/txt'
+                "data" : "WmHFvMOzxYLEhyBnxJnFm2zEhSBqYcW6xYQu==",
+                "name" : "order.txt",
+                "mime" : "application/txt"
                 },
                 {
-                'data' : 'QWxhLGtvdA==',
-                'name' : 'people.csv',
-                'mime' : 'application/csv'
+                "data" : "QWxhLGtvdA==",
+                "name" : "people.csv",
+                "mime" : "application/csv"
                 },
             ],
             "flags" : [ "clicktrack", "openrate" ],
