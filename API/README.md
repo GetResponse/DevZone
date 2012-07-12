@@ -908,8 +908,8 @@ Conditions:
 * `campaign` (mandatory) – `CAMPAIGN_ID` obtained from [get_campaigns](#get_campaigns). Newsletter will be saved in this campaign. Note that it is not the same as selecting contacts – check `contacts` / `get_contacts` params for that.
 * `from_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It represents From header (name and email) in message and will be taken from campaign if not given.
 * `reply_to_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It represents Reply-To header (email) in message and will not be present if not given.
-* `subject` (mandatory) – Subject value, all merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
-* `contents` (mandatory) – Allowed keys are `plain` and `html`, at least one is mandatory. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
+* `subject` (mandatory) – Subject value. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax. Maximum length is 512 characters.
+* `contents` (mandatory) – Allowed keys are `plain` and `html`, at least one is mandatory. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax. Maximum length is 524288 characters each.
 * `flags` (optional) – Enables extra functionality for a message, see [message_flags](#message_flags) for available values.
 * `contacts` / `get_contacts` or `segments` / `get_segments` - Recipients that should receive a newsletter obtained from [get_contacts](#get_contacts) or [get_segments](#get_segments). Only one type of selection can be used at a time. See [IDs in conditions](#ids) for detailed explanation.
 * `suppressions` / `get_suppressions` (optional) – Suppressions to use with that message. Any contact email address that matches any of the masks in those suppressions will be skipped when sending. See [IDs in conditions](#ids) for detailed explanation.
@@ -1020,8 +1020,8 @@ Conditions:
 * `campaign` (mandatory) – `CAMPAIGN_ID` obtained from [get_campaigns](#get_campaigns). Follow-up will be saved in this campaign.
 * `from_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It represents From header (name and email) in message and will be taken from campaign if not given.
 * `reply_to_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It represents Reply-To header (email) in message and will not be present if not given.
-* `subject` (mandatory) – Subject value, all merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
-* `contents` (mandatory) – Allowed keys are plain and html, at least one is mandatory. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
+* `subject` (mandatory) – Subject value. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax. Maximum length is 512 characters.
+* `contents` (mandatory) – Allowed keys are plain and html, at least one is mandatory. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax. Maximum length is 524288 characters each.
 * `flags` (optional) – Enables extra functionality for a message, see [message_flags](#message_flags) for available values.
 * `day_of_cycle` – Number of days between the day when a contact subscribed to a campaign and the day when the follow-up is sent. Must be not used in existing messages and in the range of 0..1000.
 
@@ -1066,8 +1066,8 @@ Conditions:
 * `campaign` (mandatory) – `CAMPAIGN_ID` obtained from [get_campaigns](#get_campaigns). Draft will be saved in this campaign.
 * `from_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It represents From header (name and email) in message and will be taken from campaign if not given.
 * `reply_to_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It represents Reply-To header (email) in message and will not be present if not given.
-* `subject` (mandatory) – Subject value, all merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
-* `contents` (mandatory) – Allowed keys are plain and html, at least one is mandatory. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
+* `subject` (mandatory) – Subject value. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax. Maximum length is 512 characters.
+* `contents` (mandatory) – Allowed keys are plain and html, at least one is mandatory. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax. Maximum length is 524288 characters each.
 * `flags` (optional) – Enables extra functionality for a message, see [message_flags](#message_flags) for available values.
 
 _JSON result:_
