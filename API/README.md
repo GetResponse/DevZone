@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.9.4, 2012-05-15 [changelog](#changelog)
+version 1.10.0, 2012-07-12 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -891,6 +891,18 @@ _JSON params:_
                 "plain" : "Hello there",
                 "html"  : "<h1>Hello</h1>there"
             },
+            'attachments' : [
+                {
+                'data' : 'WmHFvMOzxYLEhyBnxJnFm2zEhSBqYcW6xYQu==',
+                'name' : 'order.txt',
+                'mime' : 'application/txt'
+                },
+                {
+                'data' : 'QWxhLGtvdA==',
+                'name' : 'people.csv',
+                'mime' : 'application/csv'
+                },
+            ],
             "flags" : [ "clicktrack", "openrate" ],
             "contacts"          : [ "CONTACT_ID", "CONTACT_ID" ],
             "get_contacts"      : { get_contacts conditions },
@@ -910,6 +922,7 @@ Conditions:
 * `reply_to_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It represents Reply-To header (email) in message and will not be present if not given.
 * `subject` (mandatory) – Subject value. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax. Maximum length is 512 characters.
 * `contents` (mandatory) – Allowed keys are `plain` and `html`, at least one is mandatory. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax. Maximum length is 524288 characters each.
+* `attachments` (optional) - Files that will be attached to message. Field `data` must be encoded using [Base64](http://en.wikipedia.org/wiki/Base64) algorithm. Filed `name` represents name of file. Field `mime` represents [media type](http://en.wikipedia.org/wiki/Internet_media_type) of file.
 * `flags` (optional) – Enables extra functionality for a message, see [message_flags](#message_flags) for available values.
 * `contacts` / `get_contacts` or `segments` / `get_segments` - Recipients that should receive a newsletter obtained from [get_contacts](#get_contacts) or [get_segments](#get_segments). Only one type of selection can be used at a time. See [IDs in conditions](#ids) for detailed explanation.
 * `suppressions` / `get_suppressions` (optional) – Suppressions to use with that message. Any contact email address that matches any of the masks in those suppressions will be skipped when sending. See [IDs in conditions](#ids) for detailed explanation.
@@ -1009,6 +1022,18 @@ _JSON params:_
                 "plain" : "Hello there",
                 "html"  : "<h1>Hello</h1>there"
             },
+            'attachments' : [
+                {
+                'data' : 'WmHFvMOzxYLEhyBnxJnFm2zEhSBqYcW6xYQu==',
+                'name' : 'order.txt',
+                'mime' : 'application/txt'
+                },
+                {
+                'data' : 'QWxhLGtvdA==',
+                'name' : 'people.csv',
+                'mime' : 'application/csv'
+                },
+            ],
             "flags" : [ "clicktrack", "openrate" ],
             "day_of_cycle" : 32
         }
@@ -1022,6 +1047,7 @@ Conditions:
 * `reply_to_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It represents Reply-To header (email) in message and will not be present if not given.
 * `subject` (mandatory) – Subject value. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax. Maximum length is 512 characters.
 * `contents` (mandatory) – Allowed keys are plain and html, at least one is mandatory. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax. Maximum length is 524288 characters each.
+* `attachments` (optional) - Files that will be attached to message. Field `data` must be encoded using [Base64](http://en.wikipedia.org/wiki/Base64) algorithm. Filed `name` represents name of file. Field `mime` represents [media type](http://en.wikipedia.org/wiki/Internet_media_type) of file.
 * `flags` (optional) – Enables extra functionality for a message, see [message_flags](#message_flags) for available values.
 * `day_of_cycle` – Number of days between the day when a contact subscribed to a campaign and the day when the follow-up is sent. Must be not used in existing messages and in the range of 0..1000.
 
@@ -2999,6 +3025,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.10.0, 2012-07-12
+
+* [send_newsletter](#send_newsletter) and [add_follow_up](#add_follow_up) allow to send attachments
 
 version 1.9.4, 2012-05-15
 
