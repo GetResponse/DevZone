@@ -3009,7 +3009,7 @@ Errors not included in spec:
 version 1.11.0, 2012-07-25
 
 * [add_account](#add_account), [get_accounts](#get_accounts), [get_account](#get_account)
-  no longer support `company_country`, `company_city`, `company_street`, `company_state`, `company_zip_code`.
+  no longer support `company_country`, `company_city`, `company_street`, `company_state`, `company_zip_code`
 
 version 1.10.0, 2012-07-12
 
