@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.10.0, 2012-07-12 [changelog](#changelog)
+version 1.11.0, 2012-07-25 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -2718,19 +2718,14 @@ _JSON params:_
             "first_name"    : "Andrzej",
             "last_name"     : "Cholewiusz",
             "email"         : "andrzej.cholewiusz@implix.com",
-            "company_name"      : "Implix",
-            "company_country"   : "Polska",
-            "company_city"      : "Gdańsk",
-            "company_street"    : "Arkońska",
-            "company_state"     : "pomorskie",
-            "company_zip_code"  : "80-309",
-            "phone" : "+48587321918",
-            "country_code" : "pl",
-            "country"   : "Polska",
-            "city"      : "Gdańsk",
-            "state"     : "pomorskie",
-            "street"    : "Żabianska",
-            "zip_code"  : "24-213",
+            "company_name"  : "Implix",
+            "phone"         : "+48587321918",
+            "country_code"  : "pl",
+            "country"       : "Polska",
+            "city"          : "Gdańsk",
+            "state"         : "pomorskie",
+            "street"        : "Żabianska",
+            "zip_code"      : "24-213",
             "campaign"  : {
                 "name"                  : "trains",
                 "description"           : "Fani pociągów.",
@@ -2751,11 +2746,6 @@ Conditions:
 * `last_name` (mandatory) – At least one character.
 * `email` (mandatory) – Valid email address.
 * `company_name` (optional) – At least one character.
-* `company_country` (optional) – At least one character.
-* `company_city` (optional) – At least one character.
-* `company_street` (optional) – At least one character.
-* `company_state` (optional) – At least one character.
-* `company_zip_code` (optional) – At least one character.
 * `phone` (mandatory) – At least one character. No format is forced.
 * `country_code` (mandatory) – Two letter country code as described in [ISO 3166-1](http://www.iso.org/iso/english_country_names_and_code_elements).
 * `country` (mandatory) – Country name as described in [ISO 3166-1](http://www.iso.org/iso/english_country_names_and_code_elements).
@@ -2804,19 +2794,14 @@ _JSON result:_
             "first_name"    : "Andrzej",
             "last_name"     : "Cholewiusz",
             "email"         : "andrzej.cholewiusz@implix.com",
-            "company_name"      : "Implix",
-            "company_country"   : "Polska",
-            "company_city"      : "Gdańsk",
-            "company_street"    : "Arkońska",
-            "company_state"     : "pomorskie",
-            "company_zip_code"  : "80-309",
-            "phone" : "+48587321918",
+            "company_name"  : "Implix",
+            "phone"         : "+48587321918",
             "country_code"  : "pl",
             "country"       : "Polska",
-            "city"      : "Gdańsk",
-            "state"     : "pomorskie",
-            "street"    : "Żabianska",
-            "zip_code"  : "24-213",
+            "city"          : "Gdańsk",
+            "state"         : "pomorskie",
+            "street"        : "Żabianska",
+            "zip_code"  :    "24-213",
             "created_on"    : "2010-11-01 07:27:43",
             "API_KEY"       : "09fb76c7d2ecc0298855259f1dd224a5",
             "api_status"    : "enabled"
@@ -2861,19 +2846,14 @@ _JSON result:_
             "first_name"    : "Andrzej",
             "last_name"     : "Cholewiusz",
             "email"         : "andrzej.cholewiusz@implix.com",
-            "company_name"      : "Implix",
-            "company_country"   : "Polska",
-            "company_city"      : "Gdańsk",
-            "company_street"    : "Arkońska",
-            "company_state"     : "pomorskie",
-            "company_zip_code"  : "80-309",
-            "phone" : "+48587321918",
+            "company_name"  : "Implix",
+            "phone"         : "+48587321918",
             "country_code"  : "pl",
             "country"       : "Polska",
-            "city"      : "Gdańsk",
-            "state"     : "pomorskie",
-            "street"    : "Żabianska",
-            "zip_code"  : "24-213",
+            "city"          : "Gdańsk",
+            "state"         : "pomorskie",
+            "street"        : "Żabianska",
+            "zip_code"      : "24-213",
             "created_on"    : "2010-11-01 07:27:43",
             "API_KEY"       : "09fb76c7d2ecc0298855259f1dd224a5",
             "api_status"    : "enabled"
@@ -3025,6 +3005,11 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.11.0, 2012-07-25
+
+* [add_account](#add_account), [get_accounts](#get_accounts), [get_account](#get_account)
+  no longer support `company_country`, `company_city`, `company_street`, `company_state`, `company_zip_code`.
 
 version 1.10.0, 2012-07-12
 
