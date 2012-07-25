@@ -39,7 +39,7 @@ GetResponse API is [JSON-RPC](http://www.jsonrpc.org/) based and supports both 1
 <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/2/27/PHP-logo.svg/220px-PHP-logo.svg.png" height="64" alt="PHP"/>
 <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/110px-Python-logo-notext.svg.png" height="64" alt="Python"/>
 <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Ruby_logo.svg/198px-Ruby_logo.svg.png" height="64" alt="Ruby"/>
-<img src="http://upload.wikimedia.org/wikipedia/en/7/70/Flexicon.png" height="64" alt="Adobe Flex"/>
+<img src="http://upload.wikimedia.org/wikipedia/commons/8/8f/Adobe_Flex.png" height="64" alt="Adobe Flex"/>
 
 Check how to [use API in those programming languages](https://github.com/GetResponse/DevZone/tree/master/API/examples).
 
