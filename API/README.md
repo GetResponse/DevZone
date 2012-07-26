@@ -949,7 +949,7 @@ _JSON error messages (if any):_ `Missing campaign`, `Missing From field`, `Missi
 
 **Hint**: You don’t have to worry about duplicates when sending to multiple campaigns. If the same email exists in my_campaign_1 and my_campaign_2 campaigns then newsletter will be sent only once to this address (chosen randomly).
 
-**Warning**: You can send 128 newsletters daily. Common mistake is to call API in the following manner:
+**Warning**: You can send 256 newsletters daily. Common mistake is to call API in the following manner:
 
 ```json
     [
@@ -3009,6 +3009,7 @@ Errors not included in spec:
 version 1.11.1, 2012-07-26
 
 * [add_account](#add_account) has strict checking of `country` and `country_code`
+* [send_newsletter](#send_newsletter) daily calls limit bumped to 256
 
 version 1.11.0, 2012-07-25
 
