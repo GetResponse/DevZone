@@ -35,7 +35,7 @@ Please contact us using [this form](http://www.getresponse.com/feedback.html?dev
 
 ---
 
-#License
+#LICENSE
 
 <a href="http://opensource.org/"><img src="http://opensource.org/trademarks/opensource/OSI-Approved-License-100x137.png" alt="OpenSource"/></a>
 
