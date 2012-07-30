@@ -2748,8 +2748,8 @@ Conditions:
 * `email` (mandatory) – Valid email address.
 * `company_name` (optional) – At least one character.
 * `phone` (mandatory) – At least one character. No format is forced.
-* `country_code` (mandatory) – Two letter country code as described in [ISO 3166-1](http://www.iso.org/iso/english_country_names_and_code_elements).
-* `country` (mandatory) – Name of country as described in [ISO 3166-1](http://www.iso.org/iso/english_country_names_and_code_elements). Must match `country_code`.
+* `country_code` (mandatory) – Two letter country code as described in [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1).
+* `country` (mandatory) – Name of country as described in [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1). Must match `country_code`.
 * `city` (mandatory) – At least one character.
 * `state` (optional) – At least one character.
 * `street` (mandatory) – At least one character.
