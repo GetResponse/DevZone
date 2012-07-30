@@ -43,6 +43,7 @@ GetResponse API is [JSON-RPC](http://www.jsonrpc.org/) based and supports both 1
 
 Check how to [use API in those programming languages](https://github.com/GetResponse/DevZone/tree/master/API/examples).
 
+---
 
 ##SUPPORT
 
