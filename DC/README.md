@@ -1,6 +1,6 @@
 #GetResponse Dynamic Content
 
-version 1.6.4, 2012-05-30 [changelog](#changelog)
+version 1.6.5, 2012-08-03 [changelog](#changelog)
 
 ##INFO
 
@@ -282,17 +282,16 @@ Links that allow contact to share info about message on social media.
 
 ```
 {{LINK "social_digg"}}
-{{LINK "social_facebook" "like"}}
 ```
 
 Allowed tokens:
 
 * `social_digg`
-* `social_facebook` with `post` (default) and `like` actions 
+* `social_facebook`
 * `social_googleplus`
 * `social_linkedin`
 * `social_myspace`
-* `social_twitter` with `tweet` (default) and `retweet` actions
+* `social_twitter`
 
 **Warning**: If you want your newsletter to be shared on social media you must select "Publish in RSS" on last step of creating newsletter process in old editor.
 
@@ -700,6 +699,10 @@ inserts honda, toyota, dodge then
 will insert Honda, Toyota, Dodge.
 
 ##CHANGELOG<a name="changelog">
+
+version 1.6.5, 2012-08-03
+
+* [social links](#social_links) action is removed from facebook and twitter services
 
 version 1.6.4, 2012-05-30
 
