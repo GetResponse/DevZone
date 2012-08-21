@@ -12,7 +12,7 @@
 
 class jsonRPCClient
 {
-    protected $url = null, $is_notification = false, $is_debug = false;
+    protected $url = null, $is_debug = false, $parameters_structure = 'array';
 
     // http errors - more can be found at
     // http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
@@ -53,14 +53,21 @@ class jsonRPCClient
     }
 
     /**
-     * Set request to be a notification
+     * Set structure to use for parameters
      *
-     * @param boolean $is_notification
+     * @param string $parameters_structure 'array' or 'object'
      * @return void
      */
-    public function setNotification( $is_notification  )
+    public function setParametersStructure( $parameters_structure )
     {
-        $this->is_is_notification = !empty($is_notification);
+        if (in_array($parameters_structure, array('array', 'object')))
+        {
+            $this->parameters_structure = $parameters_structure;
+        }
+        else
+        {
+            throw new Exception('Invalid parameters structure type.');
+        }
     }
 
     /**
@@ -72,8 +79,11 @@ class jsonRPCClient
      */
     public function __call( $method, $params )
     {
-        static $counter;
-
+        static $requestId;
+        
+        // generating uniuqe id per process
+        $requestId++;
+        
         // check if given params are correct
         $validateParams = array
         (
@@ -82,11 +92,11 @@ class jsonRPCClient
         );
         $this->checkForErrors( $validateParams );
 
-        // if this is_notification - JSON-RPC specification point 1.3
-        $requestId = true === $this->is_notification ? null : ++$counter;
+        // send params as an object or an array
+        $params = ($this->parameters_structure == 'object') ? $params[0] : array_values($params);
 
-        // Request (method invocation) - JSON-RPC specification point 1.1
-        $request = json_encode( array ( 'method' => $method, 'params' => array_values($params), 'id' => $requestId ) );
+        // Request (method invocation)
+        $request = json_encode( array ( "jsonrpc"=>"2.0", 'method' => $method, 'params' => $params, 'id' => $requestId ) );
 
         // if is_debug mode is true then add request to is_debug
         $this->debug( 'Request: ' . $request . "\r\n", false );
@@ -99,19 +109,17 @@ class jsonRPCClient
         // decode and create array ( can be object, just set to false )
         $response = json_decode( $response, true );
 
-        // if this was just is_notification
-        if ( true === $this->is_notification )
-        {
-            return true;
-        }
-
         // check if response is correct
         $validateParams = array
         (
-            !is_null($response['error']) => 'Request have return error: ' . $response['error']['message'],
             $response['id'] != $requestId => 'Request id: '.$requestId.'is different from Response id: ' . $response['id'],
 
         );
+        if (isset($response['error']))
+        {
+            $validateParams[!is_null($response['error'])] = 'Request have return error: ' . $response['error']['message'];
+        }
+        
         $this->checkForErrors( $validateParams );
 
         return $response['result'];
