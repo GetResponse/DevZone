@@ -12,7 +12,7 @@
 
 class jsonRPCClient
 {
-    protected $url = null, $is_notification = false, $is_debug = false, $parameters_structure = 'array';
+    protected $url = null, $is_debug = false, $parameters_structure = 'array';
 
     // http errors - more can be found at
     // http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
@@ -53,17 +53,6 @@ class jsonRPCClient
     }
 
     /**
-     * Set request to be a notification
-     *
-     * @param boolean $is_notification
-     * @return void
-     */
-    public function setNotification( $is_notification )
-    {
-        $this->is_notification = !empty($is_notification);
-    }
-
-    /**
      * Set structure to use for parameters
      *
      * @param string $parameters_structure 'array' or 'object'
@@ -90,8 +79,11 @@ class jsonRPCClient
      */
     public function __call( $method, $params )
     {
-        static $counter;
-
+        static $requestId;
+        
+        // generating uniuqe id per process
+        $requestId++;
+        
         // check if given params are correct
         $validateParams = array
         (
@@ -100,13 +92,10 @@ class jsonRPCClient
         );
         $this->checkForErrors( $validateParams );
 
-        // if this is_notification - JSON-RPC specification point 1.3
-        $requestId = true === $this->is_notification ? null : ++$counter;
-
         // send params as an object or an array
         $params = ($this->parameters_structure == 'object') ? $params[0] : array_values($params);
 
-        // Request (method invocation) - JSON-RPC specification point 1.1
+        // Request (method invocation)
         $request = json_encode( array ( "jsonrpc"=>"2.0", 'method' => $method, 'params' => $params, 'id' => $requestId ) );
 
         // if is_debug mode is true then add request to is_debug
@@ -119,12 +108,6 @@ class jsonRPCClient
 
         // decode and create array ( can be object, just set to false )
         $response = json_decode( $response, true );
-
-        // if this was just is_notification
-        if ( true === $this->is_notification )
-        {
-            return true;
-        }
 
         // check if response is correct
         $validateParams = array
