@@ -96,7 +96,7 @@ class jsonRPCClient
         $params = ($this->parameters_structure == 'object') ? $params[0] : array_values($params);
 
         // Request (method invocation)
-        $request = json_encode( array ( "jsonrpc"=>"2.0", 'method' => $method, 'params' => $params, 'id' => $requestId ) );
+        $request = json_encode( array ( 'jsonrpc' => '2.0', 'method' => $method, 'params' => $params, 'id' => $requestId ) );
 
         // if is_debug mode is true then add request to is_debug
         $this->debug( 'Request: ' . $request . "\r\n", false );
