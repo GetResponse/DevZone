@@ -1,5 +1,4 @@
 <?php
-
 /**
  * jsonRPCClient.php
  *
@@ -9,7 +8,6 @@
  * @author Kacper Rowinski <krowinski@implix.com>
  * http://implix.com
  */
-
 class jsonRPCClient
 {
     protected $url = null, $is_debug = false, $parameters_structure = 'array';
@@ -28,14 +26,14 @@ class jsonRPCClient
      * @param string $url - url name like http://example.com/
      * @return void
      */
-    public function __construct( $url )
+    public function __construct($url)
     {
         $validateParams = array
         (
             false === extension_loaded('curl') => 'The curl extension must be loaded for using this class !',
             false === extension_loaded('json') => 'The json extension must be loaded for using this class !'
         );
-        $this->checkForErrors( $validateParams );
+        $this->checkForErrors($validateParams);
 
         // set an url to connect to
         $this->url = $url;
@@ -47,7 +45,7 @@ class jsonRPCClient
      * @param boolean $is_debug
      * @return void
      */
-    public function setDebug( $is_debug )
+    public function setDebug($is_debug)
     {
         $this->is_debug = !empty($is_debug);
     }
@@ -58,7 +56,7 @@ class jsonRPCClient
      * @param string $parameters_structure 'array' or 'object'
      * @return void
      */
-    public function setParametersStructure( $parameters_structure )
+    public function setParametersStructure($parameters_structure)
     {
         if (in_array($parameters_structure, array('array', 'object')))
         {
@@ -77,37 +75,37 @@ class jsonRPCClient
      * @param array $params - An Array of objects to pass as arguments to the method.
      * @return array
      */
-    public function __call( $method, $params )
+    public function __call($method, $params)
     {
         static $requestId;
-        
+
         // generating uniuqe id per process
         $requestId++;
-        
+
         // check if given params are correct
         $validateParams = array
         (
              false === is_scalar($method) => 'Method name has no scalar value',
              false === is_array($params) => 'Params must be given as array'
         );
-        $this->checkForErrors( $validateParams );
+        $this->checkForErrors($validateParams);
 
         // send params as an object or an array
         $params = ($this->parameters_structure == 'object') ? $params[0] : array_values($params);
 
         // Request (method invocation)
-        $request = json_encode( array ( 'jsonrpc' => '2.0', 'method' => $method, 'params' => $params, 'id' => $requestId ) );
+        $request = json_encode(array('jsonrpc' => '2.0', 'method' => $method, 'params' => $params, 'id' => $requestId));
 
         // if is_debug mode is true then add request to is_debug
-        $this->debug( 'Request: ' . $request . "\r\n", false );
+        $this->debug('Request: ' . $request . "\r\n", false);
 
-        $response = $this->getResponse( $request );
+        $response = $this->getResponse($request);
 
         // if is_debug mode is true then add response to is_debug and display it
-        $this->debug( 'Response: ' . $response . "\r\n", true );
+        $this->debug('Response: ' . $response . "\r\n", true);
 
         // decode and create array ( can be object, just set to false )
-        $response = json_decode( $response, true );
+        $response = json_decode($response, true);
 
         // check if response is correct
         $validateParams = array
@@ -117,22 +115,22 @@ class jsonRPCClient
         );
         if (isset($response['error']))
         {
-            $validateParams[!is_null($response['error'])] = 'Request have return error: ' . $response['error']['message'];
+            $validateParams[ !is_null($response['error'])] = 'Request have return error: ' . $response['error']['message'];
         }
-        
-        $this->checkForErrors( $validateParams );
+
+        $this->checkForErrors($validateParams);
 
         return $response['result'];
     }
 
     /**
-     *     When the method invocation completes, the service must reply with a response.
-     *     The response is a single object serialized using JSON
+     * When the method invocation completes, the service must reply with a response.
+     * The response is a single object serialized using JSON
      *
      * @param string $request
      * @return string
      */
-    protected function & getResponse( & $request )
+    protected function & getResponse(& $request)
     {
         // do the actual connection
         $ch = curl_init();
@@ -150,14 +148,14 @@ class jsonRPCClient
         $response = curl_exec($ch);
         // check http status code
         $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        if ( isset($this->http_errors[$http_code])  )
+        if (isset($this->http_errors[$http_code]))
         {
-            throw new Exception('Response Http Error - ' . $this->http_errors[$http_code] );
+            throw new Exception('Response Http Error - ' . $this->http_errors[$http_code]);
         }
         // check for curl error
-        if ( 0 < curl_errno($ch) )
+        if (0 < curl_errno($ch))
         {
-            throw new Exception('Unable to connect to '.$this->url . ' Error: ' . curl_error($ch) );
+            throw new Exception('Unable to connect to '.$this->url . ' Error: ' . curl_error($ch));
         }
         // close the connection
         curl_close($ch);
@@ -170,13 +168,13 @@ class jsonRPCClient
      * @param array $validateArray
      * @return void
      */
-    protected function checkForErrors( & $validateArray )
+    protected function checkForErrors(& $validateArray)
     {
-        foreach ( $validateArray as $test => $error )
+        foreach ($validateArray as $test => $error)
         {
-            if ( $test )
+            if ($test)
             {
-                throw new Exception( $error );
+                throw new Exception($error);
             }
         }
     }
@@ -188,11 +186,11 @@ class jsonRPCClient
      * @param boolean $show
      * @return void
      */
-    protected function debug( $add, $show = false )
+    protected function debug($add, $show = false)
     {
         static $debug, $startTime;
         // is_debug off return
-        if ( false === $this->is_debug )
+        if (false === $this->is_debug)
         {
             return;
         }
@@ -200,7 +198,7 @@ class jsonRPCClient
         $debug .= $add;
         // get starttime
         $startTime = empty($startTime) ? array_sum(explode(' ', microtime())) : $startTime;
-        if ( true === $show and !empty($debug)  )
+        if (true === $show and !empty($debug))
         {
             // get endtime
             $endTime = array_sum(explode(' ', microtime()));
