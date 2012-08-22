@@ -11,6 +11,12 @@
 class jsonRPCClient
 {
     protected $url = null, $is_debug = false, $parameters_structure = 'array';
+    
+    // default options for curl
+    protected $curl_options = array(
+        CURLOPT_CONNECTTIMEOUT => 8,
+        CURLOPT_TIMEOUT => 8
+    );
 
     // http errors - more can be found at
     // http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
@@ -67,6 +73,22 @@ class jsonRPCClient
             throw new Exception('Invalid parameters structure type.');
         }
     }
+    
+    /**
+     * Set extra options for curl connection
+     * @param array $options_array 
+     */
+    public function setCurlOptions($options_array)
+    {
+        if (is_array($options_array))
+        {
+            $this->curl_options = $options_array + $this->curl_options;
+        }
+        else
+        {
+            throw new Exception('Invalid options type.');
+        }
+    }
 
     /**
      * Performs a request and gets the results
@@ -110,7 +132,7 @@ class jsonRPCClient
         // check if response is correct
         $validateParams = array
         (
-            $response['id'] != $requestId => 'Request id: '.$requestId.'is different from Response id: ' . $response['id'],
+            $response['id'] != $requestId => 'Request id: '.$requestId.' is different from Response id: ' . $response['id'],
 
         );
         if (isset($response['error']))
@@ -141,9 +163,7 @@ class jsonRPCClient
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
         curl_setopt($ch, CURLOPT_ENCODING, 'gzip,deflate');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 8);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 8);
+        curl_setopt_array($ch, $this->curl_options);
         // send the request
         $response = curl_exec($ch);
         // check http status code
