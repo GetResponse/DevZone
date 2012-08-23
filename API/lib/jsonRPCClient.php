@@ -137,7 +137,9 @@ class jsonRPCClient
         );
         if (isset($response['error']))
         {
-            $validateParams[ !is_null($response['error'])] = 'Request have return error: ' . $response['error']['message'] . '; Request: ' . $request;
+            $validateParams[ !is_null($response['error'])] = 'Request have return error: ' . $response['error']['message'] . '; ' . "\n" . 
+                                                            'Request: ' . $request . '; ' . "\n" .
+                                                            'Error data: ' . $response['error']['data'];
         }
 
         $this->checkForErrors($validateParams);
