@@ -118,7 +118,8 @@ class jsonRPCClient
         // Request (method invocation)
         $request = json_encode(array('jsonrpc' => '2.0', 'method' => $method, 'params' => $params, 'id' => $requestId));
 
-        // if is_debug mode is true then add request to is_debug
+        // if is_debug mode is true then add url and request to is_debug
+        $this->debug('Url: ' . $this->url . "\r\n", false);
         $this->debug('Request: ' . $request . "\r\n", false);
 
         $response = $this->getResponse($request);
