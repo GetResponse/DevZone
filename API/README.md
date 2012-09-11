@@ -733,7 +733,7 @@ _JSON result:_
 
 Array `flags` may be present with following items:<a name="message_flags"/>
 
-* `clicktrack` – Clicks on links in message are counted.  Note that for the link to be click-tracked it must be also wrapped in Dynamic Content `{{LINK}}` tag. This behaves differently than web interface, where (for simplicity) all links are click-tracked when click-track checkbox is set.
+* `clicktrack` – Clicks on links in message are counted.  Note that for the link to be click-tracked it must be also wrapped in [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC#clicktracked_links) `{{LINK}}` tag. This behaves differently than web interface, where (for simplicity) all links are click-tracked when click-track checkbox is set.
 * `subscription_reminder` – Short disclaimer is added to the message content to make sure that subscriber know why they are receiving the messages.
 * `openrate` – Opened messages are counted (only if html content is present).
 * `google_analytics` – Google Analytics code is appended to every link in message.
@@ -990,7 +990,7 @@ and again…
 ```
 
 If you iterate through your contact list and personalize every call then you’re doing it wrong! It can be compared to sending a group of passengers from city A to B, but every passenger travels in his own train.
-Correct way of sending personalized content is to use Dynamic Content syntax (check campaign_or_contact_info section) and send newsletter once to a group of people:
+Correct way of sending personalized content is to use [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC#campaign_or_contact_or_message_info) syntax for campaign or contact or message info and then send newsletter once to a group of people:
 
 ```json
     [
