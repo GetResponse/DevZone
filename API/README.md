@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.11.1, 2012-07-26 [changelog](#changelog)
+version 1.12.0, 2012-09-17 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -103,6 +103,7 @@ If you run into an error or you have difficulties with using the API please cont
 * [get_contact_geoip](#get_contact_geoip)
 * [get_contact_opens](#get_contact_opens)
 * [get_contact_clicks](#get_contact_clicks)
+* [get_contact_goals](#get_contact_goals)
 * [set_contact_cycle](#set_contact_cycle)
 * [add_contact](#add_contact)
 * [move_contact](#move_contact)
@@ -117,6 +118,11 @@ If you run into an error or you have difficulties with using the API please cont
 
 * [get_links](#get_links)
 * [get_link](#get_link)
+
+####Goals
+
+* [get_goals](#get_goals)
+* [get_goal](#get_goal)
 
 ####Blacklists
 
@@ -1313,6 +1319,8 @@ _JSON params:_
             "get_clicks"    : { get_links conditions },
             "opens"         : [ "MESSAGE_ID", "MESSAGE_ID" ],
             "get_opens"     : { get_messages conditions },
+			"goals"         : [ "GOAL_ID", "GOAL_ID" ],
+            "get_goals"     : { get_goals conditions },
             "segmentation"  : {
                 "split" : split_value,
                 "pack"  : pack_value
@@ -1333,6 +1341,7 @@ Conditions:
 * `geo` (optional) – Use operators to narrow down search results to specific contact geo location. Precisely [text operators](#operators) are allowed for country, country_code, city, [numeric operators](#operators) are allowed for latitude and longitude (values are decimal numbers, like -54.5). Uses AND logic. Contacts that don’t have a geo location data are not returned in results.
 * `clicks` / `get_clicks` (optional) – Use to narrow down search results to the contacts that clicked specific links. Uses AND logic. See [IDs in conditions](#ids) for detailed explanation.
 * `opens` / `get_opens` (optional) – Use to narrow down search results to contacts that opened specific messages. Uses AND logic. See [IDs in conditions](#ids) for detailed explanation.
+* `goals` / `get_goals` (optional) – Use to narrow down search results to contacts that reached specific goals. Uses AND logic. See [IDs in conditions](#ids) for detailed explanation.
 * `segmentation` (optional) – Allows to fetch big results in smaller packs. Split value defines the number of packs to which contacts will be split. Group defines which pack will be returned in results. For example to get all results in 10 packs call [get_contacts](#get_contacts) 10 times. Set split to 10 and increase pack from 1 to 10.
 
 _JSON result:_
@@ -1591,7 +1600,7 @@ _JSON result:_
 
 ####get_contact_opens<a name="get_contact_opens"/>
 
-List dates when the messages were opened by contacts.
+List dates when the messages were opened by contact.
 
 _JSON params:_
 
@@ -1617,13 +1626,13 @@ _JSON result:_
     }
 ```
 
-Note that if a contact opened the same message multiple times, only the oldest date is listed.
+Note that if a contact opened the same message multiple times, only the newest date is listed.
 
 ---
 
 ####get_contact_clicks<a name="get_contact_clicks"/>
 
-List dates when the links in messages were clicked by contacts.
+List dates when the links in messages were clicked by contact.
 
 _JSON params:_
 
@@ -1649,7 +1658,39 @@ _JSON result:_
     }
 ```
 
-Note that if a contact clicked the same link multiple times only oldest date is listed.
+Note that if a contact clicked the same link multiple times only newest date is listed.
+
+---
+
+####get_contact_goals<a name="get_contact_goals"/>
+
+List dates when the goals were reached by contacts.
+
+_JSON params:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "contact" : "CONTACT_ID"
+        }
+    ]
+```
+
+Conditions:
+
+* `contact` (mandatory) – `CONTACT_ID`.
+
+_JSON result:_
+
+```json
+    {
+        "GOAL_ID"   : "2010-01-01 00:00:00",
+        "GOAL_ID"   : "2010-01-02 00:00:00"
+    }
+```
+
+Note that if a contact goaled the same link multiple times only newest date is listed.
 
 ---
 
@@ -2130,6 +2171,88 @@ _JSON result:_
             "name"      : "My Home Page",
             "url"       : "http://myhomepage.com",
             "clicks"    : 32
+        }
+    }
+```
+
+---
+
+####get_goals<a name="get_goals"/>
+
+Get goals.
+
+_JSON params:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "profile"	: { "OPERATOR" : "value" },
+            "domain"	: { "OPERATOR" : "value" },
+            "name"		: { "OPERATOR" : "value" },
+            "url"		: { "OPERATOR" : "value" }
+        }
+    ]
+```
+
+Conditions:
+
+* `profile` (optional) – Use [text operators](#operators) to narrow down search results to specific profile name.
+* `domain` (optional) – Use [text operators](#operators) to narrow down search results to specific goal domain.
+* `name` (optional) – Use [text operators](#operators) to narrow down search results to specific goal name.
+* `url` (optional) – Use [text operators](#operators) to narrow down search results to specific goal URL.
+
+_JSON result:_
+
+```json
+    {
+        "GOAL_ID"   : {
+            "profile"	: "Goals on my page",
+			"domain"	: "myhomepage.com",
+			"name"		: "My blog",
+            "url"       : "http://myhomepage.com/blog"
+        },
+        "GOAL_ID"   : {
+            "profile"	: "Goals on my page",
+			"domain"	: "myhomepage.com",
+			"name"		: "My shop",
+            "url"       : "http://myhomepage.com/shop"
+        }
+    }
+```
+
+---
+
+####get_goal<a name="get_goal"/>
+
+Get single goal using GOAL_ID.
+
+_JSON params:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "link"  : "GOAL_ID"
+        }
+    ]
+```
+
+_JSON result:_
+
+```json
+    {
+        "GOAL_ID"   : {
+            "profile"	: "Goals on my page",
+			"domain"	: "myhomepage.com",
+			"name"		: "My blog",
+            "url"       : "http://myhomepage.com/blog"
+        },
+        "GOAL_ID"   : {
+            "profile"	: "Goals on my page",
+			"domain"	: "myhomepage.com",
+			"name"		: "My shop",
+            "url"       : "http://myhomepage.com/shop"
         }
     }
 ```
@@ -3006,6 +3129,11 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.12.0, 2012-09-17
+
+* added [get_goals](#get_goals), [get_goal](#get_goal) and [get_contact_goals](#get_contact_goals) methods
+* [get_contacts](#get_contacts) accepts goals
 
 version 1.11.1, 2012-07-26
 
