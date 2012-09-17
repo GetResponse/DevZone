@@ -1690,7 +1690,7 @@ _JSON result:_
     }
 ```
 
-Note that if a contact goaled the same link multiple times only newest date is listed.
+Note that if a contact reached the same goal multiple times only newest date is listed.
 
 ---
 
