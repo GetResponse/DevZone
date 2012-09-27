@@ -4,7 +4,7 @@ version 1.6.5, 2012-08-03 [changelog](#changelog)
 
 ##INFO
 
-Dynamic Content allows to personalize emails.
+Dynamic Content is a message-composing language that enables GetResponse users with ***web developing skills*** to create personalized messages.
 
 ##SUPPORT
 
