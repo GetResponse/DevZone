@@ -1920,7 +1920,7 @@ _JSON result:_
 
 **Warning**: If a contact was added and removed multiple times from the same campaign it is presented only once in results with newest deleted_on date.
 
-**Hint**: Possible reasons are: unsubscribe, user, support, automation, complaint, blacklisted, api, bounce, other, other.
+**Hint**: Possible reasons are: unsubscribe, user, support, automation, complaint, blacklisted, api, bounce, other.
 
 **Warning**: Unsubscribe link allows contact to unsubscribe from multiple campaigns, even if message was not sent from those campaigns or to contact in those campaigns.
 
