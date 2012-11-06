@@ -1,6 +1,6 @@
 #GetResponse Dynamic Content
 
-version 1.6.5, 2012-08-03 [changelog](#changelog)
+version 1.6.6, 2012-11-06 [changelog](#changelog)
 
 ##INFO
 
@@ -261,17 +261,17 @@ Merging is opposite to splitting – many links with different URLs will be show
 Links that allow contact to perform actions.
 
 ```
-{{LINK "unsubscribe"}}
+{{LINK "me"}}
 ```
 
 Supported tokens and message types they can be used in:
 
-* `change_details` (newsletter, follow-up) – Change contact details. This is the same link as in footer.
-* `unsubscribe` (newsletter, follow-up) – Allow contact to unsubscribe. This is the same link as in footer.
-* `view` (newsletter, follow-up) – View message on website. May be useful if contact is using email client that blocks content, for example images.
-* `forward` (newsletter, follow-up) – Forward message to a friend.
+* `me` (newsletter, follow-up, rss) – Manage subscription and details. This is the same link as in footer.
+* `change_details`, `unsubscribe` - Obsolete, replaced by `me`.
+* `view` (newsletter, follow-up, rss) – View message on website. May be useful if contact is using email client that blocks content, for example images.
+* `forward` (newsletter, follow-up, rss) – Forward message to a friend.
 * `next` (follow-up) – Get next message in follow-up cycle without waiting.
-* `play` (newsletter, follow-up) – Play message using Email 2 Speech feature.
+* `play` (newsletter, follow-up, rss) – Play message using Email 2 Speech feature.
 * `confirm` (confirmation) - Confirm subscription in double optin mode.
 
 ---
@@ -699,6 +699,10 @@ inserts honda, toyota, dodge then
 will insert Honda, Toyota, Dodge.
 
 ##CHANGELOG<a name="changelog">
+
+version 1.6.6, 2012-11-06
+
+* [system links](#system_links) has `me` type added which replaced obsolete `unsubscribe` and `change_details` types
 
 version 1.6.5, 2012-08-03
 
