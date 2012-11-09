@@ -2,9 +2,17 @@
 
 version 1.6.6, 2012-11-06 [changelog](#changelog)
 
-##INFO
+##GETTING STARTED
 
 Dynamic Content is a message-composing language that enables GetResponse users with ***web developing skills*** to create personalized messages.
+
+####General rules
+
+Dynamic Content is a programing language, and so it requires strict syntax:
+
+There can be only one instruction per tag.
+Syntax is case-sensitive, casing is like in the examples.
+Back-ticks can be used instead of double quotes when composing HTML messages.
 
 ##SUPPORT
 
@@ -30,15 +38,7 @@ If you run into an error or you have difficulties with using the DC please conta
 * [conditions](#conditions)
 * [external content](#external_content)
 
-##GENERAL RULES
-
-Dynamic Content is a programing language, and so it requires strict syntax:
-
-There can be only one instruction per tag.
-Syntax is case-sensitive, casing is like in the examples.
-Back-ticks can be used instead of double quotes when composing HTML messages.
-
-##TAGS
+---
 
 ####campaign predefined values<a name="campaign_predefined_values"/>
 

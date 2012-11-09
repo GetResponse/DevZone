@@ -2,21 +2,15 @@
 
 version 1.0.0, 2012-11-06 [changelog](#changelog)
 
-##INFO
+##GETTING STARTED
 
 Callbacks allow external systems to be notified about GetResponse contact activities.
 
-They can be managed using API [get_account_callbacks](https://github.com/GetResponse/DevZone/tree/master/API/README.md#get_account_callbacks), [set_account_callbacks](https://github.com/GetResponse/DevZone/tree/master/API/README.md#set_account_callbacks) and [delete_account_callbacks](https://github.com/GetResponse/DevZone/tree/master/API/README.md#delete_account_callbacks) methods.
+####Configuration
 
-##CALLS
+Callbacks can be managed using API [get_account_callbacks](https://github.com/GetResponse/DevZone/tree/master/API/README.md#get_account_callbacks), [set_account_callbacks](https://github.com/GetResponse/DevZone/tree/master/API/README.md#set_account_callbacks) and [delete_account_callbacks](https://github.com/GetResponse/DevZone/tree/master/API/README.md#delete_account_callbacks) methods.
 
-* [subscribe](#subscribe)
-* [open](#open)
-* [click](#click)
-* [goal](#goal)
-* [unsubscribe](#unsubscribe)
-
-##PARAMETERS
+####Parameters
 
 Sample HTTP callback looks like this:
 
@@ -32,13 +26,27 @@ All `*_ID` params are compatible with corresponding identifiers in [API](https:/
 So for example after receiving [open](#open) callback one may call [get_message](https://github.com/GetResponse/DevZone/tree/master/API/README.md#get_message) API method with `MESSAGE_ID` from callback
 to fetch additional information about opened message. Those params are case-sensitive.
 
-##FAILURES
+####Failures
 
 Callback timeout is 4 seconds, not received callbacks ***are lost and will not be repeated***.
 
 Make sure that target server is capable of handling expected amount of requests, especially when SSL URI is given which is more CPU-intensive.
 
+##SUPPORT
+
+The GetResponse Callback interface is created and maintained by the *GetResponse DevZone Team*.
+
+If you run into an error or you have difficulties with using the DC please contact us using [this form](http://www.getresponse.com/feedback.html?devzone=yes) and we will provide all the support we can to solve your problems.
+
 ##CALLS
+
+* [subscribe](#subscribe)
+* [open](#open)
+* [click](#click)
+* [goal](#goal)
+* [unsubscribe](#unsubscribe)
+
+---
 
 ####subscribe<a name="subscribe"/>
 
