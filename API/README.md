@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.13.0, 2012-11-09 [changelog](#changelog)
+version 1.14.0, 2012-11-09 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -149,6 +149,13 @@ If you run into an error or you have difficulties with using the API please cont
 * [get_confirmation_subject](#get_confirmation_subject)
 * [get_confirmation_bodies](#get_confirmation_bodies)
 * [get_confirmation_body](#get_confirmation_body)
+
+####Callbacks
+
+* [get_account_callbacks](#get_account_callbacks)
+* [set_account_callbacks](#set_account_callbacks)
+* [delete_account_callbacks](#delete_account_callbacks)
+
 
 ####Server (GetResponse360 only)
 
@@ -1053,6 +1060,7 @@ Conditions:
 * `from_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It represents From header (name and email) in message and will be taken from campaign if not given.
 * `reply_to_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It represents Reply-To header (email) in message and will not be present if not given.
 * `subject` (mandatory) – Subject value. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax. Maximum length is 512 characters.
+* `contents` (mandatory) – Allowed keys are `plain` and `html`, at least one is mandatory. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax. Maximum length is 524288 characters each.
 * `attachments` (optional) - Files that will be attached to message. Field `data` must be encoded using [Base64](http://en.wikipedia.org/wiki/Base64) algorithm. Filed `name` represents name of file. Field `mime` represents [media type](http://en.wikipedia.org/wiki/Internet_media_type) of file.
 * `flags` (optional) – Enables extra functionality for a message, see [message_flags](#message_flags) for available values.
 * `day_of_cycle` – Number of days between the day when a contact subscribed to a campaign and the day when the follow-up is sent. Must be not used in existing messages and in the range of 0..10000.
@@ -1099,6 +1107,7 @@ Conditions:
 * `from_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It represents From header (name and email) in message and will be taken from campaign if not given.
 * `reply_to_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It represents Reply-To header (email) in message and will not be present if not given.
 * `subject` (mandatory) – Subject value. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax. Maximum length is 512 characters.
+* `contents` (mandatory) – Allowed keys are `plain` and `html`, at least one is mandatory. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax. Maximum length is 524288 characters each.
 * `flags` (optional) – Enables extra functionality for a message, see [message_flags](#message_flags) for available values.
 
 _JSON result:_
@@ -1333,6 +1342,7 @@ Conditions:
 * `name` (optional) – Use [text operators](#operators) to narrow down search results to specific contact names.
 * `email` (optional) – Use [text operators](#operators) to narrow down search results to specific contact emails.
 * `created_on` (optional) – Use [time operators](#operators) to narrow down search results to specific contact creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
+* `origin` (optional) – Narrow down search results by contacts’ origin (subscription method). Allowed values are `import`, `email`, `www`, `panel`, `leads`, `sale`, `api`, `forward`, `survey`, `iphone`.
 * `cycle_day` (optional) – Use [numeric operators](#operators) to narrow down search results to specific  days of the followup cycles assigned to the contacts. To find contacts that already got day 2 message you have to use `{ "GREATER" : 2 }` as they have already reached that day. To find inactive contacts pass `{ "EQUALS" : null }` condition.
 * `customs` (optional) – Use [text operators](#operators) to narrow down search results to contacts having specific customs. Uses AND logic. Note that if you need OR logic you can use MATCHES operator and use alternative in regular expression. Contacts that don’t have a custom of given name are not returned in results. If custom is multi-value then “any” junction is used: condition is true if any custom value tests true according to the operator used.
 * `geo` (optional) – Use operators to narrow down search results to specific contact geo location. Precisely [text operators](#operators) are allowed for country, country_code, city, [numeric operators](#operators) are allowed for latitude and longitude (values are decimal numbers, like -54.5). Uses AND logic. Contacts that don’t have a geo location data are not returned in results.
@@ -1625,6 +1635,8 @@ _JSON result:_
 
 Note that if a contact opened the same message multiple times, only the newest date is listed.
 
+**Hint**: If you want to keep opens synchronized with external database, then setting open [callback](https://github.com/GetResponse/DevZone/tree/master/Callback/README.md) is much more efficient than querying this method periodically.
+
 ---
 
 ####get_contact_clicks<a name="get_contact_clicks"/>
@@ -1657,6 +1669,8 @@ _JSON result:_
 
 Note that if a contact clicked the same link multiple times only newest date is listed.
 
+**Hint**: If you want to keep clicks synchronized with external database, then setting click [callback](https://github.com/GetResponse/DevZone/tree/master/Callback/README.md) is much more efficient than querying this method periodically.
+
 ---
 
 ####get_contact_goals<a name="get_contact_goals"/>
@@ -1688,6 +1702,8 @@ _JSON result:_
 ```
 
 Note that if a contact reached the same goal multiple times only newest date is listed.
+
+**Hint**: If you want to keep goals synchronized with external database, then setting goal [callback](https://github.com/GetResponse/DevZone/tree/master/Callback/README.md) is much more efficient than querying this method periodically.
 
 ---
 
@@ -1759,6 +1775,7 @@ _JSON params:_
 Conditions:
 
 * `campaign` (mandatory) – `CAMPAIGN_ID` obtained from [get_campaigns](#get_campaigns).
+* `action` (optional) – Allowed modes are `standard`, `insert`, `update`. If standard mode is chosen then a new contact will be added if not already present in a given campaign otherwise existing contact will be updated including name change and customs list merge. If insert mode is chosen then a contact will be added if it doesn’t exist in a given campaign but no updates will be performed otherwise. If update is chosen then a contact will be updated if it exists in a given campaign but no inserts will be performed otherwise. Default is standard.
 * `name` (optional) – Name value.
 * `email` (mandatory) – Email value.
 * `cycle_day` (optional) – Insert contact on a given day at the follow-up cycle. Value of 0 means the beginning of the cycle. Lack of this param means that a contact will not be inserted into cycle.
@@ -1775,7 +1792,7 @@ _JSON result:_
 
 _JSON error messages (if any):_ `Invalid email syntax`, `Missing campaign`, `Contact already queued for target campaign`.
 
-**Warning**: Adding contact is not an instant action. It will appear on your list after validation or after validation and confirmation (in case of double-optin procedure).
+**Warning**: Adding contact is not an instant action. It will appear on your list after validation or after validation and confirmation (in case of double-optin procedure). You can set subscribe [callback](https://github.com/GetResponse/DevZone/tree/master/Callback/README.md) to be notified about successful adding.
 
 **Hint**: It is legal to add a contact already existing in the campaign (check action param for more details) but it is illegal to have the same email added to queue twice.
 
@@ -1880,6 +1897,7 @@ Conditions:
 * `campaigns` / `get_campaigns` (optional) – Search only in given campaigns. Uses OR logic. If those params are not given search is performed in all campaigns on the account. Check [IDs in conditions](#ids) for detailed explanation.
 * `messages` / `get_messages` (optional) – Search only contacts removed from given messages, this info is known for example if contact clicked unsubscribe link. Uses OR logic. Check [IDs in conditions](#ids) for detailed explanation.
 * `email` (optional) – Use [text operators](#operators) to narrow down search results to specific contact emails.
+* `reason` (optional) – Narrow down search results only to contacts removed due to specific reason, allowed values are: `unsubscribe`, `user`, `support`, `automation`, `complaint`, `blacklisted`, `api`, `bounce`, `other`.
 * `created_on` (optional) – Use [time operators](#operators) to narrow down search results to specific contact creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
 * `deleted_on` (optional) – Use [time operators](#operators) to narrow down search results to specific contact deletion date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
 
@@ -1918,6 +1936,8 @@ _JSON result:_
 **Hint**: Possible reasons are: unsubscribe, user, support, automation, complaint, blacklisted, api, bounce, other.
 
 **Warning**: Unsubscribe link allows contact to unsubscribe from multiple campaigns, even if message was not sent from those campaigns or to contact in those campaigns.
+
+**Hint**: If you want to keep unsubscribes synchronized with external database, then setting unsubscribe [callback](https://github.com/GetResponse/DevZone/tree/master/Callback/README.md) is much more efficient than querying this method periodically.
 
 ---
 
@@ -2822,6 +2842,82 @@ _JSON result:_
 
 ---
 
+####get_account_callbacks<a name="get_account_callbacks"/>
+
+Get [callbacks](https://github.com/GetResponse/DevZone/tree/master/Callback/README.md) configuration for account.
+
+_JSON params:_
+
+```json
+    [
+        "API_KEY"
+    ]
+```
+
+_JSON result:_
+
+```json
+    {
+        "uri" 		: "http://example.com/callback",
+		"actions" 	: [ "subscribe", "open", "click" ]
+    }
+```
+
+---
+
+####set_account_callbacks<a name="set_account_callbacks"/>
+
+Set [callbacks](https://github.com/GetResponse/DevZone/tree/master/Callback/README.md) configuration for account.
+
+_JSON params:_
+
+```json
+    [
+        "API_KEY",
+		{
+			"uri" 		: "http://example.com/callback",
+			"actions" 	: [ "subscribe", "open", "click", "goal", "unsubscribe" ]
+		}
+    ]
+```
+
+Conditions:
+
+* `uri` (mandatory) – Location of callback listener.
+* `actions` (mandatory) – List of actions that will be reported to callback listener. Allowed values are `subscribe`, `open`, `click`, `goal`, `unsubscribe` with at least one is required.
+
+_JSON result:_
+
+```json
+    {
+        "updated" : 1
+    }
+```
+
+---
+
+####delete_account_callbacks<a name="delete_account_callbacks"/>
+
+Delete [callbacks](https://github.com/GetResponse/DevZone/tree/master/Callback/README.md) configuration for account.
+
+_JSON params:_
+
+```json
+    [
+        "API_KEY"
+    ]
+```
+
+_JSON result:_
+
+```json
+    {
+        "deleted" : 1
+    }
+```
+
+---
+
 ####add_account<a name="add_account"/>
 
 Add new account to server.
@@ -3124,6 +3220,11 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.14.0, 2012-11-09
+
+* [get_account_callbacks](#get_account_callbacks), [set_account_callbacks](#get_account_callbacks) and [delete_account_callbacks](#delete_account_callbacks)
+  for callback management added
 
 version 1.13.0, 2012-11-09
 
