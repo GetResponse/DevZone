@@ -29,7 +29,7 @@ http://foo.bar/callback?action=open \
 ```
 
 All `*_ID` params are compatible with corresponding identifiers in [API](https://github.com/GetResponse/DevZone/tree/master/API/README.md).
-So for example after receiving [open](#open) callback one may call [get_message](#get_message) API method with `MESSAGE_ID` from callback
+So for example after receiving [open](#open) callback one may call [get_message](https://github.com/GetResponse/DevZone/tree/master/API/README.md#get_message) API method with `MESSAGE_ID` from callback
 to fetch additional information about opened message. Those params are case-sensitive.
 
 ##FAILURES
