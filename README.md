@@ -20,12 +20,21 @@ Use GetResponse advanced mail-merge capabilities to personalize your email messa
 
 ---
 
-[![View GetResponse integrations][6]][5]
+[![View documentation][6]][5]
+
+Set callbacks to notify external systems about GetResponse contact activities.
+
+[5]: https://github.com/GetResponse/DevZone/tree/master/Callback/README.md
+[6]: https://raw.github.com/GetResponse/DevZone/master/Callback/icon.png
+
+---
+
+[![View GetResponse integrations][8]][7]
 
 Browse the GetResponse App Center to find applications such as CRM, CMS or E-commerce that connect directly with GetResponse.
 
-[5]: https://github.com/GetResponse/DevZone/tree/master/Plugins
-[6]: https://raw.github.com/GetResponse/DevZone/master/Plugins/icon.png
+[7]: https://github.com/GetResponse/DevZone/tree/master/Plugins
+[8]: https://raw.github.com/GetResponse/DevZone/master/Plugins/icon.png
 
 ---
 
