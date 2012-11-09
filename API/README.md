@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.12.0, 2012-09-17 [changelog](#changelog)
+version 1.13.0, 2012-11-09 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -1056,7 +1056,7 @@ Conditions:
 * `contents` (mandatory) – Allowed keys are plain and html, at least one is mandatory. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax. Maximum length is 524288 characters each.
 * `attachments` (optional) - Files that will be attached to message. Field `data` must be encoded using [Base64](http://en.wikipedia.org/wiki/Base64) algorithm. Filed `name` represents name of file. Field `mime` represents [media type](http://en.wikipedia.org/wiki/Internet_media_type) of file.
 * `flags` (optional) – Enables extra functionality for a message, see [message_flags](#message_flags) for available values.
-* `day_of_cycle` – Number of days between the day when a contact subscribed to a campaign and the day when the follow-up is sent. Must be not used in existing messages and in the range of 0..1000.
+* `day_of_cycle` – Number of days between the day when a contact subscribed to a campaign and the day when the follow-up is sent. Must be not used in existing messages and in the range of 0..10000.
 
 _JSON result:_
 
@@ -1201,7 +1201,7 @@ _JSON params:_
 Conditions:
 
 * `message` (mandatory) – `MESSAGE_ID` obtained [get_messages](#get_messages) or [add_follow_up](#add_follow_up).
-* `day_of_cycle` – Number of days between the day when a contact subscribed to a campaign and the day when the follow-up is sent. Must be not used in existing messages and in the range of 0..1000.
+* `day_of_cycle` – Number of days between the day when a contact subscribed to a campaign and the day when the follow-up is sent. Must be not used in existing messages and in the range of 0..10000.
 
 _JSON result:_
 
@@ -1713,7 +1713,7 @@ _JSON params:_
 Conditions:
 
 * `contact` (mandatory) – `CONTACT_ID`.
-* `cycle_day` (mandatory) – New value of cycle day, must be in the range of 0..1000. If cycle_day is null it deactivates contact.
+* `cycle_day` (mandatory) – New value of cycle day, must be in the range of 0..10000. If cycle_day is null it deactivates contact.
 
 _JSON result:_
 
@@ -3129,6 +3129,11 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.13.0, 2012-11-09
+
+* [add_follow_up](#add_follow_up), [set_follow_up_cycle](#set_follow_up_cycle) and [set_contact_cycle](#set_contact_cycle)
+  have maximum follow-up day increased from 1000 to 10000.
 
 version 1.12.0, 2012-09-17
 
