@@ -25,7 +25,7 @@ http://foo.bar/callback?action=open \
   &ACCOUNT_ID=A1&account_login=myaccount \
   &CAMPAIGN_ID=C1&campaign_name=mycampaign \
   &MESSAGE_ID=M1&message_name=My%20message&message_subject=Some%20subject \
-  &CONTACT_ID=C1&contact_name=Friend&contact_email=friend@implix.com`
+  &CONTACT_ID=C1&contact_name=Friend&contact_email=friend@implix.com
 ```
 
 All `*_ID` params are compatible with corresponding identifiers in [API](https://github.com/GetResponse/DevZone/tree/master/API/README.md).
