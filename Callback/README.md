@@ -6,7 +6,7 @@ version 1.0.0, 2012-11-06 [changelog](#changelog)
 
 Callbacks allow external systems to be notified about GetResponse contact activities.
 
-They can me managed using API [get_account_callbacks](https://github.com/GetResponse/DevZone/tree/master/API/README.md#get_account_callbacks), [set_account_callbacks](https://github.com/GetResponse/DevZone/tree/master/API/README.md#get_account_callbacks) and [delete_account_callbacks](https://github.com/GetResponse/DevZone/tree/master/API/README.md#delete_account_callbacks) methods.
+They can me managed using API [get_account_callbacks](https://github.com/GetResponse/DevZone/tree/master/API/README.md#get_account_callbacks), [set_account_callbacks](https://github.com/GetResponse/DevZone/tree/master/API/README.md#set_account_callbacks) and [delete_account_callbacks](https://github.com/GetResponse/DevZone/tree/master/API/README.md#delete_account_callbacks) methods.
 
 ##CALLS
 
