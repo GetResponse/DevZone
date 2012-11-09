@@ -20,7 +20,13 @@ They can me managed using API [get_account_callbacks](https://github.com/GetResp
 
 Sample HTTP callback looks like this:
 
-`http://foo.bar/callback?action=open&ACCOUNT_ID=A1&account_login=myaccount&CAMPAIGN_ID=C1&campaign_name=mycampaign&MESSAGE_ID=M1&message_name=My%20message&message_subject=Some%20subject&CONTACT_ID=C1&contact_name=Friend&contact_email=friend@implix.com`
+```
+http://foo.bar/callback?action=open \
+  &ACCOUNT_ID=A1&account_login=myaccount \
+  &CAMPAIGN_ID=C1&campaign_name=mycampaign \
+  &MESSAGE_ID=M1&message_name=My%20message&message_subject=Some%20subject \
+  &CONTACT_ID=C1&contact_name=Friend&contact_email=friend@implix.com`
+```
 
 All `*_ID` params are compatible with corresponding identifiers in [API](https://github.com/GetResponse/DevZone/tree/master/API/README.md).
 So for example after receiving [open](#open) callback one may call [get_message](#get_message) API method with `MESSAGE_ID` from callback
