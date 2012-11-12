@@ -120,6 +120,12 @@ _Params:_
 * `CONTACT_ID`
 * `contact_name` (optional)
 * `contact_email`
+* `goal_param_0`
+* `goal_param_1` (optional)
+* `goal_param_2` (optional)
+* `goal_param_3` (optional)
+* `goal_param_4` (optional)
+* `goal_param_5` (optional)
 
 ---
 
@@ -139,6 +145,10 @@ _Params:_
 Note that this callback is generated only when contact use unsubscribe link. Other removal reasons such as bounces of complaints are not reported through this callback.
 
 ##CHANGELOG<a name="changelog">
+
+version 1.1.0, 2012-11-12
+
+* goal params in [goal callback](#goal)
 
 version 1.0.0, 2012-11-06
 
