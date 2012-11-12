@@ -1239,7 +1239,7 @@ _JSON params:_
 
 Conditions:
 
-* `type` (optional) – Use newsletter or follow-up to narrow down count results to specific message types.
+* `type` (optional) – Use newsletter, follow-up or draft to narrow down count results to specific message types.
 
 _JSON result:_
 
@@ -1268,7 +1268,7 @@ _JSON params:_
 
 Conditions:
 
-* `type` (optional) – Use newsletter or follow-up to narrow down count results to specific message types.
+* `type` (optional) – Use newsletter, follow-up or draft to narrow down count results to specific message types.
 
 _JSON result:_
 
