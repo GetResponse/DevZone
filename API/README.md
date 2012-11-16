@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.14.0, 2012-11-09 [changelog](#changelog)
+version 1.15.0, 2012-11-14 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -856,6 +856,7 @@ _JSON result:_
             "sent"      : 1024,
             "opened"    : 512,
             "clicked"   : 128,
+			"forwarded"	: 2,
             "bounces_user_unknown"  : 8,
             "bounces_mailbox_full"  : 2,
             "bounces_block_content" : 0,
@@ -870,6 +871,7 @@ _JSON result:_
             "sent"      : 0,
             "opened"    : 64,
             "clicked"   : 16,
+			"forwarded"	: 0,
             "bounces_user_unknown"  : 0,
             "bounces_mailbox_full"  : 1,
             "bounces_block_content" : 0,
@@ -3220,6 +3222,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.15.0, 2012-11-14
+
+* [get_message_stats](#get_message_stats) has `forwarded` counter added
 
 version 1.14.0, 2012-11-09
 
