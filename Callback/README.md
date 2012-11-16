@@ -8,7 +8,9 @@ Callbacks allow external systems to be notified about GetResponse contact activi
 
 ####Configuration
 
-Callbacks can be managed using API [get_account_callbacks](https://github.com/GetResponse/DevZone/tree/master/API/README.md#get_account_callbacks), [set_account_callbacks](https://github.com/GetResponse/DevZone/tree/master/API/README.md#set_account_callbacks) and [delete_account_callbacks](https://github.com/GetResponse/DevZone/tree/master/API/README.md#delete_account_callbacks) methods.
+Callbacks can be managed using API [get_account_callbacks](https://github.com/GetResponse/DevZone/tree/master/API/README.md#get_account_callbacks), [set_account_callbacks](https://github.com/GetResponse/DevZone/tree/master/API/README.md#set_account_callbacks) and [delete_account_callbacks](https://github.com/GetResponse/DevZone/tree/master/API/README.md#delete_account_callbacks) methods or on [web interface](https://app.getresponse.com/my_api_key.html).
+
+We support SSL, so you can use either HTTP or HTTPS for callback messages.
 
 ####Parameters
 
