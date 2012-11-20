@@ -40,7 +40,7 @@ If you run into an error or you have difficulties with using the DC please conta
 
 ---
 
-####campaign predefined values<a name="campaign_predefined_values"/>
+####campaign predefined values
 
 Merge-words that are constant in your campaign.
 
@@ -54,7 +54,7 @@ Predefined values can be defined on [GetResponse WWW](https://app.getresponse.co
 
 ---
 
-####campaign or contact or message info<a name="campaign_or_contact_or_message_info"/>
+####campaign or contact or message info
 
 Basic merge-words providing info about campaign, contact or message. Please note that "contact" is called a "subscriber" in tokens due to backward compatibility.
 
@@ -100,7 +100,7 @@ After receiving click on your server use this `ID` to get additional info about 
 
 ---
 
-####contact custom fields<a name="contact_custom_fields"/>
+####contact custom fields
 
 Merge-words for contact custom (additional) fields.
 
@@ -118,7 +118,7 @@ Contact custom fields can be defined on [GetResponse WWW](https://app.getrespons
 
 ---
 
-####contact geo location<a name="contact_geo_location"/>
+####contact geo location
 
 Geo location info based on contact IP (if available).
 
@@ -149,7 +149,7 @@ Empty string is inserted into the message on undefined value. This behavior can 
 
 ---
 
-####contact subscription date<a name="contact_subscription_date"/>
+####contact subscription date
 
 Contact subscription date that can be presented in various formats.
 
@@ -189,7 +189,7 @@ Ordinated values are always stripped of leading zeros.
 
 ---
 
-####clicktracked links<a name="clicktracked_links"/>
+####clicktracked links
 
 Mark links for click counting tracking and assign optional description for statistics.
 
@@ -256,7 +256,7 @@ Merging is opposite to splitting – many links with different URLs will be show
 
 ---
 
-####system links<a name="system_links"/>
+####system links
 
 Links that allow contact to perform actions.
 
@@ -276,7 +276,7 @@ Supported tokens and message types they can be used in:
 
 ---
 
-####social links<a name="social_links"/>
+####social links
 
 Links that allow contact to share info about message on social media.
 
@@ -297,7 +297,7 @@ Allowed tokens:
 
 ---
 
-####qrcode links<a name="qrcode_links"/>
+####qrcode links
 
 Links that allow to place QR Code into your message.
 
@@ -316,7 +316,7 @@ Nested tags have following restrictions:
 
 ---
 
-####dates<a name="dates"/>
+####dates
 
 Date of email delivery that can be presented in various formats and be time-shifted.
 
@@ -371,7 +371,7 @@ Total amount of time shift cannot exceed +/-16 years. If it does then unmodified
 
 ---
 
-####timers<a name="timers"/>
+####timers
 
 Countdown to/since given timestamp or contact subscription date.
 
@@ -422,7 +422,7 @@ Second / third params (both are mandatory, even if empty) are future / past form
 
 ---
 
-####randoms<a name="randoms"/>
+####randoms
 
 Inserts random text from provided list.
 
@@ -432,7 +432,7 @@ Inserts random text from provided list.
 
 ---
 
-####currency conversions<a name="currency_conversions"/>
+####currency conversions
 
 Convert between price currencies in your email depending on which country is your contact from.
 
@@ -447,7 +447,7 @@ Target currency is determined by 2-letters `{{CUSTOM "country_code"}}` value or 
 
 ---
 
-####conditions<a name="conditions"/>
+####conditions
 
 Allows to display various parts of message depending on [campaign or contact or message_info](#campaign_or_contact_or_message_info), [contact custom fields](#contact_custom_fields), [contact geo location](#contact_geo_location) or [dates](#dates).
 
@@ -572,7 +572,7 @@ Presence of custom of given name is always checked before presence of such named
 
 ---
 
-####external content<a name="external_content"/>
+####external content
 
 Include content from any WWW server in message.
 
@@ -660,7 +660,7 @@ What may go wrong when using external content?
 
 In such cases evaluated link will be inserted into the message.
 
-##BEAUTIFULIZERS<a name="beautifulizers"/>
+##BEAUTIFULIZERS
 
 Several beautifulizers are allowed in some tags:
 

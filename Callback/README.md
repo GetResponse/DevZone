@@ -50,7 +50,7 @@ If you run into an error or you have difficulties with using the DC please conta
 
 ---
 
-####subscribe<a name="subscribe"/>
+####subscribe
 
 _Params:_
 
@@ -67,7 +67,7 @@ _Params:_
 
 ---
 
-####open<a name="open"/>
+####open
 
 _Params:_
 
@@ -85,7 +85,7 @@ _Params:_
 
 ---
 
-####click<a name="click"/>
+####click
 
 _Params:_
 
@@ -105,7 +105,7 @@ _Params:_
 
 ---
 
-####goal<a name="goal"/>
+####goal
 
 _Params:_
 
@@ -131,7 +131,7 @@ _Params:_
 
 ---
 
-####unsubscribe<a name="unsubscribe"/>
+####unsubscribe
 
 _Params:_
 

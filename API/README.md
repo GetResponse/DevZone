@@ -166,7 +166,7 @@ If you run into an error or you have difficulties with using the API please cont
 
 ---
 
-####ping<a name="ping"/>
+####ping
 
 Test connection with API.
 
@@ -188,7 +188,7 @@ _JSON result:_
 
 ---
 
-####get_account_info<a name="get_account_info"/>
+####get_account_info
 
 Get basic info about your account.
 
@@ -213,7 +213,7 @@ _JSON result:_
 
 ---
 
-####get_account_from_fields<a name="get_account_from_fields"/>
+####get_account_from_fields
 
 Get list of email addresses assigned to account.
 
@@ -244,7 +244,7 @@ _JSON result:_
 
 ---
 
-####get_account_from_field<a name="get_account_from_field"/>
+####get_account_from_field
 
 Get single email address assigned to account using `FROM_FIELD_ID`.
 
@@ -276,7 +276,7 @@ _JSON result:_
 
 ---
 
-####add_account_from_field<a name="add_account_from_field"/>
+####add_account_from_field
 
 Assign email address to account. It can be used in newly created campaigns.
 
@@ -307,7 +307,7 @@ _JSON error messages (if any):_ `Invalid email syntax`.
 
 ---
 
-####get_account_domains<a name="get_account_domains"/>
+####get_account_domains
 
 Get domains assigned to account using web interface.
 
@@ -338,7 +338,7 @@ _JSON result:_
 
 ---
 
-####get_account_domain<a name="get_account_domain"/>
+####get_account_domain
 
 Get single domain assigned to account using web interface. Comes in handy when you need to check which domain has campaign assigned.
 
@@ -366,7 +366,7 @@ _JSON result:_
 
 ---
 
-####get_campaigns<a name="get_campaigns"/>
+####get_campaigns
 
 Get list of campaigns in account.
 
@@ -423,7 +423,7 @@ and the only one key from response is `CAMPAIGN_ID`.
 
 ---
 
-####get_campaign<a name="get_campaign"/>
+####get_campaign
 
 Get single campaign using `CAMPAIGN_ID`.
 Useful for checking which campaign the contact or message belongs to.
@@ -460,7 +460,7 @@ _JSON result:_
 
 ---
 
-####add_campaign<a name="add_campaign"/>
+####add_campaign
 
 Add campaign to account.
 
@@ -508,7 +508,7 @@ _JSON error messages (if any):_ `Total limit of campaigns exceeded`, `Invalid em
 
 ---
 
-####get_campaign_domain<a name="get_campaign_domain"/>
+####get_campaign_domain
 
 Check if any account domain is assigned to campaign. Assigned domain will be used in links in messages sent from this campaign.
 
@@ -544,7 +544,7 @@ _JSON error messages (if any):_ `Missing campaign`.
 
 ---
 
-####set_campaign_domain<a name="set_campaign_domain"/>
+####set_campaign_domain
 
 Assign account domain to campaign. Assigned domain will be used in links in messages sent from this campaign.
 
@@ -579,7 +579,7 @@ _JSON error messages (if any):_ `Missing campaign`, `Missing account domain`.
 
 ---
 
-####delete_campaign_domain<a name="delete_campaign_domain"/>
+####delete_campaign_domain
 
 Detach account domain from campaign. Unassigned domain will no longer be used in links in messages sent from this campaign.
 
@@ -614,7 +614,7 @@ _JSON error messages (if any):_ `Missing campaign`.
 
 ---
 
-####get_campaign_postal_address<a name="get_campaign_postal_address"/>
+####get_campaign_postal_address
 
 Get postal address and postal design (formatting) in campaign. Postal address is attached to every message sent from campaign.
 
@@ -653,7 +653,7 @@ _JSON error messages (if any):_ `Missing campaign`.
 
 ---
 
-####set_campaign_postal_address<a name="set_campaign_postal_address"/>
+####set_campaign_postal_address
 
 Set postal address and postal design (formatting) in campaign. Postal address is attached to every message sent from campaign.
 
@@ -698,7 +698,7 @@ _JSON error messages (if any):_ `Missing campaign`, `Token missing in design`.
 
 ---
 
-####get_messages<a name="get_messages"/>
+####get_messages
 
 Get messages in account.
 
@@ -744,7 +744,7 @@ _JSON result:_
     }
 ```
 
-Array `flags` may be present with following items:<a name="message_flags"/>
+Array `flags` may be present with following items:
 
 * `clicktrack` – Clicks on links in message are counted.  Note that for the link to be click-tracked it must be also wrapped in [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC#clicktracked_links) `{{LINK}}` tag. This behaves differently than web interface, where (for simplicity) all links are click-tracked when click-track checkbox is set.
 * `subscription_reminder` – Short disclaimer is added to the message content to make sure that subscriber know why they are receiving the messages.
@@ -759,7 +759,7 @@ Array `flags` may be present with following items:<a name="message_flags"/>
 
 ---
 
-####get_message<a name="get_message"/>
+####get_message
 
 Get single message using `MESSAGE_ID`.
 
@@ -795,7 +795,7 @@ _JSON result:_
 
 ---
 
-####get_message_contents<a name="get_message_contents"/>
+####get_message_contents
 
 Get message contents (parts).
 
@@ -829,7 +829,7 @@ _JSON result:_
 
 ---
 
-####get_message_stats<a name="get_message_stats"/>
+####get_message_stats
 
 Get message statistics with daily resolution.
 
@@ -889,7 +889,7 @@ _JSON result:_
 
 ---
 
-####send_newsletter<a name="send_newsletter"/>
+####send_newsletter
 
 Queue a newsletter to be sent.
 
@@ -1020,7 +1020,7 @@ Correct way of sending personalized content is to use [GetResponse Dynamic Conte
 
 ---
 
-####add_follow_up<a name="add_follow_up"/>
+####add_follow_up
 
 Add a follow-up to the campaign at the specific day of cycle.
 
@@ -1080,7 +1080,7 @@ _JSON error messages (if any):_ `Missing campaign`, `Missing From field`, `Missi
 
 ---
 
-####add_draft<a name="add_draft"/>
+####add_draft
 
 Add a draft of given message type to the campaign. Useful for autosave features.
 
@@ -1127,7 +1127,7 @@ _JSON error messages (if any):_ `Missing campaign`, `Missing From field`, `Missi
 
 ---
 
-####delete_newsletter<a name="delete_newsletter"/>
+####delete_newsletter
 
 Delete newsletter from campaign.
 
@@ -1160,7 +1160,7 @@ _JSON error messages (if any):_ `Missing message`, `Message is not newsletter`, 
 
 ---
 
-####delete_follow_up<a name="delete_follow_up"/>
+####delete_follow_up
 
 Delete follow-up from campaign.
 
@@ -1191,7 +1191,7 @@ _JSON error messages (if any):_ `Missing message`, `Message is not follow-up`.
 
 ---
 
-####set_follow_up_cycle<a name="set_follow_up_cycle"/>
+####set_follow_up_cycle
 
 Set day of cycle of existing follow-up.
 
@@ -1224,7 +1224,7 @@ _JSON error messages (if any):_ `Missing message`, `Message is not follow-up`, `
 
 ---
 
-####get_messages_amount_per_account<a name="get_messages_amount_per_account"/>
+####get_messages_amount_per_account
 
 Get total messages amount on your account.
 
@@ -1253,7 +1253,7 @@ _JSON result:_
 
 ---
 
-####get_messages_amount_per_campaign<a name="get_messages_amount_per_campaign"/>
+####get_messages_amount_per_campaign
 
 Get total messages amount in every campaign on your account.
 
@@ -1287,7 +1287,7 @@ _JSON result:_
 
 ---
 
-####get_contacts<a name="get_contacts"/>
+####get_contacts
 
 Get list of contacts from the account.
 
@@ -1386,7 +1386,7 @@ _JSON result:_
 
 ---
 
-####get_contact<a name="get_contact"/>
+####get_contact
 
 Get a single contact using `CONTACT_ID`.
 
@@ -1423,7 +1423,7 @@ _JSON result:_
 
 ---
 
-####set_contact_name<a name="set_contact_name"/>
+####set_contact_name
 
 Set contact name.
 
@@ -1456,7 +1456,7 @@ _JSON error messages (if any):_  `Missing contact`.
 
 ---
 
-####get_contact_customs<a name="get_contact_customs"/>
+####get_contact_customs
 
 Get list of contact customs.
 
@@ -1488,7 +1488,7 @@ _JSON result:_
 
 ---
 
-####set_contact_customs<a name="set_contact_customs"/>
+####set_contact_customs
 
 Set contact customs.
 
@@ -1567,7 +1567,7 @@ This will clear all content values of multi-value custom and set two new ones.
 
 ---
 
-####get_contact_geoip<a name="get_contact_geoip"/>
+####get_contact_geoip
 
 Get contact geo location based on IP address from which the subscription was processed.
 
@@ -1607,7 +1607,7 @@ _JSON result:_
 
 ---
 
-####get_contact_opens<a name="get_contact_opens"/>
+####get_contact_opens
 
 List dates when the messages were opened by contact.
 
@@ -1641,7 +1641,7 @@ Note that if a contact opened the same message multiple times, only the newest d
 
 ---
 
-####get_contact_clicks<a name="get_contact_clicks"/>
+####get_contact_clicks
 
 List dates when the links in messages were clicked by contact.
 
@@ -1675,7 +1675,7 @@ Note that if a contact clicked the same link multiple times only newest date is 
 
 ---
 
-####get_contact_goals<a name="get_contact_goals"/>
+####get_contact_goals
 
 List dates when the goals were reached by contacts.
 
@@ -1709,7 +1709,7 @@ Note that if a contact reached the same goal multiple times only newest date is 
 
 ---
 
-####set_contact_cycle<a name="set_contact_cycle"/>
+####set_contact_cycle
 
 Place a contact on a desired day of the follow-up cycle or deactivate a contact.
 
@@ -1744,7 +1744,7 @@ _JSON error messages (if any):_ `Missing contact`.
 
 ---
 
-####add_contact<a name="add_contact"/>
+####add_contact
 
 Add contact to the list.
 
@@ -1802,7 +1802,7 @@ _JSON error messages (if any):_ `Invalid email syntax`, `Missing campaign`, `Con
 
 ---
 
-####move_contact<a name="move_contact"/>
+####move_contact
 
 Move contact from one campaign to another.
 
@@ -1835,7 +1835,7 @@ _JSON error messages (if any):_ `Missing contact`, `Missing campaign`, `Contact 
 
 ---
 
-####delete_contact<a name="delete_contact"/>
+####delete_contact
 
 Delete contact.
 
@@ -1866,7 +1866,7 @@ _JSON result:_
 
 ---
 
-####get_contacts_deleted<a name="get_contacts_deleted"/>
+####get_contacts_deleted
 
 Get deleted contacts.
 
@@ -1943,7 +1943,7 @@ _JSON result:_
 
 ---
 
-####get_contacts_subscription_stats<a name="get_contacts_subscription_stats"/>
+####get_contacts_subscription_stats
 
 Get contacts subscription stats aggregated by date, campaign and contact’s origin.
 
@@ -2031,7 +2031,7 @@ _JSON result:_
 
 ---
 
-####get_contacts_amount_per_account<a name="get_contacts_amount_per_account"/>
+####get_contacts_amount_per_account
 
 Get total contacts amount on your account.
 
@@ -2053,7 +2053,7 @@ _JSON result:_
 
 ---
 
-####get_contacts_amount_per_campaign<a name="get_contacts_amount_per_campaign"/>
+####get_contacts_amount_per_campaign
 
 Get total contacts amount in every campaign on your account.
 
@@ -2081,7 +2081,7 @@ _JSON result:_
 
 ---
 
-####get_segments<a name="get_segments"/>
+####get_segments
 
 Get contact segments saved on web interface to use in [send_newsletter](#send_newsletter).
 
@@ -2117,7 +2117,7 @@ _JSON result:_
 
 ---
 
-####get_links<a name="get_links"/>
+####get_links
 
 Get clicktracked links.
 
@@ -2164,7 +2164,7 @@ _JSON result:_
 
 ---
 
-####get_link<a name="get_link"/>
+####get_link
 
 Get single click-tracked link using LINK_ID.
 
@@ -2194,7 +2194,7 @@ _JSON result:_
 
 ---
 
-####get_goals<a name="get_goals"/>
+####get_goals
 
 Get goals.
 
@@ -2240,7 +2240,7 @@ _JSON result:_
 
 ---
 
-####get_goal<a name="get_goal"/>
+####get_goal
 
 Get single goal using GOAL_ID.
 
@@ -2276,7 +2276,7 @@ _JSON result:_
 
 ---
 
-####get_account_blacklist<a name="get_account_blacklist"/>
+####get_account_blacklist
 
 Get blacklist masks on account level.
 
@@ -2297,7 +2297,7 @@ _JSON result:_
     }
 ```
 
-Format of mask can be:<a name="mask_format"/>
+Format of mask can be:
 
 * whole email  – xxx@yyy.zz
 * local part of email- xxx@
@@ -2310,7 +2310,7 @@ Format of mask can be:<a name="mask_format"/>
 
 ---
 
-####add_account_blacklist<a name="add_account_blacklist"/>
+####add_account_blacklist
 
 Adds blacklist mask on account level.
 
@@ -2341,7 +2341,7 @@ _JSON error messages (if any):_  `Cannot set mask` (some masks are forbidden to 
 
 ---
 
-####delete_account_blacklist<a name="delete_account_blacklist"/>
+####delete_account_blacklist
 
 Delete blacklist mask on account level.
 
@@ -2372,7 +2372,7 @@ _JSON error messages (if any):_ `Cannot set mask` (some masks are forbidden to m
 
 ---
 
-####get_campaign_blacklist<a name="get_campaign_blacklist"/>
+####get_campaign_blacklist
 
 Get blacklist masks on campaign level.
 
@@ -2404,7 +2404,7 @@ _JSON result:_
 
 ---
 
-####add_campaign_blacklist<a name="add_campaign_blacklist"/>
+####add_campaign_blacklist
 
 Adds blacklist mask on campaign level.
 
@@ -2437,7 +2437,7 @@ _JSON error messages (if any):_ `Missing campaign`, `Cannot set mask` (some mask
 
 ---
 
-####delete_campaign_blacklist<a name="delete_campaign_blacklist"/>
+####delete_campaign_blacklist
 
 Delete blacklist mask on campaign level.
 
@@ -2470,7 +2470,7 @@ _JSON error messages (if any):_ `Missing campaign`, `Cannot set mask` (some mask
 
 ---
 
-####get_suppressions<a name="get_suppressions"/>
+####get_suppressions
 
 Get list of defined suppression lists on your account.
 
@@ -2499,7 +2499,7 @@ _JSON result:_
 
 ---
 
-####get_suppression<a name="get_suppression"/>
+####get_suppression
 
 Get single suppression using `SUPPRESSION_ID`.
 
@@ -2531,7 +2531,7 @@ _JSON result:_
 
 ---
 
-####add_suppression<a name="add_suppression"/>
+####add_suppression
 
 Add suppression list to your account.
 
@@ -2565,7 +2565,7 @@ _JSON error messages (if any):_ `Name already used`.
 
 ---
 
-####delete_suppression<a name="delete_suppression"/>
+####delete_suppression
 
 Delete suppression list from your account.
 
@@ -2600,7 +2600,7 @@ _JSON error messages (if any):_ `Missing suppression`.
 
 ---
 
-####get_suppression_skiplist<a name="get_suppression_skiplist"/>
+####get_suppression_skiplist
 
 Skiplist is a set of masks for suppression. If contact’s email address matches any of those masks in message that uses this suppression then it will be skipped.
 
@@ -2637,7 +2637,7 @@ _JSON error messages (if any):_ `Missing suppression`.
 
 ---
 
-####add_suppression_skiplist<a name="add_suppression_skiplist"/>
+####add_suppression_skiplist
 
 Add mask to a set of masks for suppression.
 
@@ -2670,7 +2670,7 @@ _JSON error messages (if any):_ `Missing suppression`, `Invalid mask syntax`.
 
 ---
 
-####delete_suppression_skiplist<a name="delete_suppression_skiplist"/>
+####delete_suppression_skiplist
 
 Delete mask from a set of masks for suppression.
 
@@ -2705,7 +2705,7 @@ _JSON error messages (if any):_ `Missing suppression`, `Invalid mask syntax`, `M
 
 ---
 
-####get_confirmation_subjects<a name="get_confirmation_subjects"/>
+####get_confirmation_subjects
 
 Get list of available subjects for confirmation messages. They can be used in campaign settings.
 
@@ -2741,7 +2741,7 @@ _JSON result:_
 
 ---
 
-####get_confirmation_subject<a name="get_confirmation_subject"/>
+####get_confirmation_subject
 
 Get single subject for confirmation message using `CONFIRMATION_SUBJECT_ID`.
 
@@ -2773,7 +2773,7 @@ _JSON result:_
 
 ---
 
-####get_confirmation_bodies<a name="get_confirmation_bodies"/>
+####get_confirmation_bodies
 
 Get list of available bodies for confirmation messages. They can be used in campaign settings.
 
@@ -2811,7 +2811,7 @@ _JSON result:_
 
 ---
 
-####get_confirmation_body<a name="get_confirmation_body"/>
+####get_confirmation_body
 
 Get single body for confirmation message using `CONFIRMATION_BODY_ID`.
 
@@ -2844,7 +2844,7 @@ _JSON result:_
 
 ---
 
-####get_account_callbacks<a name="get_account_callbacks"/>
+####get_account_callbacks
 
 Get [callbacks](https://github.com/GetResponse/DevZone/tree/master/Callback/README.md) configuration for account.
 
@@ -2867,7 +2867,7 @@ _JSON result:_
 
 ---
 
-####set_account_callbacks<a name="set_account_callbacks"/>
+####set_account_callbacks
 
 Set [callbacks](https://github.com/GetResponse/DevZone/tree/master/Callback/README.md) configuration for account.
 
@@ -2898,7 +2898,7 @@ _JSON result:_
 
 ---
 
-####delete_account_callbacks<a name="delete_account_callbacks"/>
+####delete_account_callbacks
 
 Delete [callbacks](https://github.com/GetResponse/DevZone/tree/master/Callback/README.md) configuration for account.
 
@@ -2920,7 +2920,7 @@ _JSON result:_
 
 ---
 
-####add_account<a name="add_account"/>
+####add_account
 
 Add new account to server.
 
@@ -2989,7 +2989,7 @@ _JSON error messages (if any):_ `Owner privilege missing`, `Login already taken`
 
 ---
 
-####get_accounts<a name="get_accounts"/>
+####get_accounts
 
 List all accounts on server.
 
@@ -3038,7 +3038,7 @@ Every field is present in response, even if it has null value.
 
 ---
 
-####get_account<a name="get_account"/>
+####get_account
 
 Get one account on server using `ACCOUNT_ID`.
 
@@ -3084,7 +3084,7 @@ This method is useful to obtain API KEY of newly created account.
 
 ---
 
-####set_account_status<a name="set_account_status"/>
+####set_account_status
 
 Enable or disable account.
 
@@ -3117,7 +3117,7 @@ _JSON result:_
 
 _JSON error messages (if any):_ `Owner privilege missing`, `Missing account`, `Cannot modify owner account` (owner account cannot set status of itself or another owner account).
 
-##OPERATORS<a name="operators"/>
+##OPERATORS
 
 There may be several types of operators in method conditions.
 
@@ -3136,7 +3136,7 @@ Time:
 
 **Warning**: Operators must be UPPERCASED.
 
-##IDs in conditions<a name="ids"/>
+##IDs in conditions
 
 In many methods IDs may be passed to conditions. Method [get_messages](#get_messages) will be used as an example of how to do it.
 
@@ -3221,7 +3221,7 @@ Errors not included in spec:
 ```
 
 
-##CHANGELOG<a name="changelog"/>
+##CHANGELOG
 
 version 1.15.0, 2012-11-14
 
