@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.15.0, 2012-11-14 [changelog](#changelog)
+version 1.16.0, 2012-11-21 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -104,6 +104,7 @@ If you run into an error or you have difficulties with using the API please cont
 * [get_contact_opens](#get_contact_opens)
 * [get_contact_clicks](#get_contact_clicks)
 * [get_contact_goals](#get_contact_goals)
+* [get_contact_surveys](#get_contact_surveys)
 * [set_contact_cycle](#set_contact_cycle)
 * [add_contact](#add_contact)
 * [move_contact](#move_contact)
@@ -123,6 +124,12 @@ If you run into an error or you have difficulties with using the API please cont
 
 * [get_goals](#get_goals)
 * [get_goal](#get_goal)
+
+####Surveys
+
+* [get_surveys](#get_surveys)
+* [get_survey](#get_survey)
+* [get_survey_stats](#get_survey_stats)
 
 ####Blacklists
 
@@ -1709,6 +1716,47 @@ Note that if a contact reached the same goal multiple times only newest date is 
 
 ---
 
+####get_contact_surveys<a name="get_contact_surveys"/>
+
+List survey results filled by contacts.
+
+_JSON params:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "contact" : "CONTACT_ID"
+        }
+    ]
+```
+
+Conditions:
+
+* `contact` (mandatory) – `CONTACT_ID`.
+
+_JSON result:_
+
+```json
+	{
+		"SURVEY_ID" :	{
+			"QUESTION_ID"	: "Too high!",
+			"QUESTION_ID"	: [ "OPTION_ID", "OPTION_ID" ],
+        	"created_on"	: "2012-11-06 23:33:11"
+    	},
+		"SURVEY_ID" :	{
+			"QUESTION_ID"	: [ "OPTION_ID" ],
+        	"created_on"	: "2012-11-11 12:54:01"
+    	}
+	}
+```
+
+Questions that do not have predetermined answers (text fields) have response returned as string while questions with predetermined answers (single/multi selects) have array of selected options returned.
+
+Meaning of every `QUESTION_ID` and `OPTION_ID` can be found by calling [get_survey](#get_survey) method with given `SURVEY_ID`.
+
+---
+
 ####set_contact_cycle<a name="set_contact_cycle"/>
 
 Place a contact on a desired day of the follow-up cycle or deactivate a contact.
@@ -2273,6 +2321,164 @@ _JSON result:_
         }
     }
 ```
+
+---
+
+####get_surveys<a name="get_surveys"/>
+
+Get surveys.
+
+_JSON params:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "status" 	: "value",
+            "name"		: { "OPERATOR" : "value" },
+        }
+    ]
+```
+
+Conditions:
+
+* `status` (optional) – Allowed values are `unpublished`, `published` and `closed`.
+* `name` (optional) – Use [text operators](#operators) to narrow down search results to specific survey name.
+
+_JSON result:_
+
+```json
+    {
+        "SURVEY_ID": {
+            "name"			: "My survey 1",
+			"title"			: "Tell me something about yourself.",
+            "description"	: "Trying to engage my potential customers",
+            "questions"	: {
+	            "QUESTION_ID"	: {
+					"name"	: "What do you think about gas prices?",
+					"note"	: null
+    			},
+                "QUESTION_ID"	: {
+					"name"	: "What car do you own?",
+					"note"	: "You may select multiple brands",
+                    "options": {
+                        "OPTION_ID"	: {	"name": "Dodge" },
+                        "OPTION_ID"	: {	"name": "Ford" },
+                        "OPTION_ID"	: {	"name": "Uaz" },
+                        "OPTION_ID"	: {	"name": "other" }
+                    }
+                }
+            },
+            "status" : "closed",
+            "created_on": "2012-01-01 00:00:00"
+        },
+		"SURVEY_ID": {
+            "name"			: "My survey 2",
+			"title"			: null,
+            "description"	: null,
+            "questions"	: {
+	            "QUESTION_ID"	: {
+					"name"	: "Truth or dare?",
+					"note"	: null,
+					"options": {
+                        "OPTION_ID"	: {	"name": "Truth" },
+                        "OPTION_ID"	: {	"name": "Dare" }
+                    }
+    			}
+			},
+			"status" : "published",
+	        "created_on": "2012-02-02 00:00:00"
+		}
+    }
+```
+
+---
+
+####get_survey<a name="get_survey"/>
+
+Get single survey using SURVEY_ID.
+
+_JSON params:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "survey"	: "SURVEY_ID"
+        }
+    ]
+```
+
+_JSON result:_
+
+```json
+    {
+        "SURVEY_ID": {
+            "name"			: "My survey 1",
+			"title"			: "Tell me something about yourself.",
+            "description"	: "Trying to engage my potential customers",
+            "questions"	: {
+	            "QUESTION_ID"	: {
+					"name"	: "What do you think about gas prices?",
+					"note"	: null
+    			},
+                "QUESTION_ID"	: {
+					"name"	: "What car do you own?",
+					"note"	: "You may select multiple brands",
+                    "options": {
+                        "OPTION_ID"	: {	"name": "Dodge" },
+                        "OPTION_ID"	: {	"name": "Ford" },
+                        "OPTION_ID"	: {	"name": "Uaz" },
+                        "OPTION_ID"	: {	"name": "other" }
+                    }
+                }
+            },
+            "status" : "closed",
+            "created_on": "2012-01-01 00:00:00"
+        }
+	}
+```
+
+---
+
+####get_survey_stats<a name="get_survey_stats"/>
+
+Get message statistics with summarized amount of every choices.
+
+_JSON params:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "survey"	: "SURVEY_ID",
+			"anonymous"	: true
+        }
+    ]
+```
+
+Conditions:
+
+* `survey` (mandatory) – `SURVEY_ID`, may be obtained from [get_surveys](#get_surveys).
+* `anonymous` (optional) – Allowed values are `true` and `false`. Survey may be filled by contact (for example when it was sent by email and `CONTACT_ID` is known) or by anonymous visitor (for example when survey is linked on www page). When this param is skipped all responses are counted without distinguishing who filled the survey.
+
+_JSON result:_
+
+```json
+	{
+    	"QUESTION_ID" 	: 2,
+		"QUESTION_ID"	: {
+        	"OPTION_ID" : 128,
+        	"OPTION_ID" : 2,
+        	"OPTION_ID" : 0,
+        	"OPTION_ID" : 4
+		}
+	}
+```
+
+Questions that do not have predetermined answers (text fields) have total amount of responses returned while questions with predetermined answers (single/multi selects) have amount of responses for every option returned.
+
+Meaning of every `QUESTION_ID` and `OPTION_ID` can be found by calling [get_surveys](#get_surveys) method.
 
 ---
 
@@ -3222,6 +3428,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.16.0, 2012-11-21
+
+* [get_surveys](#get_surveys), [get_survey](#get_survey), [get_survey_stats](#get_survey_stats) and [get_contact_surveys](#get_contact_surveys) for surveys added
 
 version 1.15.0, 2012-11-14
 
