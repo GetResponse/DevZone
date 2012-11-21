@@ -2361,7 +2361,7 @@ _JSON result:_
                 "QUESTION_ID"	: {
 					"name"	: "What car do you own?",
 					"note"	: "You may select multiple brands",
-                    "options": {
+                    "options"	: {
                         "OPTION_ID"	: {	"name": "Dodge" },
                         "OPTION_ID"	: {	"name": "Ford" },
                         "OPTION_ID"	: {	"name": "Uaz" },
@@ -2369,8 +2369,8 @@ _JSON result:_
                     }
                 }
             },
-            "status" : "closed",
-            "created_on": "2012-01-01 00:00:00"
+            "status" 		: "closed",
+            "created_on"	: "2012-01-01 00:00:00"
         },
 		"SURVEY_ID": {
             "name"			: "My survey 2",
@@ -2380,14 +2380,14 @@ _JSON result:_
 	            "QUESTION_ID"	: {
 					"name"	: "Truth or dare?",
 					"note"	: null,
-					"options": {
+					"options"	: {
                         "OPTION_ID"	: {	"name": "Truth" },
                         "OPTION_ID"	: {	"name": "Dare" }
                     }
     			}
 			},
-			"status" : "published",
-	        "created_on": "2012-02-02 00:00:00"
+			"status" 		: "published",
+	        "created_on"	: "2012-02-02 00:00:00"
 		}
     }
 ```
@@ -2425,7 +2425,7 @@ _JSON result:_
                 "QUESTION_ID"	: {
 					"name"	: "What car do you own?",
 					"note"	: "You may select multiple brands",
-                    "options": {
+                    "options"	: {
                         "OPTION_ID"	: {	"name": "Dodge" },
                         "OPTION_ID"	: {	"name": "Ford" },
                         "OPTION_ID"	: {	"name": "Uaz" },
@@ -2433,8 +2433,8 @@ _JSON result:_
                     }
                 }
             },
-            "status" : "closed",
-            "created_on": "2012-01-01 00:00:00"
+            "status"		: "closed",
+            "created_on"	: "2012-01-01 00:00:00"
         }
 	}
 ```
