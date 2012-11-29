@@ -149,8 +149,8 @@ _Params:_
 * `survey_title` (optional)
 * `QUESTION_ID`
 * `question_name`
-* `OPTION_ID` (optional, jak nie jest question textowy)
-* `option_name` (optional, jak nie jest question textowy)
+* `OPTION_ID` (optional)
+* `option_name` (optional)
 * `CONTACT_ID` (optional)
 * `contact_name` (optional)
 * `contact_email` (optional)
