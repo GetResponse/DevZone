@@ -1,6 +1,6 @@
 #GetResponse Callback
 
-version 1.0.0, 2012-11-06 [changelog](#changelog)
+version 1.2.0, 2012-11-29 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -46,6 +46,7 @@ If you run into an error or you have difficulties with using the DC please conta
 * [open](#open)
 * [click](#click)
 * [goal](#goal)
+* [survey](#survey)
 * [unsubscribe](#unsubscribe)
 
 ---
@@ -131,6 +132,31 @@ _Params:_
 
 ---
 
+####survey<a name="survey"/>
+
+_Params:_
+
+* `action` - Always `survey`.
+* `ACCOUNT_ID`
+* `account_login`
+* `CAMPAIGN_ID`
+* `campaign_name`
+* `MESSAGE_ID` (optional)
+* `message_name` (optional)
+* `message_subject` (optional)
+* `SURVEY_ID`
+* `survey_name`
+* `survey_title` (optional)
+* `QUESTION_ID`
+* `question_name`
+* `OPTION_ID` (optional, jak nie jest question textowy)
+* `option_name` (optional, jak nie jest question textowy)
+* `CONTACT_ID` (optional)
+* `contact_name` (optional)
+* `contact_email` (optional)
+
+---
+
 ####unsubscribe<a name="unsubscribe"/>
 
 _Params:_
@@ -147,6 +173,10 @@ _Params:_
 Note that this callback is generated only when contact use unsubscribe link. Other removal reasons such as bounces of complaints are not reported through this callback.
 
 ##CHANGELOG<a name="changelog">
+
+version 1.2.0, 2012-11-29
+
+* survey params in [survey callback](#survey)
 
 version 1.1.0, 2012-11-12
 
