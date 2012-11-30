@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.17.0, 2012-11-30 [changelog](#changelog)
+version 1.17.1, 2012-11-30 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -20,6 +20,8 @@ In order to use GetResponse API the API KEY is required.
 ####Protocol
 
 GetResponse API is [JSON-RPC](http://www.jsonrpc.org/) based and supports both 1.0 and 2.0 specifications.
+
+**Warning**: 1.1 draft specification support will be dropped by the end of the year, please adjust your code/libraries to use official 1.0 or 2.0 specification.
 
 ---
 
@@ -3430,6 +3432,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.17.1, 2012-11-30
+
+* added note about dropping JSON-RPC 1.1 draft specification
 
 version 1.17.0, 2012-11-30
 
