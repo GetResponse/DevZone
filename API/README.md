@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.17.1, 2012-11-30 [changelog](#changelog)
+version 1.18.0, 2012-11-30 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -19,7 +19,7 @@ In order to use GetResponse API the API KEY is required.
 
 ####Protocol
 
-GetResponse API is [JSON-RPC](http://www.jsonrpc.org/) based and supports both 1.0 and 2.0 specifications.
+GetResponse API is [JSON-RPC](http://www.jsonrpc.org/) based and supports both 1.0 and 2.0 (with Notifications and Batches) specifications.
 
 **Warning**: 1.1 draft specification support will be dropped by the end of the year, please adjust your code/libraries to use official 1.0 or 2.0 specification.
 
@@ -3399,7 +3399,7 @@ It will return messages from campaigns that have name beginning with my_campaign
 
 ##ERRORS
 
-Field `error` format is compatible with [JSON-RPC 2.0 spec](http://www.jsonrpc.org/spec.html).
+Field `error` format is compatible with [JSON-RPC 2.0 spec](http://www.jsonrpc.org/specification#error_object).
 
 Errors not included in spec:
 
@@ -3425,13 +3425,17 @@ Errors not included in spec:
 
 ```json
     {
-        "code"      : -2,
+        "code"      : -1,
         "message"   : "...",
     }
 ```
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.18.0, 2012-11-30
+
+* added support for [Batches](http://www.jsonrpc.org/specification#batch) and [Notifications](http://www.jsonrpc.org/specification#notification) in JSON-RPC 2.0
 
 version 1.17.1, 2012-11-30
 
