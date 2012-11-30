@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.16.0, 2012-11-21 [changelog](#changelog)
+version 1.17.0, 2012-11-30 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -1755,6 +1755,8 @@ Questions that do not have predetermined answers (text fields) have response ret
 
 Meaning of every `QUESTION_ID` and `OPTION_ID` can be found by calling [get_survey](#get_survey) method with given `SURVEY_ID`.
 
+**Hint**: If you want to keep surveys synchronized with external database, then setting survey [callback](https://github.com/GetResponse/DevZone/tree/master/Callback/README.md) is much more efficient than querying this method periodically.
+
 ---
 
 ####set_contact_cycle<a name="set_contact_cycle"/>
@@ -3084,7 +3086,7 @@ _JSON params:_
         "API_KEY",
 		{
 			"uri" 		: "http://example.com/callback",
-			"actions" 	: [ "subscribe", "open", "click", "goal", "unsubscribe" ]
+			"actions" 	: [ "subscribe", "open", "click", "goal", "survey", "unsubscribe" ]
 		}
     ]
 ```
@@ -3092,7 +3094,7 @@ _JSON params:_
 Conditions:
 
 * `uri` (mandatory) – Location of callback listener.
-* `actions` (mandatory) – List of actions that will be reported to callback listener. Allowed values are `subscribe`, `open`, `click`, `goal`, `unsubscribe` with at least one is required.
+* `actions` (mandatory) – List of actions that will be reported to callback listener. Allowed values are `subscribe`, `open`, `click`, `goal`, `survey`, `unsubscribe` with at least one value required.
 
 _JSON result:_
 
@@ -3428,6 +3430,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.17.0, 2012-11-30
+
+* [account_callbacks](#get_account_callbacks) has survey callback added
 
 version 1.16.0, 2012-11-21
 

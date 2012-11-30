@@ -1,6 +1,6 @@
 #GetResponse Callback
 
-version 1.2.0, 2012-11-29 [changelog](#changelog)
+version 1.2.1, 2012-11-30 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -141,19 +141,22 @@ _Params:_
 * `account_login`
 * `CAMPAIGN_ID`
 * `campaign_name`
-* `MESSAGE_ID` (optional)
-* `message_name` (optional)
-* `message_subject` (optional)
+* `MESSAGE_ID` (optional) - Present if survey was sent in email message.
+* `message_name` (optional) - Present if survey was sent in email message.
+* `message_subject` (optional) - Present if survey was sent in email message.
 * `SURVEY_ID`
 * `survey_name`
 * `survey_title` (optional)
 * `QUESTION_ID`
 * `question_name`
-* `OPTION_ID` (optional)
-* `option_name` (optional)
-* `CONTACT_ID` (optional)
-* `contact_name` (optional)
-* `contact_email` (optional)
+* `question_answer` (optional) - Present if question is of text type.
+* `OPTION_ID` (optional) - Present if question has predetermined options to select.
+* `option_name` (optional) - Present if question has predetermined options to select.
+* `CONTACT_ID` (optional) - Present if survey was sent in email message.
+* `contact_name` (optional) - Present if survey was sent in email message.
+* `contact_email` (optional) - Present if survey was sent in email message.
+
+**Note**: Every answer generates separate callback. So if you have survey with one text question, one question with single select answer and one question with three multi select answers you may receive up to 5 callbacks for one contact filling this survey. It also means that survey does not have to be completed by contact to generate callbacks.
 
 ---
 
@@ -170,13 +173,17 @@ _Params:_
 * `contact_name` (optional)
 * `contact_email`
 
-Note that this callback is generated only when contact use unsubscribe link. Other removal reasons such as bounces of complaints are not reported through this callback.
+**Warning**: This callback is generated only when contact use unsubscribe link. Other removal reasons such as bounces of complaints are not reported through this callback.
 
 ##CHANGELOG<a name="changelog">
 
+version 1.2.1, 2012-11-30
+
+* [survey](#survey) callback has `question_answer` field added for text answers
+
 version 1.2.0, 2012-11-29
 
-* survey params in [survey callback](#survey)
+* survey params in [survey](#survey) callback
 
 version 1.1.0, 2012-11-12
 
