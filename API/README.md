@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.18.0, 2012-11-30 [changelog](#changelog)
+version 1.18.0, 2012-12-03 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -850,7 +850,8 @@ _JSON params:_
     [
         "API_KEY",
         {
-            "message"   : "MESSAGE_ID"
+            "message"   : "MESSAGE_ID",
+			"resolution" : "daily"
         }
     ]
 ```
@@ -858,6 +859,7 @@ _JSON params:_
 Conditions:
 
 * `message` (mandatory) – `MESSAGE_ID`.
+* `resolution` (optional) – Determines period of time by which stats are aggregated. Allowed values are: `hourly` (result keys in "YYYY-MM-DD HH" format), `daily` (result keys in "YYYY-MM-DD" format), `monthly` (result keys in "YYYY-MM" format) and `yearly` (result keys in "YYYY" format). Default is `daily`.
 
 _JSON result:_
 
@@ -896,7 +898,7 @@ _JSON result:_
     }
 ```
 
-**Hint**: Stats are aggregated by dates of given events. Hence it is normal to have stats with `sent` equals 0 and other values positive because opens, clicks, bounces and complaints take place also during a few days after message was sent.
+**Hint**: It is normal to have stats for given date with `sent` equals 0 and other values positive because opens, clicks, bounces and complaints take place also during a few days after message was sent.
 
 ---
 
@@ -3434,6 +3436,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.18.0, 2012-12-03
+
+* [get_message_stats](#get_message_stats) has `resolution` param added
 
 version 1.18.0, 2012-11-30
 
