@@ -143,7 +143,7 @@ class jsonRPCClient
 
             if (isset($response['error']['data']))
             {
-                error_message .= "\n" . 'Error data: ' . $response['error']['data'];
+                $error_message .= "\n" . 'Error data: ' . $response['error']['data'];
             }
 
             $validateParams[ !is_null($response['error'])] = error_message;
