@@ -482,11 +482,11 @@ class GetResponse
 	 * @return string JSON encoded string
 	 * @access private
 	 */
-	private function prepRequest($method, $params = null)
+	private function prepRequest($method, $params = null, $id = null)
 	{
 		$array = array($this->apiKey);
 		if(!is_null($params)) $array[1] = $params;
-		$request = json_encode(array('method' => $method, 'params' => $array));
+		$request = json_encode(array('method' => $method, 'params' => $array, 'id' => $id));
 		return $request;
 	}
 	
@@ -506,7 +506,7 @@ class GetResponse
 		$response = json_decode(curl_exec($handle));
 		if(curl_error($handle)) trigger_error(curl_error($handle), E_USER_ERROR);
 		$httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-		if($httpCode != '200') trigger_error('API call failed. Server returned status code '.$httpCode, E_USER_ERROR);
+		if(!(($httpCode == '200') || ($httpCode == '204'))) trigger_error('API call failed. Server returned status code '.$httpCode, E_USER_ERROR);
 		curl_close($handle);
 		if(!$response->error) return $response->result;
 	}
