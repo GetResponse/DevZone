@@ -3,11 +3,11 @@
 /**
  * GetResponsePHP is a PHP5 implementation of the GetResponse API
  * @internal This wrapper is incomplete and subject to change.
- * @author Ben Tadiar <ben@bentadiar.co.uk>
+ * @authors Ben Tadiar <ben@bentadiar.co.uk>, Robert Staddon <robert@abundantdesigns.com>
  * @copyright Copyright (c) 2010 Assembly Studios
  * @link http://www.assemblystudios.co.uk
  * @package GetResponsePHP
- * @version 0.1
+ * @version 0.1.1
  */
 
 /**
@@ -70,6 +70,42 @@ class GetResponse
 		$response = $this->execute($request);
 		return $response;
 	}
+
+	/**
+	 * Get list of email addresses assigned to account
+	 * @return object
+	 */
+	public function getAccountFromFields()
+	{
+		$request  = $this->prepRequest('get_account_from_fields');
+		$response = $this->execute($request);
+		return $response;
+	}
+
+	/**
+	 * Get single email address assigned to an account using the account From Field ID
+	 * @param string $id
+	 * @return object
+	 */
+	public function getAccountFromFieldByID($id)
+	{
+		$request  = $this->prepRequest('get_account_from_field', array('account_from_field' => $id));
+		$response = $this->execute($request);
+		return $response;
+	}
+	
+	/**
+	 * Get single email address assigned to an account using an email address
+	 * @param string $email
+	 * @return object
+	 */
+	public function getAccountFromFieldsByEmail($email)
+	{
+		$request  = $this->prepRequest('get_account_from_fields');
+		$response = $this->execute($request);
+		foreach($response as $key => $account) if($account->email!=$email) unset($response->$key);
+		return $response;
+	}
 	
 	/**
 	 * Get a list of active campaigns, optionally filtered
@@ -97,6 +133,115 @@ class GetResponse
 		$response = $this->execute($request);
 		return $response;
 	}
+
+	/**
+	 * Return a list of messages, optionally filtered by multiple conditions
+	 * @todo Implement all conditions, this is unfinished
+	 * @param array|null $campaigns  Optional argument to narrow results by campaign ID
+	 * @param string|null $type  Optional argument to narrow results by "newsletter" or "follow-up"
+	 * @param string $operator
+	 * @param string $comparison
+	 * @return object
+	 */
+	public function getMessages($campaigns = null, $type = null, $operator = 'CONTAINS', $comparison = '%')
+	{
+		$params = null;
+		if(is_array($campaigns)) $params['campaigns'] = $campaigns;
+		if(is_string($type)) $params['type'] = $type;
+		$request  = $this->prepRequest('get_messages', $params);
+		$response = $this->execute($request);
+		return $response;
+	}
+	
+	/**
+	 * Return a message by ID
+	 * @param string $id Message ID
+	 * @return object
+	 */
+	public function getMessageByID($id)
+	{
+		$request  = $this->prepRequest('get_message', array('message' => $id));
+		$response = $this->execute($request);
+		return $response;
+	}
+
+	/**
+	 * Return a follow-up message from a campaign by Cycle Day
+	 * @param string $campaign Campaign ID
+	 * @param string $cycle_day Cycle Day
+	 * @return object
+	 */
+	public function getMessageByCycleDay($campaign, $cycle_day)
+	{
+		$params['campaigns'] = array($campaign);
+		$params['type'] = "follow-up";
+		$request  = $this->prepRequest('get_messages', $params);
+		$response = $this->execute($request);
+		foreach($response as $key => $message) if($message->day_of_cycle!=$cycle_day) unset($response->$key);
+		return $response;
+	}
+	
+	/**
+	 * Return message contents by ID
+	 * @param string $id Message ID
+	 * @return object
+	 */
+	public function getMessageContents($id)
+	{
+		$request  = $this->prepRequest('get_message_contents', array('message' => $id));
+		$response = $this->execute($request);
+		return $response;
+	}
+
+	/**
+	 * Return follow-up message contents by Cycle Day
+	 * @param string $campaign Campaign ID
+	 * @param string $cycle_day Cycle Day
+	 * @return object|null
+	 */
+	public function getMessageContentsByCycleDay($campaign, $cycle_day)
+	{
+		$params['campaigns'] = array($campaign);
+		$params['type'] = "follow-up";
+		$request  = $this->prepRequest('get_messages', $params);
+		$response = $this->execute($request);
+		foreach($response as $key => $message) if($message->day_of_cycle==$cycle_day) return $this->getMessageContents($key);
+		return null;
+	}
+	
+	/**
+	 * Add follow-up to a campaign at a specific day of cycle
+	 * @param string $campaign Campaign ID
+	 * @param string $subject Subject of message
+	 * @param array $contents Allowed keys are "plain" and "html", at least one is mandatory
+	 * @param int $cycle_day
+	 * @param string $from_field From Field ID obtained through getAccountFromFields()
+	 * @param array $flags Enables extra functionality for a message: "clicktrack", "subscription_reminder", "openrate", "google_analytics"
+	 * @return object
+	 */
+	public function addFollowUp($campaign, $subject, $cycle_day, $html = null, $plain = null, $from_field = null, $flags = null)
+	{
+		$params = array('campaign' => $campaign, 'subject' => $subject, 'day_of_cycle' => $cycle_day);
+		if(is_string($html)) $params['contents']['html'] = $html;
+		if(is_string($plain)) $params['contents']['plain'] = $plain;
+		if(is_string($from_field)) $params['from_field'] = $from_field;
+		if(is_array($flags)) $params['flags'] = $flags;
+		$request  = $this->prepRequest('add_follow_up', $params);
+		$response = $this->execute($request);
+		return $response;
+	}
+	
+	/**
+	 * Delete a follow-up email
+	 * @param string $id
+	 * @return object
+	 */
+	public function deleteFollowUp($id)
+	{
+		$request  = $this->prepRequest('delete_follow_up', array('message' => $id));
+		$response = $this->execute($request);
+		return $response;
+	}
 	
 	/**
 	 * Return a list of users, optionally filtered by multiple conditions
@@ -104,13 +249,36 @@ class GetResponse
 	 * @param array|null $campaigns Optional argument to narrow results by campaign ID
 	 * @param string $operator
 	 * @param string $comparison
+	 * @param array $fields (an associative array, the keys of which should enable/disable comparing name or email)
 	 * @return object
 	 */
-	public function getContacts($campaigns = null, $operator = 'CONTAINS', $comparison = '%')
+	public function getContacts($campaigns = null, $operator = 'CONTAINS', $comparison = '%', $fields = array('name' => true, 'email' => false))
 	{
 		$params = null;
 		if(is_array($campaigns)) $params['campaigns'] = $campaigns;
-		$params['name'] = $this->prepTextOp($operator, $comparison);
+		if($fields['name']) $params['name'] = $this->prepTextOp($operator, $comparison);
+		if($fields['email']) $params['email'] = $this->prepTextOp($operator, $comparison);
+		$request  = $this->prepRequest('get_contacts', $params);
+		$response = $this->execute($request);
+		return $response;
+	}
+
+	/**
+	 * Return a list of users filtered by custom contact information
+	 * $customs is an associative arrays, the keys of which should correspond to the
+	 * custom field names of the customers you wish to retrieve.
+	 * @param array|null $campaigns Optional argument to narrow results by campaign ID 
+	 * @param string $operator
+	 * @param array $customs
+	 * @param string $comparison
+	 * @return object
+	 */
+	public function getContactsByCustoms($campaigns = null, $customs, $operator = 'EQUALS')
+	{
+		$params = null;
+		if(is_array($campaigns)) $params['campaigns'] = $campaigns;
+		if(!is_array($customs)) trigger_error('Second argument must be an array', E_USER_ERROR);
+		foreach($customs as $key => $val) $params['customs'][] = array('name' => $key, 'content' => $this->prepTextOp($operator, $val));
 		$request  = $this->prepRequest('get_contacts', $params);
 		$response = $this->execute($request);
 		return $response;
@@ -136,6 +304,19 @@ class GetResponse
 	public function setContactName($id, $name)
 	{
 		$request  = $this->prepRequest('set_contact_name', array('contact' => $id, 'name' => $name));
+		$response = $this->execute($request);
+		return $response;
+	}
+	
+	/**
+	 * Set a contact cycle
+	 * @param string $id User ID
+	 * @param int $cycle_day Cycle Day
+	 * @return object
+	 */
+	public function setContactCycle($id, $cycle_day)
+	{
+		$request  = $this->prepRequest('set_contact_cycle', array('contact' => $id, 'cycle_day' => $cycle_day));
 		$response = $this->execute($request);
 		return $response;
 	}
