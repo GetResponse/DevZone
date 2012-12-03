@@ -146,7 +146,7 @@ class jsonRPCClient
                 $error_message .= "\n" . 'Error data: ' . $response['error']['data'];
             }
 
-            $validateParams[ !is_null($response['error'])] = error_message;
+            $validateParams[ !is_null($response['error'])] = $error_message;
         }
 
         $this->checkForErrors($validateParams);
