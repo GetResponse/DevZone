@@ -36,16 +36,18 @@ GetResponse API is [JSON-RPC](http://www.jsonrpc.org/) based and supports both 1
 
 ####Examples
 
-<img src="http://upload.wikimedia.org/wikipedia/commons/7/72/Logo_C_Sharp.png" height="64" alt="C#"/>
-<img src="http://upload.wikimedia.org/wikipedia/en/thumb/3/39/Java_logo.svg/300px-Java_logo.svg.png" height="64" alt="Java"/>
-<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/JavaScript-logo.png/600px-JavaScript-logo.png" height="64" alt="JavaScript"/>
-<img src="http://upload.wikimedia.org/wikipedia/en/0/00/Perl-camel-small.png" height="64" alt="Perl"/>
-<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/2/27/PHP-logo.svg/220px-PHP-logo.svg.png" height="64" alt="PHP"/>
-<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/110px-Python-logo-notext.svg.png" height="64" alt="Python"/>
-<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Ruby_logo.svg/198px-Ruby_logo.svg.png" height="64" alt="Ruby"/>
-<img src="http://upload.wikimedia.org/wikipedia/commons/8/8f/Adobe_Flex.png" height="64" alt="Adobe Flex"/>
+Check how to use API in following programming languages in our [examples](https://github.com/GetResponse/DevZone/tree/master/API/examples) section.
 
-Check how to [use API in those programming languages](https://github.com/GetResponse/DevZone/tree/master/API/examples).
+<img src="http://upload.wikimedia.org/wikipedia/commons/7/72/Logo_C_Sharp.png" height="64" title="C#" alt="C#"/>
+<img src="http://upload.wikimedia.org/wikipedia/en/thumb/3/39/Java_logo.svg/300px-Java_logo.svg.png" height="64" title="Java" alt="Java"/>
+<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/JavaScript-logo.png/600px-JavaScript-logo.png" height="64" title="JavaScript" alt="JavaScript"/>
+<img src="http://upload.wikimedia.org/wikipedia/en/0/00/Perl-camel-small.png" height="64" title="Perl" alt="Perl"/>
+<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/2/27/PHP-logo.svg/220px-PHP-logo.svg.png" height="64" title="PHP" alt="PHP"/>
+<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/110px-Python-logo-notext.svg.png" height="64" title="Python" alt="Python"/>
+<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Ruby_logo.svg/198px-Ruby_logo.svg.png" height="64" title="Ruby" alt="Ruby"/>
+<img src="http://upload.wikimedia.org/wikipedia/commons/8/8f/Adobe_Flex.png" height="64" title="AdobeFlex" alt="Adobe Flex"/>
+
+There are also PHP and Ruby wrappers available in our [wrappers](https://github.com/GetResponse/DevZone/tree/master/API/wrappers) section.
 
 ---
 

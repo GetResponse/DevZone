@@ -1,0 +1,6 @@
+[submodule "API/wrappers/PHP"]
+	path = API/wrappers/PHP
+	url = git://github.com/robertstaddon/GetResponse-PHP-Wrapper.git
+[submodule "API/wrappers/Ruby"]
+	path = API/wrappers/Ruby
+	url = git://github.com/seban/ruby-getresponse.git
