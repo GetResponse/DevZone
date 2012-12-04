@@ -842,7 +842,7 @@ _JSON result:_
 
 ####get_message_stats<a name="get_message_stats"/>
 
-Get message statistics with daily resolution.
+Get message statistics.
 
 _JSON params:_
 
@@ -851,7 +851,7 @@ _JSON params:_
         "API_KEY",
         {
             "message"   : "MESSAGE_ID",
-			"resolution" : "daily"
+			"grouping" : "daily"
         }
     ]
 ```
@@ -859,7 +859,7 @@ _JSON params:_
 Conditions:
 
 * `message` (mandatory) – `MESSAGE_ID`.
-* `resolution` (optional) – Determines period of time by which stats are aggregated. Allowed values are: `hourly` (result keys in "YYYY-MM-DD HH" format), `daily` (result keys in "YYYY-MM-DD" format), `monthly` (result keys in "YYYY-MM" format) and `yearly` (result keys in "YYYY" format). Default is `daily`.
+* `grouping` (optional) – Determines period of time by which stats are aggregated. Allowed values are: `hourly` (result keys in "YYYY-MM-DD HH" format), `daily` (result keys in "YYYY-MM-DD" format), `monthly` (result keys in "YYYY-MM" format) and `yearly` (result keys in "YYYY" format). Default is `daily`.
 
 _JSON result:_
 
@@ -3436,6 +3436,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.18.1, 2012-12-04
+
+* [get_message_stats](#get_message_stats) has `resolution` param renamed to `grouping` to be more intuitive
 
 version 1.18.0, 2012-12-03
 
