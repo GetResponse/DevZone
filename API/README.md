@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.18.0, 2012-12-03 [changelog](#changelog)
+version 1.18.1, 2012-12-04 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -24,6 +24,8 @@ GetResponse API is [JSON-RPC](http://www.jsonrpc.org/) based and supports both 1
 **Warning**: 1.1 draft specification support will be dropped by the end of the year, please adjust your code/libraries to use official 1.0 or 2.0 specification.
 
 **Warning**: If you're receiving **HTTP "204 No content"** response check if `id` member is present in your Requests. Lack of this member means that the Request is a Notification - signifies the Clients lack of interest in receiving Response as explained [here](http://www.jsonrpc.org/specification#notification). Our API supports Notification requests since November 30th. If your integration due to lack of `id` member requested this functionality by mistake then don't worry because all Notification Requests were processed by our servers. If you used for example add_contact() method those subscriptions are not lost.
+
+**Note**: We support SSL and gzipped transfer (over 1KB).
 
 ---
 
@@ -3438,6 +3440,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.18.2, 2012-12-04
+
+* support for gzipped transfer
 
 version 1.18.1, 2012-12-04
 
