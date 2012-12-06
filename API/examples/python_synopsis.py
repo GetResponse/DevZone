@@ -27,7 +27,7 @@ campaigns = client.get_campaigns(
     }
 );
 
-# uncomment this line to preview Response
+# uncomment following line to preview Response
 # pprint.pprint(campaigns)
 
 # because there can be only one campaign of this name
@@ -60,7 +60,7 @@ result = client.add_contact(
     }
 );
 
-# uncomment this line to preview Response
+# uncomment following line to preview Response
 # pprint.pprint(result)
 
 print 'Contact added';

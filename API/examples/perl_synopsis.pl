@@ -26,7 +26,7 @@ my $campaigns = $client.get_campaigns(
     }
 );
 
-# uncomment this line to preview Response
+# uncomment following line to preview Response
 # note $campaigns.perl;
 
 # because there can be only one campaign of this name
@@ -57,7 +57,7 @@ my $result = $client.add_contact(
     }
 );
 
-# uncomment this line to preview Response
+# uncomment following line to preview Response
 # note $result.perl;
 
 say 'Contact added';
