@@ -1,86 +1,67 @@
 #!/usr/bin/ruby
 
-# Implementation of sample scenario using GetResponse API:
-#
-# Add new contact to campaign 'sample_marketing'.
-# Start his follow-up cycle and set custom field
-# 'last_purchased_product' to 'netbook'.
-#
-# @author Sebastain Nowak, Pawel Pabian
-# http://implix.com
-# http://dev.getresponse.com
-#
-# It is highly recommended to use 'getresponse' rubygem for dealing with GetResponse API.
-# Rubygem is far better solution than this sample scenario. 'getresponse' rubygem is created
-# by Sebastian Nowak, but any other contributors are welcome.
-# Source code: https://github.com/seban/ruby-getresponse
-# Gem page: https://rubygems.org/gems/getresponse
-# Some auto-generated docs: http://rubydoc.info/gems/getresponse/frames
+# Demonstrates how to add new contact to campaign.
 
-require 'rubygems'
-require 'net/http'
-require 'json'
+# JSON-RPC module is required
+# available at https://github.com/chriskite/jimson
+# and in Ruby gems http://rubygems.org/gems/jimson
+require 'jimson'
 
-# your API key
-# available at http://www.getresponse.com/my_api_key.html
+# your API key is available at
+# https://app.getresponse.com/my_api_key.html
 api_key = 'ENTER_YOUR_API_KEY_HERE'
 
 # API 2.x URL
 api_url = 'http://api2.getresponse.com/'
 
 # initialize JSON-RPC client
-uri = URI.parse(api_url)
-client = Net::HTTP.start(uri.host, uri.port)
+client = Jimson::Client.new(api_url)
 
-# get CAMPAIGN_ID of 'sample_marketing' campaign
-response = client.post(
-    uri.path, {
-        'method' => 'get_campaigns',
-        'params' => [
-            api_key, {
-                'name' => { 'EQUALS' => 'sample_marketing' }
+# find campaign named 'test'
+campaigns = client.get_campaigns(
+    api_key,
+    {
+        # find by name literally
+        'name' => { 'EQUALS' => 'test' }
+    }
+)
+
+# uncomment following line to preview Response
+# print campaigns.inspect
+
+# because there can be only one campaign of this name
+# first key is the CAMPAIGN_ID required by next method
+# (this ID is constant and should be cached for future use)
+CAMPAIGN_ID = campaigns.keys().pop();
+
+# add contact to the campaign
+result = client.add_contact(
+    api_key,
+    {
+        # identifier of 'test' campaign
+        'campaign'  => CAMPAIGN_ID,
+        
+        # basic info
+        'name'      => 'Test',
+        'email'     => 'test@test.test',
+
+        # custom fields
+        'customs' => [
+            {
+                'name'      => 'likes_to_drink',
+                'content'   => 'tea'
+            },
+            {
+                'name'      => 'likes_to_eat',
+                'content'   => 'steak'
             }
         ]
-    }.to_json
+    }
 )
-# check for communication and response errors
-# implement handling if needed
 
-result = JSON.parse(response.body)
-
-# uncomment this line to preview data structure
-# print result.inspect
-
-# since there can be only one campaign of this name
-# first key is the CAMPAIGN_ID you need
-CAMPAIGN_ID = result['result'].keys().pop();
-
-# add contact to 'sample_marketing' campaign
-response = client.post(
-    '/', {
-        'method' => 'add_contact',
-        'params' => [
-            api_key, {
-                'campaign'  => CAMPAIGN_ID,
-                'name'      => 'Sample Name',
-                'email'     => 'sample@email.com',
-                'cycle_day' => '0',
-                'customs' => [
-                    {
-                        'name'      => 'last_purchased_product',
-                        'content'   => 'netbook'
-                    }
-                ]
-            }
-        ]
-    }.to_json
-)
-# check for communication and response errors
-# implement handling if needed
-
-result = JSON.parse(response.body)
-
-# uncomment this line to preview data structure
+# uncomment following line to preview Response
 # print result.inspect
 
 print "Contact added\n";
+
+# Pawel Pabian http://implix.com
