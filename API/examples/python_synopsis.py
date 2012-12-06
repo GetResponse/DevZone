@@ -44,7 +44,7 @@ result = client.add_contact(
         
         # basic info
         'name'  : 'Test',
-        'email' : 'test@test.com',
+        'email' : 'test@test.test',
         
         # custom fields
         'customs' : [

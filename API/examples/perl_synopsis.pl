@@ -35,7 +35,7 @@ my $campaigns = $client.get_campaigns(
 my $CAMPAIGN_ID = $campaigns.keys.pop;
 
 # add contact to the campaign
-my $response = $client.add_contact(
+my $result = $client.add_contact(
     $api_key,
     {
         # identifier of 'test' campaign
@@ -43,7 +43,7 @@ my $response = $client.add_contact(
 
         # basic info
         'name'  => 'Test',
-        'email' => 'test@test.com',
+        'email' => 'test@test.test',
 
         # custom fields
         'customs' => [
@@ -58,7 +58,7 @@ my $response = $client.add_contact(
 );
 
 # uncomment this line to preview Response
-# note $response.perl;
+# note $result.perl;
 
 say 'Contact added';
 
