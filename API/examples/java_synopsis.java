@@ -1,175 +1,94 @@
-/**
-*
-* Implementation of sample scenario using GetResponse API:
-*
-* Add new contact to campaign 'sample_marketing'.
-* Start his follow-up cycle and set custom field
-* 'last_purchased_product' to 'netbook'.
-*
-* @author Dawid Ostapiuk
-* http://implix.com
-* http://dev.getresponse.com
-*
-*/
+// Demonstrates how to add new contact to campaign.
 
-package gr_api;
+// JSON-RPC module is required
+// available at http://software.dzhuvinov.com/json-rpc-2.0.html
+import com.thetransactioncompany.jsonrpc2.client.*;
+import com.thetransactioncompany.jsonrpc2.*;
+import net.minidev.json.*;
 
-import org.apache.commons.httpclient.*;
-import org.apache.commons.httpclient.methods.*;
-import net.sf.json.*;
+import java.net.*;
+import java.util.*;
 
-import java.io.*;
-import java.util.Hashtable;
-import java.util.Iterator;
+public class java_synopsis {
 
-public class Main
-{
+    public static void main(String[] args) throws Exception {
 
-    private static String url = "http://api2.getresponse.com/";
-    private static String api_key = "ENTER_YOUR_API_KEY_HERE";
+        // your API key is available at
+        // https://app.getresponse.com/my_api_key.html
+        String api_key = "ENTER_YOUR_API_KEY_HERE";
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args)
-    {
-        // create an instance of HttpClient.
-        HttpClient client = new HttpClient();
+        // API 2.x URL
+        URL api_url = new URL("http://api2.getresponse.com");
 
-        // request params
-        Hashtable operator_obj = new Hashtable();
-        operator_obj.put("EQUALS", "sample_marketing");
+        // initialize JSON-RPC client
+        JSONRPC2Session client = new JSONRPC2Session(api_url);
+        client.getOptions().setRequestContentType("application/json");
 
-        Hashtable name_obj = new Hashtable();
-        name_obj.put("name", operator_obj);
+        // find campaign named 'test'
+		JSONRPC2Response campaigns = client.send(
+		    new JSONRPC2Request(
+                "get_campaigns",
+                Arrays.asList(new Object[]{
+                    api_key,
+                    // find by name literally
+                    new Hashtable<String, Map>() {{
+                        put("name",
+                            new Hashtable<String, String>() {{
+                                put("EQUALS","test");
+                            }}
+                        );
+                    }}
+                }),
+                1
+            )
+		);
 
-        Object[] params = { api_key, name_obj};
+        // uncomment following line to preview Response
+		// System.out.println(campaigns.getResult());
 
-        Hashtable request = new Hashtable();
-        request.put("method", "get_campaigns");
-        request.put("params", params);
+        // because there can be only one campaign of this name
+        // first key is the CAMPAIGN_ID required by next method
+        // (this ID is constant and should be cached for future use)
+        @SuppressWarnings("unchecked")
+        final String CAMPAIGN_ID = ((HashMap<String, Map>)campaigns.getResult()).keySet().iterator().next();
 
-        JSONObject json = new JSONObject();
-
-        // create a method instance.
-        PostMethod method = new PostMethod(url);
-        method.setRequestBody((String)json.fromObject(request).toString());
-
-        String response_string = null;
+        // add contact to the campaign
+        JSONRPC2Response result = client.send(
+		    new JSONRPC2Request(
+                "add_contact",
+                Arrays.asList(new Object[]{
+                    api_key,
+                    new Hashtable<String, Object>() {{
+                        
+                        // identifier of 'test' campaign
+                        put("campaign", CAMPAIGN_ID);
+                        
+                        // basic info
+                        put("name", "Test");
+                        put("email", "test@test.test");
+                        
+                        // custom fields
+                        put("customs", Arrays.asList(new Hashtable[]{
+                            new Hashtable<String, String>() {{
+                                put("name", "likes_to_drink");
+                                put("content", "tea");
+                            }},
+                            new Hashtable<String, String>() {{
+                                put("name", "likes_to_drink");
+                                put("content", "tea");
+                            }}
+                        }));
+                    }}
+                }),
+                2
+            )
+		);
         
-        try
-        {
-            // make request.
-            int statusCode = client.executeMethod(method);
-
-            if (statusCode != HttpStatus.SC_OK)
-            {
-                System.err.println("Method failed: " + method.getStatusLine());
-            }
-
-            // read the response body
-            byte[] responseBody = method.getResponseBody();
-
-            response_string = new String(responseBody);
-        }
-        catch (HttpException e)
-        {
-            System.err.println("Fatal protocol violation: " + e.getMessage());
-            e.printStackTrace();
-        } 
-        catch (IOException e)
-        {
-            System.err.println("Fatal transport error: " + e.getMessage());
-            e.printStackTrace();
-        } 
-        finally
-        {
-            // release the connection.
-            method.releaseConnection();
-        }
-
-        // parse response
-        JSONObject jsonObj = JSONObject.fromObject(response_string);
-
-        JSONObject result =  jsonObj.getJSONObject("result");
-
-        Iterator iterator = result.keys();
-
-        String campaign_id = null;
-   
-        while (iterator.hasNext())
-        {
-            // set campaign ID
-            campaign_id = (String) iterator.next();
-        }
+        // uncomment following line to preview Response
+		// System.out.println(result.getResult());
         
-        // add new contact
-
-        // new instance of HttpClient.
-        client = new HttpClient();
-
-        // contact params
-        Hashtable custom = new Hashtable();
-        custom.put("name", "last_purchased_product");
-        custom.put("content", "netbook");
-
-        // contact customs array
-        Object[] customs_array = {custom};
-     
-        Hashtable contact_params = new Hashtable();
-        contact_params.put("campaign", campaign_id);
-        contact_params.put("name", "Sample Name");
-        contact_params.put("email", "sample@email.com");
-        contact_params.put("cycle_day", "0");
-        contact_params.put("customs", customs_array);
-
-        Object[] request_params = { api_key, contact_params};
-
-        // request object
-        request = new Hashtable();
-        request.put("method", "add_contact");
-        request.put("params", request_params);
-
-        json = new JSONObject();
-
-        // create a method instance.
-        method = new PostMethod(url);
-        method.setRequestBody((String)json.fromObject(request).toString());
-
-        response_string = null;
-
-        try
-        {
-            // execute the method.
-            int statusCode = client.executeMethod(method);
-
-            if (statusCode != HttpStatus.SC_OK)
-            {
-                System.err.println("Method failed: " + method.getStatusLine());
-            }
-
-            // read the response body.
-            byte[] responseBody = method.getResponseBody();
-
-            response_string = new String(responseBody);
-        }
-        catch (HttpException e)
-        {
-            System.err.println("Fatal protocol violation: " + e.getMessage());
-            e.printStackTrace();
-        }
-        catch (IOException e)
-        {
-            System.err.println("Fatal transport error: " + e.getMessage());
-            e.printStackTrace();
-        }
-        finally
-        {
-            // release the connection.
-            method.releaseConnection();
-        }
-
         System.out.println("Contact Added");
     }
 }
 
+// Pawel Pabian http://implix.com
