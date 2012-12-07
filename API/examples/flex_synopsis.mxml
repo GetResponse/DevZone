@@ -46,11 +46,13 @@ http://dev.getresponse.com
 			{
 				
 				var params:Object = {
+					'jsonrpc' : '2.0',
 					'method' : 'get_campaigns',
 					'params' : [
 						API_KEY, {
 							'name' : { 'EQUALS' : 'sample_marketing' }
-						}]
+						}],
+					'id' : 1
 				};
 				
 				var requestStrin:String = JSON.encode(params);
@@ -93,6 +95,7 @@ http://dev.getresponse.com
 			private function _addContact(CAMPAIGN_ID:String):void{
 				
 				var params:Object = {
+					'jsonrpc' : '2.0',
 					"method" : "add_contact",
 					"params" : [
 						API_KEY,
@@ -109,7 +112,8 @@ http://dev.getresponse.com
 								}
 							]
 						}
-					]
+					],
+					'id' : 2
 				}
 				
 				var requestStrin:String = JSON.encode(params);
