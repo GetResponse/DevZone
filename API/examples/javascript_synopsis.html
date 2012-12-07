@@ -7,11 +7,11 @@
         <meta name="Author" content="Pawel Pabian, Pawel Nejczew http://implix.com" />
         <title>Demonstrates how to add new contact to campaign.</title>
 
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script type="text/javascript">
             
-			// your API key is available at
-			// https://app.getresponse.com/my_api_key.html
+            // your API key is available at
+            // https://app.getresponse.com/my_api_key.html
             var api_key = 'ENTER_YOUR_API_KEY_HERE';
 
             // API 2.x URL
@@ -23,81 +23,81 @@
 
                 // find campaign named 'test'
                 $.ajax({
-                    url		: api_url,
-                    data 	: JSON.stringify({
-	                    'jsonrpc'   : '2.0',
-	                    'method'    : 'get_campaigns',
-	                    'params'    : [
-	                        api_key,
-	                        {
-	                            // find by name literally
-	                            'name' : { 'EQUALS' : 'test' }
-	                        }
-	                    ],
-	                    'id'		: 1
-	                }),
-                    type 		: 'POST',
+                    url        : api_url,
+                    data     : JSON.stringify({
+                        'jsonrpc'   : '2.0',
+                        'method'    : 'get_campaigns',
+                        'params'    : [
+                            api_key,
+                            {
+                                // find by name literally
+                                'name' : { 'EQUALS' : 'test' }
+                            }
+                        ],
+                        'id'        : 1
+                    }),
+                    type         : 'POST',
                     contentType : 'application/json',
-                    dataType 	: 'JSON',
+                    dataType     : 'JSON',
                     crossDomain : true,
-                    async 		: false,
-                    success 	: function(response) {                        
+                    async         : false,
+                    success     : function(response) {                        
                         // uncomment following line to preview Response
-						// alert(JSON.stringify(response));
-						
-						campaigns = response.result;
+                        // alert(JSON.stringify(response));
+                        
+                        campaigns = response.result;
                     }
                 });
 
                 // because there can be only (too much HIGHLANDER movie) one campaign of this name
-				// first key is the CAMPAIGN_ID required by next method
-				// (this ID is constant and should be cached for future use)
+                // first key is the CAMPAIGN_ID required by next method
+                // (this ID is constant and should be cached for future use)
                 var CAMPAIGN_ID;
                 for(var key in campaigns) {
                     CAMPAIGN_ID = key;
-					break;
+                    break;
                 }
 
                 $.ajax({
-                    url		: api_url,
-                    data 	: JSON.stringify({
-						'jsonrpc'	: '2.0',
-	                    'method'    : 'add_contact',
-	                    'params'    : [
-	                        api_key,
-							{
-	                            // identifier of 'test' campaign
-								'campaign'  : CAMPAIGN_ID,
+                    url        : api_url,
+                    data     : JSON.stringify({
+                        'jsonrpc'    : '2.0',
+                        'method'    : 'add_contact',
+                        'params'    : [
+                            api_key,
+                            {
+                                // identifier of 'test' campaign
+                                'campaign'  : CAMPAIGN_ID,
 
-								// basic info
-	                            'name'      : 'Test',
-	                            'email'     : 'test@test.test',
+                                // basic info
+                                'name'      : 'Test',
+                                'email'     : 'test@test.test',
 
-								// custom fields
-	                            'customs'   : [
-	                                {
-	                                    'name'       : 'likes_to_drink',
-	                                    'content'    : 'tea'
-	                                },
-	                                {
-	                                    'name'       : 'likes_to_eat',
-	                                    'content'    : 'steak'
-	                                }
-	                            ]
-	                        }
-	                    ],
-	                    'id'        : 2
-	                }),
-                    type 		: 'POST',
+                                // custom fields
+                                'customs'   : [
+                                    {
+                                        'name'       : 'likes_to_drink',
+                                        'content'    : 'tea'
+                                    },
+                                    {
+                                        'name'       : 'likes_to_eat',
+                                        'content'    : 'steak'
+                                    }
+                                ]
+                            }
+                        ],
+                        'id'        : 2
+                    }),
+                    type         : 'POST',
                     contentType : 'application/json',
-                    dataType 	: 'JSON',
+                    dataType     : 'JSON',
                     crossDomain : true,
-                    async 		: false,
-                    success		: function(response) 
+                    async         : false,
+                    success        : function(response) 
                     {                        
-						// uncomment following line to preview Response
-						// alert(JSON.stringify(response));
-	
+                        // uncomment following line to preview Response
+                        // alert(JSON.stringify(response));
+    
                         alert('Contact added');
                     }
                 });
