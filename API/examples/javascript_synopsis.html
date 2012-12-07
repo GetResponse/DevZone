@@ -23,8 +23,8 @@
 
                 // find campaign named 'test'
                 $.ajax({
-                    url        : api_url,
-                    data     : JSON.stringify({
+                    url     : api_url,
+                    data    : JSON.stringify({
                         'jsonrpc'   : '2.0',
                         'method'    : 'get_campaigns',
                         'params'    : [
@@ -36,11 +36,11 @@
                         ],
                         'id'        : 1
                     }),
-                    type         : 'POST',
+                    type        : 'POST',
                     contentType : 'application/json',
-                    dataType     : 'JSON',
+                    dataType    : 'JSON',
                     crossDomain : true,
-                    async         : false,
+                    async       : false,
                     success     : function(response) {                        
                         // uncomment following line to preview Response
                         // alert(JSON.stringify(response));
@@ -59,8 +59,8 @@
                 }
 
                 $.ajax({
-                    url        : api_url,
-                    data     : JSON.stringify({
+                    url     : api_url,
+                    data    : JSON.stringify({
                         'jsonrpc'    : '2.0',
                         'method'    : 'add_contact',
                         'params'    : [
@@ -88,12 +88,12 @@
                         ],
                         'id'        : 2
                     }),
-                    type         : 'POST',
+                    type        : 'POST',
                     contentType : 'application/json',
-                    dataType     : 'JSON',
+                    dataType    : 'JSON',
                     crossDomain : true,
-                    async         : false,
-                    success        : function(response) 
+                    async       : false,
+                    success     : function(response) 
                     {                        
                         // uncomment following line to preview Response
                         // alert(JSON.stringify(response));
