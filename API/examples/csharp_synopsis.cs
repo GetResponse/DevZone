@@ -1,16 +1,4 @@
-/**
-*
-* Implementation of sample scenario using GetResponse API:
-*
-* Add new contact to campaign 'sample_marketing'.
-* Start his follow-up cycle and set custom field
-* 'last_purchased_product' to 'netbook'.
-*
-* @author Dawid Ostapiuk
-* http://implix.com
-* http://dev.getresponse.com
-*
-*/
+// Demonstrates how to add new contact to campaign.
 
 using System;
 using System.Web.Script.Serialization;
@@ -39,6 +27,9 @@ namespace GetResponseApi
 
             // new request object
             Hashtable _request = new Hashtable();
+
+			_request["jsonrpc"] = "2.0";
+			_request["id"] = 1;
 
             // set method name
             _request["method"] = "get_campaigns";
@@ -111,6 +102,9 @@ namespace GetResponseApi
             // new request object
             _request = new Hashtable();
 
+			_request["jsonrpc"] = "2.0";
+			_request["id"] = 2;
+
             // set method name
             _request["method"] = "add_contact";
 
@@ -118,7 +112,6 @@ namespace GetResponseApi
             contact_params["campaign"] = campaign_id;
             contact_params["name"] = "Sample Name";
             contact_params["email"] = "sample@email.com";
-            contact_params["cycle_day"] = "0";
 
             Hashtable custom = new Hashtable();
             custom["name"] = "last_purchased_product";
@@ -177,3 +170,5 @@ namespace GetResponseApi
         }
     }
 }
+
+// @author Dawid Ostapiuk
