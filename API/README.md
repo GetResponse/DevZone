@@ -3445,7 +3445,7 @@ Errors not included in spec:
 
 version 1.19.0, 2012-12-11
 
-* [get_contacts_subscription_stats](#get_contacts_subscription_stats) has `resolution` param added
+* [get_contacts_subscription_stats](#get_contacts_subscription_stats) has `grouping` param added
 
 version 1.18.2, 2012-12-04
 
