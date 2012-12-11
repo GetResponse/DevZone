@@ -121,6 +121,7 @@ If you run into an error or you have difficulties with using the API please cont
 * [get_contacts_subscription_stats](#get_contacts_subscription_stats)
 * [get_contacts_amount_per_account](#get_contacts_amount_per_account)
 * [get_contacts_amount_per_campaign](#get_contacts_amount_per_campaign)
+* [get_contacts_distinct_amount](#get_contacts_distinct_amount)
 * [get_segments](#get_segments)
 
 ####Links
@@ -2101,7 +2102,7 @@ _JSON params:_
 
 ```json
     [
-        "API_KEY",
+        "API_KEY"
     ]
 ```
 
@@ -2123,7 +2124,7 @@ _JSON params:_
 
 ```json
     [
-        "API_KEY",
+        "API_KEY"
     ]
 ```
 
@@ -2139,6 +2140,37 @@ _JSON result:_
         "CAMPAIGN_ID"   : 0,
         "CAMPAIGN_ID"   : 0
     }
+```
+
+---
+
+####get_contacts_distinct_amount<a name="get_contacts_distinct_amount"/>
+
+Get amount of unique email addresses of your contacts.
+
+This method is useful for pre-estimating amount of recipients in [send_newsletter](#send_newsletter) method.
+Also can help in tracking redundancy when combined with [get_contacts_amount_per_campaign](#get_contacts_amount_per_campaign) method.
+
+_JSON params:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "campaigns"     : [ "CAMPAIGN_ID", "CAMPAIGN_ID" ],
+            "get_campaigns" : { get_campaigns conditions }
+        }
+    ]
+```
+
+Conditions:
+
+* `campaigns` / `get_campaigns` (optional) – Count distinct emails only in given campaigns. Uses OR logic. If those params are not given statistics are returned from all campaigns on the account. Check [IDs in conditions](#ids) for detailed explanation.
+
+_JSON result:_
+
+```json
+    64
 ```
 
 ---
@@ -3442,6 +3474,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.20.0, 2012-12-11
+
+* [get_contacts_distinct_amount](#get_contacts_distinct_amount) added
 
 version 1.19.0, 2012-12-11
 
