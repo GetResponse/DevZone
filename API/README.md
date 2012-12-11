@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.18.1, 2012-12-04 [changelog](#changelog)
+version 1.19.0, 2012-12-11 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -2005,7 +2005,7 @@ _JSON result:_
 
 ####get_contacts_subscription_stats<a name="get_contacts_subscription_stats"/>
 
-Get contacts subscription stats aggregated by date, campaign and contact’s origin.
+Get contacts subscription stats aggregated by time period, campaign and contact’s origin.
 
 _JSON params:_
 
@@ -2018,7 +2018,8 @@ _JSON params:_
             "created_on"    : {
                 "OPERATOR" : "value",
                 "OPERATOR" : "value"
-            }
+            },
+            "grouping"      : "monthly"
         }
     ]
 ```
@@ -2027,6 +2028,7 @@ Conditions:
 
 * `campaigns` / `get_campaigns` (optional) – Get statistics only for given campaigns. Uses OR logic. If those params are not given statistics are returned from all campaigns on the account. Check [IDs in conditions](#ids) for detailed explanation.
 * `created_on` (optional) – Use [time operators](#operators) to narrow down search results to specific contact creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
+* `grouping` (optional) – Determines period of time by which stats are aggregated. Allowed values are: `hourly` (result keys in "YYYY-MM-DD HH" format), `daily` (result keys in "YYYY-MM-DD" format), `monthly` (result keys in "YYYY-MM" format) and `yearly` (result keys in "YYYY" format). Default is `daily`.
 
 _JSON result:_
 
@@ -2034,7 +2036,7 @@ _JSON result:_
     {
         "2010-01-01" : {
             "CAMPAIGN_ID"   : {
-                "iphone'    : 0,
+                "iphone"    : 0,
                 "www"       : 32,
                 "sale"      : 64,
                 "leads"     : 2,
@@ -3440,6 +3442,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.19.0, 2012-12-11
+
+* [get_contacts_subscription_stats](#get_contacts_subscription_stats) has `resolution` param added
 
 version 1.18.2, 2012-12-04
 
