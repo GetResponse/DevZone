@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.19.0, 2012-12-11 [changelog](#changelog)
+version 1.21.0, 2012-12-17 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -100,6 +100,7 @@ If you run into an error or you have difficulties with using the API please cont
 * [set_follow_up_cycle](#set_follow_up_cycle)
 * [get_messages_amount_per_account](#get_messages_amount_per_account)
 * [get_messages_amount_per_campaign](#get_messages_amount_per_campaign)
+* [get_newsletter_statuses](#get_newsletter_statuses)
 
 ####Contacts
 
@@ -408,6 +409,7 @@ _JSON result:_
         "CAMPAIGN_ID" : {
             "name"              : "my_campaign_1",
             "description"       : "My campaign",
+            "optin"             : "single",
             "from_name"         : "My From Name",
             "from_email"        : "me@emailaddress.com",
             "reply_to_email"    : "replies@emailaddress.com",
@@ -416,6 +418,7 @@ _JSON result:_
         "CAMPAIGN_ID" : {
             "name"              : "my_campaign_2",
             "description"       : null,
+            "optin"             : "double",
             "from_name"         : "My From Name",
             "from_email"        : "me@emailaddress.com",
             "reply_to_email"    : "replies@emailaddress.com",
@@ -466,6 +469,7 @@ _JSON result:_
         "CAMPAIGN_ID" : {
             "name"              : "my_campaign_1",
             "description"       : "My campaign",
+            "optin"             : "single",
             "from_name"         : "My From Name",
             "from_email"        : "me@emailaddress.com",
             "reply_to_email"    : "replies@emailaddress.com",
@@ -1036,6 +1040,8 @@ Correct way of sending personalized content is to use [GetResponse Dynamic Conte
     ]
 ```
 
+**Hint**: You can check status of newsletter using [get_newsletter_statuses](#get_newsletter_statuses) method.
+
 ---
 
 ####add_follow_up<a name="add_follow_up"/>
@@ -1300,6 +1306,30 @@ _JSON result:_
         "CAMPAIGN_ID"   : 1,
         "CAMPAIGN_ID"   : 0,
         "CAMPAIGN_ID"   : 1
+    }
+```
+
+---
+
+####get_newsletter_progresses<a name="get_newsletter_statuses"/>
+
+Get statuses of newsletter messages.
+
+_JSON params:_
+
+```json
+    [
+        "API_KEY"
+    ]
+```
+
+_JSON result:_
+
+```json
+    {
+        "scheduled"     : [ "MESSAGE_ID", "MESSAGE_ID", "MESSAGE_ID" ],
+        "in_progress"   : [ "MESSAGE_ID" ],
+        "delivered"     : [ "MESSAGE_ID", "MESSAGE_ID", "MESSAGE_ID", "MESSAGE_ID" ]
     }
 ```
 
@@ -3474,6 +3504,11 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.21.0, 2012-12-17
+
+* [get_newsletter_statuses](#get_newsletter_statuses) added
+* [get_campaigns](#get_campaigns) has `optin` param added in response
 
 version 1.20.0, 2012-12-11
 
