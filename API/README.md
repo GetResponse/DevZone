@@ -1311,7 +1311,7 @@ _JSON result:_
 
 ---
 
-####get_newsletter_progresses<a name="get_newsletter_statuses"/>
+####get_newsletter_statuses<a name="get_newsletter_statuses"/>
 
 Get statuses of newsletter messages.
 
