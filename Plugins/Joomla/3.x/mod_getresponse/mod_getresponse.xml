@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension
+    type="module"
+    version="2.5"
+    client="site"
+    method="upgrade">
+    <name>GetResposne Webform Integration</name>
+    <author>Implix</author>
+    <creationDate>2012-11-13</creationDate>
+    <copyright>All rights reserved by GetResponse.com</copyright>
+    <license>GPL 2.0</license>
+    <authorEmail>integrations@getresponse.com</authorEmail>
+    <authorUrl>http://www.getresponse.com</authorUrl>
+    <version>1.2</version>
+    <description>This module makes it easy to integrate custom web forms created in GetResponse into Joomla!-based websites. Add any custom fields for more effective segmentation of your list and they will automatically appear on your Joomla! site sign up form.</description>
+    <files>
+        <filename module="mod_getresponse">mod_getresponse.php</filename>
+        <folder>tmpl</folder>
+        <filename>index.html</filename>
+        <filename>mod_getresponse.xml</filename>
+    </files>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field
+                    name="webform_id"
+                    type="text"
+                    default=""
+                    label="WebForm ID"
+                    description="Write id of webform created in GetResponse.com">
+                </field>
+
+                <field
+                    name="display_css"
+                    type="list"
+                    default="yes"
+                    label="Display Styles"
+                    description="Use GetRespone styles or use default Joomla's style.">
+                    <option value="yes">yes</option>
+                    <option value="no">no</option>
+                </field>
+
+                <param name="@spacer" type="spacer" default="" label="" description="" />
+
+                <field
+                    name="moduleclass_sfx"
+                    type="text"
+                    default="_menu"
+                    label="Module Class Suffix"
+                    description="Module Class Suffix"/>
+            </fieldset>
+        </fields>
+    </config>
+</extension>
