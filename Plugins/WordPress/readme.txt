@@ -1,11 +1,11 @@
 ﻿=== GetResponse Integration ===
 Contributors: GetResponse
-Tags: getresponse, email, newsletter, signup, marketing, plugin, widget, mailing list, subscriber, contacts, subscribe form
+Tags: getresponse, email, newsletter, signup, marketing, plugin, widget, mailing list, subscriber, contacts, subscribe form, woocommerce
 Requires at least: 3.3.0
-Tested up to: 3.3.1
-Stable tag: 1.2.1
+Tested up to: 3.4.2
+Stable tag: 1.3.0
 
-The GetResponse Integration plugin allows you to quickly and easily add a signup form for your site.
+The GetResponse Integration plugin allows you to quickly and easily add a sign-up form to your site. If you have a WooCommerce account, this plugin will allow newsletter subscrpition via your checkout page.
 
 == Description ==
 
@@ -30,7 +30,8 @@ This plug-in enables installation of a GetResponse fully customizable sign up fo
 2. Go to you’re the plug-in settings in your WordPress account.
 3. Get your GetResponse form ID (you’ll learn where from the plug-in configuration window) and type it in the “Subscribe via Web Form” field. Note that leaving the field empty will disable any previously added web form.
 4. Enable the “Subscribe via Comment” option if you want to offer all commenting visitors to join your mailing list. Type in the invitation to subscribe e.g. “Subscribe to join the buzz”.
-5. Modify the position of your web form from your WordPress settings.
+5. Enable the “Subscribe via Checkout Page” option if you want to offer to join your mailing list after checkout (if WooCommerce is activated). Type in the invitation to subscribe e.g. “Subscribe to join the buzz”.
+6. Modify the position of your web form from your WordPress settings.
 
 With GetResponse form builder you can fully adjust the form to your needs: add custom fields, confirmation URLs, enable pop-up option, image, logo etc. Note that to modify your WordPress form site you need to do it from GetResponse account – the changes will be displayed automatically on your site.
 
@@ -49,6 +50,10 @@ Your web form id can be found on you account Webforms. There if you move cursor 
 
 
 == Changelog ==
+
+= v1.3.0 =
+
+* Added integration with WooCommerce to allow users to subscribe via the checkout page.
 
 = v1.2.1 =
 

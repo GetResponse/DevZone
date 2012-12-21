@@ -1,20 +1,3 @@
-#GRform { overflow: hidden; }
-#GRform label { display: block; font-weight: bold; margin: 0 0 4px 0; }
-#GRform input { margin: 0 0 20px 0; display: block; }
-
-#GRform .GRf-title { margin-bottom: 20px !important; }
-#GRform .GRf-row { width: 90%; margin: 0 auto; }
-#GRform .GRf-row input { width: 100%; margin: 0 0 10px 0; }
-#GRform .GRf-info { clear: both; text-align: center; margin: 0 0 20px 0; }
-
-
-/* Horizontal centering */
-#GRform .GRf-hCnt, #chickletFrmID { float: left; left: 50%; position: relative; }
-#GRform .GRfh-In, #chickletFrmID .box { float: left; left: -50%; position: relative; }
-
-/* Kubrick reset */
-#sidebar #chickletFrmID li:before{ content: ""; }
-
 .GR_label { display: inline-block !important; width: 150px !important; }
 .GR_input { width: 120px !important; }
 .GR_select { width: 120px !important; }
@@ -34,5 +17,4 @@
 .twitter-ico { background-position: 0 -30px; }
 .linkedin-ico { background-position: 0 -54px; }
 .blog-ico { background-position: 0 -78px; }
-
 
