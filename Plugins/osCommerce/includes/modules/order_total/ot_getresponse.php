@@ -62,7 +62,7 @@ class ot_getresponse {
 		if ($_GET['gr']=='export') {				// dla export u
 			ob_clean();
 			// START
-				
+
 			$query = tep_db_query('
 					SELECT
 					cu.customers_firstname AS firstname ,
@@ -80,7 +80,7 @@ class ot_getresponse {
 					JOIN countries ca ON ca.countries_id = bo.entry_country_id
 					WHERE cu.customers_newsletter = 1
 					');
-				
+
 			if (tep_db_num_rows($query)>0) {
 
 				// sprawdzam polaczenie do api i kampanie
@@ -95,14 +95,28 @@ class ot_getresponse {
 						$duplicated = 0;
 						$queued = 0;
 						$contact = 0;
+                        $campaign_id = array_pop(array_keys($result));
+
 						while ($row = tep_db_fetch_array($query))
 						{
-							$r = $client->add_contact(MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY,
+                            $check_cycle_day = $client->get_contact(
+                                MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY,
+                                array (
+                                    'campaigns' => array($campaign_id),
+                                    'email' => array (
+                                        'EQUALS' => $row['email']
+                                    )
+                                )
+                            );
+
+                            $cycle_day = (!empty($check_cycle_day) and isset($check_cycle_day[$campaign_id]['cycle_day'])) ? "'cycle_day' => ".$check_cycle_day[$campaign_id]['cycle_day']."," : '0';
+
+                            $r = $client->add_contact(MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY,
 									array (
-											'campaign'  => array_pop(array_keys($result)),
+											'campaign'  => $campaign_id,
 											'name'      => $row['firstname'] . ' ' . $row['lastname'],
 											'email'     => $row['email'],
-											'cycle_day' => '0',
+											'cycle_day' => $cycle_day,
 											'customs' => array(
 													array(
 															'name'       => 'ref',
@@ -146,7 +160,7 @@ class ot_getresponse {
 			else {
 				$json = array( 'status' => 0, 'response' =>'No contacts to export' );
 			}
-				
+
 			// KONIEC
 			header('Content-type: application/json');	echo json_encode($json);	die();
 		}
@@ -158,7 +172,7 @@ class ot_getresponse {
 					'id' => 0,
 					'text' => TEXT_NONE,
 			);
-				
+
 			try {
 				$client = new jsonRPCClient('http://api2.getresponse.com');
 				$result = $client->get_campaigns( $api_key );
@@ -206,13 +220,27 @@ class ot_getresponse {
 				);
 			}
 
-			$client->add_contact(
+            $campaign_id = array_pop(array_keys($result));
+
+            $check_cycle_day = $client->get_contact(
+                MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY,
+                array (
+                    'campaigns' => array($campaign_id),
+                    'email' => array (
+                        'EQUALS' => $order->customer['email_address']
+                    )
+                )
+            );
+
+            $cycle_day = (!empty($check_cycle_day) and isset($check_cycle_day[$campaign_id]['cycle_day'])) ? "'cycle_day' => ".$check_cycle_day[$campaign_id]['cycle_day']."," : '0';
+
+            $client->add_contact(
 					MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY,
 					array (
-							'campaign'  => array_pop(array_keys($result)),
+							'campaign'  => $campaign_id,
 							'name'      => $order->customer['firstname'] . ' ' . $order->customer['lastname'],
 							'email'     => $order->customer['email_address'],
-							'cycle_day' => '0',
+							'cycle_day' => $cycle_day,
 							'customs' => array(
 									array(
 											'name'       => 'ref',
