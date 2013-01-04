@@ -910,6 +910,7 @@ _JSON result:_
 **Hint**: It is normal to have stats for given date with `sent` equals 0 and other values positive because opens, clicks, bounces and complaints take place also during a few days after message was sent.
 
 **Warning**: Graduation may not be continuous. Given time period is present in result only if it has at least one positive value in it.
+
 ---
 
 ####send_newsletter<a name="send_newsletter"/>
@@ -2077,7 +2078,8 @@ _JSON result:_
                 "api"       : 128,
                 "import"    : 0,
                 "email"     : 16,
-                "survey"    : 1
+                "survey"    : 1,
+                "copy"      : 0
             },
             "CAMPAIGN_ID"   : {
                 "iphone"    : 8,
@@ -2089,7 +2091,8 @@ _JSON result:_
                 "api"       : 512,
                 "import"    : 16,
                 "email"     : 0,
-                "survey"    : 0
+                "survey"    : 0,
+                "copy"      : 1
             }
         },
         "2010-01-02"    : {
@@ -2103,7 +2106,8 @@ _JSON result:_
                 "api"       : 1024,
                 "import"    : 0,
                 "email"     : 2,
-                "survey"    : 8
+                "survey"    : 8,
+                "copy"      : 0
             },
             "CAMPAIGN_ID"   : {
                 "iphone"    : 0,
@@ -2115,7 +2119,8 @@ _JSON result:_
                 "api"       : 2048,
                 "import"    : 0,
                 "email"     : 0,
-                "survey"    : 0
+                "survey"    : 0,
+                "copy"      : 0
             }
         }
     }
