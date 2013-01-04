@@ -1394,7 +1394,7 @@ Conditions:
 * `name` (optional) – Use [text operators](#operators) to narrow down search results to specific contact names.
 * `email` (optional) – Use [text operators](#operators) to narrow down search results to specific contact emails.
 * `created_on` (optional) – Use [time operators](#operators) to narrow down search results to specific contact creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
-* `origin` (optional) – Narrow down search results by contacts’ origin (subscription method). Allowed values are `import`, `email`, `www`, `panel`, `leads`, `sale`, `api`, `forward`, `survey`, `iphone`.
+* `origin` (optional) – Narrow down search results by contacts’ origin (subscription method). Allowed values are `import`, `email`, `www`, `panel`, `leads`, `sale`, `api`, `forward`, `survey`, `iphone`, `copy`.
 * `cycle_day` (optional) – Use [numeric operators](#operators) to narrow down search results to specific  days of the followup cycles assigned to the contacts. To find contacts that already got day 2 message you have to use `{ "GREATER" : 2 }` as they have already reached that day. To find inactive contacts pass `{ "EQUALS" : null }` condition.
 * `customs` (optional) – Use [text operators](#operators) to narrow down search results to contacts having specific customs. Uses AND logic. Note that if you need OR logic you can use MATCHES operator and use alternative in regular expression. Contacts that don’t have a custom of given name are not returned in results. If custom is multi-value then “any” junction is used: condition is true if any custom value tests true according to the operator used.
 * `geo` (optional) – Use operators to narrow down search results to specific contact geo location. Precisely [text operators](#operators) are allowed for country, country_code, city, [numeric operators](#operators) are allowed for latitude and longitude (values are decimal numbers, like -54.5). Uses AND logic. Contacts that don’t have a geo location data are not returned in results.
@@ -3513,7 +3513,8 @@ Errors not included in spec:
 
 version 1.22.0, 2013-01-04
 
-* [get_contacts_subscription_stats](#get_contacts_subscription_stats) returns copied contacts as separate counter.
+* [get_contacts_subscription_stats](#get_contacts_subscription_stats) returns copied contacts as separate counter
+* copied contacts can be obtained using [get_contacts](#get_contacts) with `origin` param
 
 version 1.21.0, 2012-12-17
 
