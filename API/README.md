@@ -909,6 +909,7 @@ _JSON result:_
 
 **Hint**: It is normal to have stats for given date with `sent` equals 0 and other values positive because opens, clicks, bounces and complaints take place also during a few days after message was sent.
 
+**Warning**: Graduation may not be continuous. Given time period is present in result only if it has at least one positive value in it.
 ---
 
 ####send_newsletter<a name="send_newsletter"/>
@@ -2120,7 +2121,7 @@ _JSON result:_
     }
 ```
 
-**Warning**: If  there was no subscription for any contacts origin in given day then this day is not returned.
+**Warning**: Graduation may not be continuous. Given time period is present in result only if it has at least one positive value in it.
 
 ---
 
