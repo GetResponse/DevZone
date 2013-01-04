@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.21.0, 2012-12-17 [changelog](#changelog)
+version 1.22.0, 2013-01-04 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -3510,6 +3510,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.22.0, 2013-01-04
+
+* [get_contacts_subscription_stats](#get_contacts_subscription_stats) returns copied contacts as separate counter.
 
 version 1.21.0, 2012-12-17
 
