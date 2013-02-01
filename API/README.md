@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.21.0, 2012-12-17 [changelog](#changelog)
+version 1.22.0, 2013-01-04 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -909,6 +909,8 @@ _JSON result:_
 
 **Hint**: It is normal to have stats for given date with `sent` equals 0 and other values positive because opens, clicks, bounces and complaints take place also during a few days after message was sent.
 
+**Warning**: Graduation may not be continuous. Given time period is present in result only if it has at least one positive value in it.
+
 ---
 
 ####send_newsletter<a name="send_newsletter"/>
@@ -1392,7 +1394,7 @@ Conditions:
 * `name` (optional) – Use [text operators](#operators) to narrow down search results to specific contact names.
 * `email` (optional) – Use [text operators](#operators) to narrow down search results to specific contact emails.
 * `created_on` (optional) – Use [time operators](#operators) to narrow down search results to specific contact creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
-* `origin` (optional) – Narrow down search results by contacts’ origin (subscription method). Allowed values are `import`, `email`, `www`, `panel`, `leads`, `sale`, `api`, `forward`, `survey`, `iphone`.
+* `origin` (optional) – Narrow down search results by contacts’ origin (subscription method). Allowed values are `import`, `email`, `www`, `panel`, `leads`, `sale`, `api`, `forward`, `survey`, `iphone`, `copy`.
 * `cycle_day` (optional) – Use [numeric operators](#operators) to narrow down search results to specific  days of the followup cycles assigned to the contacts. To find contacts that already got day 2 message you have to use `{ "GREATER" : 2 }` as they have already reached that day. To find inactive contacts pass `{ "EQUALS" : null }` condition.
 * `customs` (optional) – Use [text operators](#operators) to narrow down search results to contacts having specific customs. Uses AND logic. Note that if you need OR logic you can use MATCHES operator and use alternative in regular expression. Contacts that don’t have a custom of given name are not returned in results. If custom is multi-value then “any” junction is used: condition is true if any custom value tests true according to the operator used.
 * `geo` (optional) – Use operators to narrow down search results to specific contact geo location. Precisely [text operators](#operators) are allowed for country, country_code, city, [numeric operators](#operators) are allowed for latitude and longitude (values are decimal numbers, like -54.5). Uses AND logic. Contacts that don’t have a geo location data are not returned in results.
@@ -2076,7 +2078,8 @@ _JSON result:_
                 "api"       : 128,
                 "import"    : 0,
                 "email"     : 16,
-                "survey"    : 1
+                "survey"    : 1,
+                "copy"      : 0
             },
             "CAMPAIGN_ID"   : {
                 "iphone"    : 8,
@@ -2088,7 +2091,8 @@ _JSON result:_
                 "api"       : 512,
                 "import"    : 16,
                 "email"     : 0,
-                "survey"    : 0
+                "survey"    : 0,
+                "copy"      : 1
             }
         },
         "2010-01-02"    : {
@@ -2102,7 +2106,8 @@ _JSON result:_
                 "api"       : 1024,
                 "import"    : 0,
                 "email"     : 2,
-                "survey"    : 8
+                "survey"    : 8,
+                "copy"      : 0
             },
             "CAMPAIGN_ID"   : {
                 "iphone"    : 0,
@@ -2114,13 +2119,14 @@ _JSON result:_
                 "api"       : 2048,
                 "import"    : 0,
                 "email"     : 0,
-                "survey"    : 0
+                "survey"    : 0,
+                "copy"      : 0
             }
         }
     }
 ```
 
-**Warning**: If  there was no subscription for any contacts origin in given day then this day is not returned.
+**Warning**: Graduation may not be continuous. Given time period is present in result only if it has at least one positive value in it.
 
 ---
 
@@ -3504,6 +3510,11 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.22.0, 2013-01-04
+
+* [get_contacts_subscription_stats](#get_contacts_subscription_stats) returns copied contacts as separate counter
+* copied contacts can be obtained using [get_contacts](#get_contacts) with `origin` param
 
 version 1.21.0, 2012-12-17
 
