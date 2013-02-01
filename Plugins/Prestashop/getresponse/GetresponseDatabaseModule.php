@@ -19,6 +19,7 @@ class DbConnection
     {
         $this->db = $database;
         $this->obj = 1;
+        $this->api_url = 'http://api2.getresponse.com';
     }
 
 /******************************************************************/
@@ -34,6 +35,19 @@ class DbConnection
                 ';
 
         if ($results = $this->db->ExecuteS($sql))
+        {
+            return $results[0];
+        }
+    }
+
+    public function getWebformSettings()
+    {
+        $sql = 'SELECT
+                    webform_id, active_subscription, sidebar, style
+                FROM
+                    '._DB_PREFIX_.'getresponse_webform
+                ';
+
         if ($results = $this->db->ExecuteS($sql))
         {
             return $results[0];
@@ -54,7 +68,7 @@ class DbConnection
 
         try
         {
-            $client = new jsonRPCClient('http://api2.getresponse.com');
+            $client = new jsonRPCClient($this->api_url);
             $results = $client->get_campaigns( $api_key );
             foreach ($results as $id=>$info)
             {
@@ -69,19 +83,67 @@ class DbConnection
         }
         catch (Exception $e)
         {
-            //$error = array('message' => 'Wrong API key');
-            //$msg = new GetresponseError($error);
-            //print $msg->error_msg();
+            //print_r($e);
         }
-
-        //$name = !empty($info['name']) : $info['name'] ? $info['description'];
     }
 
-    public function getContacts($email = null)
+    public function checkModuleStatus($module)
+    {
+        if (empty($module))
+        {
+            return false;
+        }
+
+        $sql = 'SELECT
+                    active
+                FROM
+                    '._DB_PREFIX_.'module
+                WHERE
+                    name = "' . pSQL($module) . '"
+                ';
+
+        if ($results = $this->db->ExecuteS($sql))
+        {
+            if (isset($results[0]['active']) and $results[0]['active'] == 1)
+            {
+                return "active";
+            }
+        }
+
+        return false;
+    }
+
+    public function getContacts($email = null, $newsletter_guests = null)
     {
         $where = !empty($email) ? " AND cu.email = '" . $email ."'" : null;
 
-        $sql = 'SELECT
+        if ( !empty($newsletter_guests))
+        {
+            $blocknewsletter = $this->checkModuleStatus('blocknewsletter');
+
+            if ($blocknewsletter == 'active')
+            {
+                $ng_where = "UNION SELECT
+                        'Friend' as firstname,
+                        '' as lastname,
+                        n.email as email,
+                        '' as company,
+                        '' as birthday,
+                        '' as address1,
+                        '' as address2,
+                        '' as postcode,
+                        '' as city,
+                        '' as phone,
+                        '' as country
+                    FROM
+                        "._DB_PREFIX_."newsletter n
+                    WHERE
+                        n.active = 1
+                ";
+            }
+        }
+
+        $sql = "SELECT
                     cu.firstname as firstname,
                     cu.lastname as lastname,
                     cu.email as email,
@@ -94,18 +156,18 @@ class DbConnection
                     ad.phone as phone,
                     co.iso_code as country
                 FROM
-                    '._DB_PREFIX_.'customer as cu
+                    "._DB_PREFIX_."customer as cu
                 JOIN
-                    '._DB_PREFIX_.'address ad ON cu.id_customer = ad.id_customer
+                    "._DB_PREFIX_."address ad ON cu.id_customer = ad.id_customer
                 JOIN
-                    '._DB_PREFIX_.'country co ON ad.id_country = co.id_country
+                    "._DB_PREFIX_."country co ON ad.id_country = co.id_country
                 WHERE
-                    cu.newsletter = 1' . $where . '
+                    cu.newsletter = 1" . $where . "
                 AND
                     ad.active = 1
-                ORDER BY
-                    ad.date_add desc
-                ';
+                " . $ng_where . "
+                ";
+
 
         if ($results = $this->db->ExecuteS($sql))
         {
@@ -145,6 +207,22 @@ class DbConnection
         $data = array('api_key' => pSQL($apikey));
 
         if ($this->db->autoExecute(_DB_PREFIX_.'getresponse_settings', $data , 'UPDATE', 'id = 1'))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function updateWebformSettings($webform_id, $active_subscription, $sidebar, $style)
+    {
+        $data = array('webform_id' => pSQL($webform_id),
+                      'active_subscription' => pSQL($active_subscription),
+                      'sidebar' => pSQL($sidebar),
+                      'style' => pSQL($style)
+                );
+
+        if ($this->db->autoExecute(_DB_PREFIX_.'getresponse_webform', $data , 'UPDATE', 'id = 1'))
         {
             return true;
         }
@@ -201,52 +279,41 @@ class DbConnection
             return array('status'=>'0' , 'message' => 'Request error');
         }
 
-        try
+        $duplicated = 0;
+        $queued = 0;
+        $contact = 0;
+
+        if ( !empty($customers))
         {
-            $client = new jsonRPCClient('http://api2.getresponse.com');
-
-            $duplicated = 0;
-            $queued = 0;
-            $contact = 0;
-
-            if ( !empty($customers))
+            foreach ($customers as $customer)
             {
-                foreach ($customers as $customer)
+                $customs = $this->mapCustoms($customer, $_POST, 'export');
+
+                if ( !empty($customs['custom_error']) and $customs['custom_error'] == true)
                 {
-                    $customs = $this->mapCustoms($customer, $_POST, 'export');
+                    return array('status'=>'0' , 'message' => 'Incorrect field name: "' . $customs['custom_message'] . '". <br/>The field name contains invalid characters. Only alphanumeric characters and the underscore symbol are allowed.');
+                }
 
-                    if ( !empty($customs['custom_error']) and $customs['custom_error'] == true)
-                    {
-                        return array('status'=>'0' , 'message' => 'Incorrect field name: "' . $customs['custom_message'] . '". <br/>The field name contains invalid characters. Only alphanumeric characters and the underscore symbol are allowed.');
-                    }
+                $r = $this->addContactToGR($apikey, $campaign_id, $customer['firstname'], $customer['lastname'], $customer['email'], $customs);
 
-                    $r = $client->add_contact($apikey,
-                        array (
-                            'campaign'  => $campaign_id,
-                            'name'      => $customer['firstname'] . ' ' . $customer['lastname'],
-                            'email'     => $customer['email'],
-                            'cycle_day' => '0',
-                            'customs'   => $customs
-                        )
-                    );
-                    $contact++;
-                    if ($r['duplicated']==1)
-                    {
-                        $duplicated++;
-                    }
-                    else if ($r['queued']==1)
-                    {
-                        $queued++;
-                    }
+                if ( $r === false)
+                {
+                    return array('status'=>'0' , 'message' => 'API request error.');
+                }
+
+                $contact++;
+                if (isset($r['duplicated']) and $r['duplicated']==1)
+                {
+                    $duplicated++;
+                }
+                else if (isset($r['queued']) and $r['queued']==1)
+                {
+                    $queued++;
                 }
             }
+        }
 
-            return array('status'=>'1' , 'message' =>'Export completed. <br /> Contacts: ' .$contact. '. Queued:' .$queued. '. Updated: ' .$duplicated. '.');
-        }
-        catch (Exception $e)
-        {
-            return array('status'=>'0' , 'message' => 'API request error.');
-        }
+        return array('status'=>'1' , 'message' =>'Export completed. <br /> Contacts: ' .$contact. '. Queued:' .$queued. '. Updated: ' .$duplicated. '.');
     }
 
     private function mapCustoms($customer, $customer_post, $type)
@@ -358,33 +425,62 @@ class DbConnection
         //update_contact
         else
         {
-            $contact = $this->getContacts($params[$prefix]->email);
+            $contact = $this->getContacts($params[$prefix]->email, null);
             $customs = $this->mapCustoms($contact, $_POST, 'order');
         }
 
         if (isset($params[$prefix]->newsletter) and $params[$prefix]->newsletter == 1)
         {
-            try
-            {
-                $client = new jsonRPCClient('http://api2.getresponse.com');
-
-                $client->add_contact($apikey,
-                        array (
-                            'campaign'  => $campaign_id,
-                            'name'      => $params[$prefix]->firstname . ' ' . $params[$prefix]->lastname,
-                            'email'     => $params[$prefix]->email,
-                            'cycle_day' => '0',
-                            'customs'   => $customs
-                        )
-                    );
-            }
-            catch (Exception $e)
-            {
-                //return array('status'=>'0' , 'message' => 'Error with API request.');
-            }
+            $this->addContactToGR($apikey, $campaign_id, $params[$prefix]->firstname, $params[$prefix]->lastname, $params[$prefix]->email, $customs);
         }
 
         return true;
+    }
+
+    public function addContactToGR($apikey, $campaign_id, $first_name = null, $last_name = null, $email, $customs)
+    {
+        if ( empty($apikey) or empty($campaign_id) or empty($email) or empty($customs))
+        {
+            return false;
+        }
+
+        try
+        {
+            $client = new jsonRPCClient($this->api_url);
+
+            $name = !empty($first_name) ? $first_name . ' ' .$last_name : 'Friend';
+            $cycle_day = '0';
+
+            $check_cycle_day = $client->get_contacts(
+                $apikey,
+                array (
+                    'campaigns' => array($campaign_id),
+                    'email' => array (
+                        'EQUALS' => $email)
+                     )
+                );
+
+            if ( !empty($check_cycle_day) and isset($check_cycle_day[$campaign_id]['cycle_day']))
+            {
+                $cycle_day = $check_cycle_day[$campaign_id]['cycle_day'];
+            }
+
+            $params = array (
+                'campaign'  => $campaign_id,
+                'name'      => $name,
+                'email'     => $email,
+                'cycle_day' => $cycle_day,
+                'customs'   => $customs
+            );
+
+            $result = $client->add_contact($apikey, $params);
+
+            return $result;
+        }
+        catch (Exception $e)
+        {
+            return false;
+        }
     }
 
 }

@@ -21,6 +21,7 @@ class GetresponseSubTab extends AdminTab
         $this->edit          = false;
         $this->delete        = true;
         $this->identifier    = 'api_key';
+        $this->webform_img   = "/img/t/Getresponse_webform.gif";
 
         $instance            = Db::getInstance();
         $this->db            = new DbConnection($instance);
@@ -78,7 +79,14 @@ class GetresponseSubTab extends AdminTab
             }
             else
             {
-                $contacts = $this->db->getContacts();
+                $newsletter_guests = false;
+
+                if ( !empty($_POST['newsletter_guests']))
+                {
+                    $newsletter_guests = true;
+                }
+
+                $contacts = $this->db->getContacts(null, $newsletter_guests);
 
                 if ( empty($contacts))
                 {
@@ -126,6 +134,19 @@ class GetresponseSubTab extends AdminTab
                 echo $msg->error_msg('No campaign selected');
             }
 
+        }
+        else if (isset($_POST['webformgetresponse_settings']))
+        {
+            if ( (isset($_POST['webform_id']) and $_POST['webform_id'] <= '0'))
+            {
+                echo $msg->error_msg('No Web Form ID or incorrect value');
+            }
+            else
+            {
+                $this->db->updateWebformSettings($_POST['webform_id'], $_POST['webform_status'], $_POST['webform_sidebar'], $_POST['webform_style']);
+
+                echo $msg->success('Settings update successful');
+            }
         }
 
         // apikey settings
@@ -206,21 +227,27 @@ APIFORM;
         if ($this->apikey)
         {
             $campaigns  = $this->db->getCampaigns($this->apikey);
+            $Options = '';
+            $Options2 = '';
+            $Options3 = '';
 
-            foreach($campaigns as $campaign)
+            if ( !empty($campaigns))
             {
-                $Options .= '<option value="' . $campaign['id'] . '">' . $campaign['name'] . '</option>';
-
-                $seleted = '';
-                if ($campaign['id'] == $settings['campaign_id'] or isset($_POST['order_campaign']) and $_POST['order_campaign'] == $campaign['id'])
+                foreach($campaigns as $campaign)
                 {
-                    $seleted = "selected";
+                    $Options .= '<option value="' . $campaign['id'] . '">' . $campaign['name'] . '</option>';
+
+                    $seleted = '';
+                    if ($campaign['id'] == $settings['campaign_id'] or isset($_POST['order_campaign']) and $_POST['order_campaign'] == $campaign['id'])
+                    {
+                        $seleted = "selected";
+                    }
+
+                    $Options2 .= '<option value="' . $campaign['id'] .'"' .$seleted . '>' . $campaign['name'] . '</option>';
+                    $Options3 .= '<option value="' . $campaign['id'] .'"' .$seleted . '>' . $campaign['name'] . '</option>';
                 }
 
-                $Options2 .= '<option value="' . $campaign['id'] .'"' .$seleted . '>' . $campaign['name'] . '</option>';
-            }
-
-            echo <<<EXPORTFORM
+                echo <<<EXPORTFORM
             <br/>
                 <fieldset>
                     <legend>{$this->l('Export Customers')}</legend>
@@ -229,7 +256,11 @@ APIFORM;
                                 <select id="campaign" name="campaign" style="width: 150px">
                                     $Options
                                 </select>
-                        <br><br>
+                        </div>
+                        <label>{$this->l('Guests who subscribed to newsletter: ')}</label>
+                            <div class="margin-form">
+                                <input form="form-api" type="checkbox" name="newsletter_guests" id="newsletter_guests" value="yes"/>
+                        <br/><br/>
 
                         <div id="extra"></div>
 
@@ -257,26 +288,26 @@ APIFORM;
             </script>
 EXPORTFORM;
 
-            // order form
-            $opt_yes = '';
-            $opt_no = '';
-            $opt_update = '';
+                // order form
+                $opt_yes = '';
+                $opt_no = '';
+                $opt_update = '';
 
-            if ($settings['active_subscription'] == 'yes' or isset($_POST['order_status']) and $_POST['order_status'] == 'yes')
-            {
-                $opt_yes = "selected";
-
-                if ($settings['update_address'] == 'yes' or isset($_POST['update_address']) and $_POST['update_address'] == 'yes')
+                if ($settings['active_subscription'] == 'yes' or isset($_POST['order_status']) and $_POST['order_status'] == 'yes')
                 {
-                    $opt_update = 'checked';
-                }
-            }
-            else
-            {
-                $opt_no = "selected";
-            }
+                    $opt_yes = "selected";
 
-            echo <<<ORDERFORM
+                    if ($settings['update_address'] == 'yes' or isset($_POST['update_address']) and $_POST['update_address'] == 'yes')
+                    {
+                        $opt_update = 'checked';
+                    }
+                }
+                else
+                {
+                    $opt_no = "selected";
+                }
+
+                echo <<<ORDERFORM
             <br/>
             <fieldset>
                     <legend>{$this->l('Subscription via registration page')}</legend>
@@ -309,7 +340,7 @@ EXPORTFORM;
                             <div id="update_sup_extra"></div>
                         </div>
                 </fieldset>
-            </form>
+
             <br/>
             <script>
             $('#update_address').change(function()
@@ -336,8 +367,110 @@ EXPORTFORM;
 
             </script>
 ORDERFORM;
-
+            }
         }
+
+        $webform_settings  = $this->db->getWebformSettings();
+
+        // order form
+        $webform_yes = '';
+        $webform_no = '';
+        $sidebar_left = '';
+        $sidebar_right = '';
+        $webform_style = '';
+        $presta_style = '';
+
+        if ($webform_settings['active_subscription'] == 'yes' or isset($_POST['webform_status']) and $_POST['webform_status'] == 'yes')
+        {
+            $webform_yes = "selected";
+
+            if ($webform_settings['style'] == 'webform' or isset($_POST['webform_style']) and $_POST['webform_style'] == 'yes')
+            {
+                $webform_style = 'selected';
+            }
+            else
+            {
+                $presta_style = 'selected';
+            }
+
+            if ($webform_settings['sidebar'] == 'right' or isset($_POST['webform_sidebar']) and $_POST['webform_sidebar'] == 'yes')
+            {
+                $sidebar_right = 'selected';
+            }
+            else
+            {
+                $sidebar_left = 'selected';
+            }
+        }
+        else
+        {
+            $webform_no = "selected";
+        }
+
+        echo <<<ORDERFORM
+            <br/>
+            <fieldset>
+                    <legend>{$this->l('Subscription via Web Form')}</legend>
+                        <label>{$this->l('Web Form ID: ')}</label>
+                            <div class="margin-form">
+                                <input id="webform_id" name="webform_id" value="{$webform_settings['webform_id']}" style="width: 150px"></input>
+                                <sup>*</sup>
+                        <br/>
+                        </div>
+                        <label>{$this->l('Web Form position: ')}</label>
+                            <div class="margin-form">
+                                <select id="webform_sidebar" name="webform_sidebar" style="width: 150px">
+                                    <option value="left" {$sidebar_left}>{$this->l('Left sidebar')}</option>
+                                    <option value="right" {$sidebar_right}>{$this->l('Right sidebar')}</option>
+                                </select>
+                        <br/>
+                        </div>
+                        <label>{$this->l('Style: ')}</label>
+                            <div class="margin-form">
+                                <select id="webform_style" name="webform_style" style="width: 150px">
+                                    <option value="webform" {$webform_style}>{$this->l('Web Form')}</option>
+                                    <option value="prestashop" {$presta_style}>{$this->l('PrestaShop')}</option>
+                                </select>
+                        <br/>
+                        </div>
+                        <label>{$this->l('Subscription: ')}</label>
+                            <div class="margin-form">
+                                <select id="webform_status" name="webform_status" style="width: 150px">
+                                    <option value="no" {$webform_no}>{$this->l('disabled')}</option>
+                                    <option value="yes" {$webform_yes}>{$this->l('enabled')}</option>
+                                </select>
+                        <br/><br/>
+                        <input type="submit" value="{$this->l('Save')}" name="webform{$this->table}" class="button" />
+                        </div>
+                        <div class="small">
+                            <sup>*</sup>{$this->l('You will find your web form ID right in your GetResponse account...')}
+                            <a href="#webform_info" id="webform_info" style="color:#009DD4"><span id="webform_click">click here to see more</span></a>
+                            <span id="webform_info2"></span>
+                            <br/>
+                            <div id="webform_extra"></div>
+                        </div>
+                </fieldset>
+            </form>
+            <br/>
+            <script>
+            $('#webform_info').click(function()
+            {
+                $('#webform_click').html('');
+                $('#webform_info2').html('<br/>Go to Web Forms => Web forms list and click on the \"Source\" link in the selected web form. Your web form ID is the number you\'ll see right after the \"?wid=\" portion of the JavaScript code.');
+                $('#webform_extra').html('<br/><span style="color:black;font-size: 12px"><img src="{$this->webform_img}"/></span>');
+            });
+
+            $('#order_status').change(function()
+            {
+                if($('#order_status').val() == 'no')
+                {
+                    $('#update_extra,update_sup_extra').empty();
+                    $('#update_address').removeAttr('checked');
+                }
+            });
+
+            </script>
+ORDERFORM;
 
     }
 }
