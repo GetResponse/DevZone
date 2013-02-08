@@ -1,15 +1,16 @@
-﻿=== GetResponse Integration ===
+=== GetResponse Integration ===
 Contributors: GetResponse
 Tags: getresponse, email, newsletter, signup, marketing, plugin, widget, mailing list, subscriber, contacts, subscribe form, woocommerce
 Requires at least: 3.3.0
 Tested up to: 3.4.2
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 
-The GetResponse Integration plugin allows you to quickly and easily add a sign-up form to your site. If you have a WooCommerce account, this plugin will allow newsletter subscrpition via your checkout page.
+The GetResponse Integration plugin allows you to quickly and easily add a sign-up form to your site.
 
 == Description ==
 
 This plug-in enables installation of a GetResponse fully customizable sign up form on your WordPress site or blog. Once a web form is created and added to the site the visitors are automatically added to your GetResponse contact list and sent a confirmation email. The plug-in additionally offers sign-up upon leaving a comment. 
+If you have a WooCommerce account, this plugin will allow newsletter subscrpition via your checkout page.
 
 == Installation ==
 = Method 1. =
@@ -50,6 +51,10 @@ Your web form id can be found on you account Webforms. There if you move cursor 
 
 
 == Changelog ==
+
+= v1.3.1 =
+
+* Added shortcode
 
 = v1.3.0 =
 

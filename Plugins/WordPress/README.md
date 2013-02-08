@@ -1,6 +1,6 @@
 #Wordpress plugin
 
-version 1.3.0, 2012-03-29 [changelog](#changelog)
+version 1.3.1, 2013-02-08 [changelog](#changelog)
 
 ##INFO
 
@@ -59,6 +59,10 @@ Your web form id can be found on you account Webforms. There if you move cursor 
 5.	Leaving a comment view ![Leaving a comment view](https://github.com/GetResponse/DevZone/raw/master/Plugins/WordPress/screenshot-5.png)
 
 ##CHANGELOG<a name="changelog">
+
+version 1.3.1, 2013-02-08
+
+* Added shortcode
 
 version 1.3.0, 2012-11-29
 
