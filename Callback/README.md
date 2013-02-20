@@ -38,7 +38,7 @@ Make sure that target server is capable of handling expected amount of requests,
 
 The GetResponse Callback interface is created and maintained by the *GetResponse DevZone Team*.
 
-If you run into an error or you have difficulties with using the DC please contact us using [this form](http://www.getresponse.com/feedback.html?devzone=yes) and we will provide all the support we can to solve your problems.
+If you run into an error or you have difficulties with using Callbacks please contact us using [this form](http://www.getresponse.com/feedback.html?devzone=yes) and we will provide all the support we can to solve your problems.
 
 ##CALLS
 
@@ -63,7 +63,7 @@ _Params:_
 * `CONTACT_ID`
 * `contact_name` (optional)
 * `contact_email`
-* `contact_ip` (optional) - In case of double-optin this is the IP from confirmation link was clicked.
+* `contact_ip` (optional) - In case of double-optin this is the IP than confirmation link was clicked from.
 * `contact_origin` - One of `import`, `email`, `www`, `panel`, `leads`, `sale`, `api`, `forward`, `survey`, `iphone`.
 
 ---
