@@ -99,7 +99,7 @@ class ot_getresponse {
 
 						while ($row = tep_db_fetch_array($query))
 						{
-                            $check_cycle_day = $client->get_contact(
+                            $check_cycle_day = $client->get_contacts(
                                 MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY,
                                 array (
                                     'campaigns' => array($campaign_id),
@@ -222,7 +222,7 @@ class ot_getresponse {
 
             $campaign_id = array_pop(array_keys($result));
 
-            $check_cycle_day = $client->get_contact(
+            $check_cycle_day = $client->get_contacts(
                 MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY,
                 array (
                     'campaigns' => array($campaign_id),

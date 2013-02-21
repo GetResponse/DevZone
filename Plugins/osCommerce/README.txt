@@ -1,6 +1,6 @@
 #osCommerce plugin
 
-version 0.5, 2012-12-20
+version 0.6, 2013-02-21
 
 ##INFO
 
@@ -71,6 +71,10 @@ will be added too as contact custom fields. He also will be placed at the beginn
 This is all available now with just one click.
 
 ##CHANGELOG
+
+version 0.6, 2013-02-21
+
+* Changed method name to get contacts
 
 version 0.5, 2012-12-20
 
