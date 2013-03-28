@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.22.0, 2013-01-04 [changelog](#changelog)
+version 1.23.0, 2013-03-28 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -93,11 +93,11 @@ If you run into an error or you have difficulties with using the API please cont
 * [get_message_contents](#get_message_contents)
 * [get_message_stats](#get_message_stats)
 * [send_newsletter](#send_newsletter)
-* [add_follow_up](#add_follow_up)
-* [add_draft](#add_draft)
 * [delete_newsletter](#delete_newsletter)
-* [delete_follow_up](#delete_follow_up)
-* [set_follow_up_cycle](#set_follow_up_cycle)
+* [add_autoresponder](#add_autoresponder)
+* [set_autoresponder_cycle](#set_autoresponder_cycle)
+* [delete_autoresponder](#delete_autoresponder)
+* [add_draft](#add_draft)
 * [get_messages_amount_per_account](#get_messages_amount_per_account)
 * [get_messages_amount_per_campaign](#get_messages_amount_per_campaign)
 * [get_newsletter_statuses](#get_newsletter_statuses)
@@ -739,7 +739,7 @@ _JSON params:_
 Conditions:
 
 * `campaigns` / `get_campaigns` (optional) – Search only in given campaigns. Uses OR logic. If those params are not given search, is performed in all campaigns in the account. Check [IDs in conditions](#ids) for detailed explanation.
-* `type` (optional) – Use "newsletter", "follow-up" or "draft" to narrow down search results to specific message types. If not given newsletters and follow-ups are returned in the result.
+* `type` (optional) – Use "newsletter", "autoresponder" or "draft" to narrow down search results to specific message types. If not given newsletters and autoresponders are returned in the result.
 * `subject` (optional) – Use [text operators](#operators) to narrow down search results to specific message subjects.
 
 _JSON result:_
@@ -748,8 +748,8 @@ _JSON result:_
     {
         "MESSAGE_ID" : {
             "campaign"      : "CAMPAIGN_ID",
-            "type"          : "follow-up",
-            "subject"       : "My follow-up",
+            "type"          : "autoresponder",
+            "subject"       : "My autoresponder",
             "day_of_cycle"  : 8,
             "flags"         : ["clicktrack", "openrate"],
             "created_on"    : "2010-01-01 00:00:00"
@@ -773,7 +773,7 @@ Array `flags` may be present with following items:<a name="message_flags"/>
 
 **Hint**: All merge-words in subject are returned as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
 
-**Hint**: If type is follow-up then `day_of_cycle` is returned and if type is newsletter then `send_on` is returned. Those fields are not present in drafts.
+**Hint**: If type is autoresponder then `day_of_cycle` is returned and if type is newsletter then `send_on` is returned. Those fields are not present in drafts.
 
 **Hint**: If you need plain and HTML contents of your message use [get_message_contents](#get_message_contents) method.
 
@@ -804,8 +804,8 @@ _JSON result:_
     {
         "MESSAGE_ID" : {
             "campaign"      : "CAMPAIGN_ID",
-            "type"          : "follow-up",
-            "subject"       : "My follow-up",
+            "type"          : "autoresponder",
+            "subject"       : "My autoresponder",
             "day_of_cycle"  : 8,
             "flags"         : ["clicktrack", "openrate"],
             "created_on"    : "2010-01-01 00:00:00"
@@ -1046,9 +1046,9 @@ Correct way of sending personalized content is to use [GetResponse Dynamic Conte
 
 ---
 
-####add_follow_up<a name="add_follow_up"/>
+####add_autoresponder<a name="add_autoresponder"/>
 
-Add a follow-up to the campaign at the specific day of cycle.
+Add a autoresponder to the campaign at the specific day of cycle.
 
 _JSON params:_
 
@@ -1059,7 +1059,7 @@ _JSON params:_
             "campaign"          : "CAMPAIGN_ID",
             "from_field"        : "FROM_FIELD_ID",
             "reply_to_field"    : "FROM_FIELD_ID",
-            "subject"   : "My follow-up",
+            "subject"   : "My autoresponder",
             "contents"  : {
                 "plain" : "Hello there",
                 "html"  : "<h1>Hello</h1>there"
@@ -1091,7 +1091,7 @@ Conditions:
 * `contents` (mandatory) – Allowed keys are `plain` and `html`, at least one is mandatory. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax. Maximum length is 524288 characters each.
 * `attachments` (optional) - Files that will be attached to message. Field `data` must be encoded using [Base64](http://en.wikipedia.org/wiki/Base64) algorithm. Filed `name` represents name of file. Field `mime` represents [media type](http://en.wikipedia.org/wiki/Internet_media_type) of file.
 * `flags` (optional) – Enables extra functionality for a message, see [message_flags](#message_flags) for available values.
-* `day_of_cycle` – Number of days between the day when a contact subscribed to a campaign and the day when the follow-up is sent. Must be not used in existing messages and in the range of 0..10000.
+* `day_of_cycle` – Number of days between the day when a contact subscribed to a campaign and the day when the autoresponder is sent. Must be in the range of 0..10000.
 
 _JSON result:_
 
@@ -1102,7 +1102,7 @@ _JSON result:_
     }
 ```
 
-_JSON error messages (if any):_ `Missing campaign`, `Missing From field`, `Missing Reply-To field`, `Day of cycle already used`, `Missing contents`, `Dynamic Content syntax error`.
+_JSON error messages (if any):_ `Missing campaign`, `Missing From field`, `Missing Reply-To field`, `Missing contents`, `Dynamic Content syntax error`.
 
 ---
 
@@ -1119,7 +1119,7 @@ _JSON params:_
             "campaign"          : "CAMPAIGN_ID",
             "from_field"        : "FROM_FIELD_ID",
             "reply_to_field"    : "FROM_FIELD_ID",
-            "subject"   : "My follow-up",
+            "subject"   : "My draft",
             "contents"  : {
                 "plain" : "Hello there",
                 "html"  : "<h1>Hello</h1>there"
@@ -1186,9 +1186,9 @@ _JSON error messages (if any):_ `Missing message`, `Message is not newsletter`, 
 
 ---
 
-####delete_follow_up<a name="delete_follow_up"/>
+####delete_autoresponder<a name="delete_autoresponder"/>
 
-Delete follow-up from campaign.
+Delete autoresponder from campaign.
 
 _JSON params:_
 
@@ -1203,7 +1203,7 @@ _JSON params:_
 
 Conditions:
 
-* `message` (mandatory) – `MESSAGE_ID` obtained from [get_messages](#get_messages) or [add_follow_up](#add_follow_up).
+* `message` (mandatory) – `MESSAGE_ID` obtained from [get_messages](#get_messages) or [add_autoresponder](#add_autoresponder).
 
 _JSON result:_
 
@@ -1213,13 +1213,13 @@ _JSON result:_
     }
 ```
 
-_JSON error messages (if any):_ `Missing message`, `Message is not follow-up`.
+_JSON error messages (if any):_ `Missing message`, `Message is not autoresponder`.
 
 ---
 
-####set_follow_up_cycle<a name="set_follow_up_cycle"/>
+####set_autoresponder_cycle<a name="set_autoresponder_cycle"/>
 
-Set day of cycle of existing follow-up.
+Set day of cycle of existing autoresponder.
 
 _JSON params:_
 
@@ -1235,8 +1235,8 @@ _JSON params:_
 
 Conditions:
 
-* `message` (mandatory) – `MESSAGE_ID` obtained [get_messages](#get_messages) or [add_follow_up](#add_follow_up).
-* `day_of_cycle` – Number of days between the day when a contact subscribed to a campaign and the day when the follow-up is sent. Must be not used in existing messages and in the range of 0..10000.
+* `message` (mandatory) – `MESSAGE_ID` obtained [get_messages](#get_messages) or [add_autoresponder](#add_autoresponder).
+* `day_of_cycle` – Number of days between the day when a contact subscribed to a campaign and the day when the autoresponder is sent. Must be in the range of 0..10000.
 
 _JSON result:_
 
@@ -1246,7 +1246,7 @@ _JSON result:_
     }
 ```
 
-_JSON error messages (if any):_ `Missing message`, `Message is not follow-up`, `Day of cycle already used`.
+_JSON error messages (if any):_ `Missing message`, `Message is not autoresponder`.
 
 ---
 
@@ -1267,7 +1267,7 @@ _JSON params:_
 
 Conditions:
 
-* `type` (optional) – Use newsletter, follow-up or draft to narrow down count results to specific message types.
+* `type` (optional) – Use newsletter, autoresponder or draft to narrow down count results to specific message types.
 
 _JSON result:_
 
@@ -1296,7 +1296,7 @@ _JSON params:_
 
 Conditions:
 
-* `type` (optional) – Use newsletter, follow-up or draft to narrow down count results to specific message types.
+* `type` (optional) – Use newsletter, autoresponder or draft to narrow down count results to specific message types.
 
 _JSON result:_
 
@@ -1395,7 +1395,7 @@ Conditions:
 * `email` (optional) – Use [text operators](#operators) to narrow down search results to specific contact emails.
 * `created_on` (optional) – Use [time operators](#operators) to narrow down search results to specific contact creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
 * `origin` (optional) – Narrow down search results by contacts’ origin (subscription method). Allowed values are `import`, `email`, `www`, `panel`, `leads`, `sale`, `api`, `forward`, `survey`, `iphone`, `copy`.
-* `cycle_day` (optional) – Use [numeric operators](#operators) to narrow down search results to specific  days of the followup cycles assigned to the contacts. To find contacts that already got day 2 message you have to use `{ "GREATER" : 2 }` as they have already reached that day. To find inactive contacts pass `{ "EQUALS" : null }` condition.
+* `cycle_day` (optional) – Use [numeric operators](#operators) to narrow down search results to specific  days of the autoresponder cycles assigned to the contacts. To find contacts that are on day 2 you have to use `{ "EQUALS" : 2 }`. To find inactive contacts pass `{ "EQUALS" : null }` condition. Note that the fact that contact is on day 2 does not mean he received all autoresponder messages for day 2, there are factors such as excluded of days of week that may cause message to be delayed beyond its `cycle_day`.
 * `customs` (optional) – Use [text operators](#operators) to narrow down search results to contacts having specific customs. Uses AND logic. Note that if you need OR logic you can use MATCHES operator and use alternative in regular expression. Contacts that don’t have a custom of given name are not returned in results. If custom is multi-value then “any” junction is used: condition is true if any custom value tests true according to the operator used.
 * `geo` (optional) – Use operators to narrow down search results to specific contact geo location. Precisely [text operators](#operators) are allowed for country, country_code, city, [numeric operators](#operators) are allowed for latitude and longitude (values are decimal numbers, like -54.5). Uses AND logic. Contacts that don’t have a geo location data are not returned in results.
 * `clicks` / `get_clicks` (optional) – Use to narrow down search results to the contacts that clicked specific links. Uses AND logic. See [IDs in conditions](#ids) for detailed explanation.
@@ -1804,7 +1804,7 @@ Meaning of every `QUESTION_ID` and `OPTION_ID` can be found by calling [get_surv
 
 ####set_contact_cycle<a name="set_contact_cycle"/>
 
-Place a contact on a desired day of the follow-up cycle or deactivate a contact.
+Place a contact on a desired day of the autoresponder cycle or deactivate a contact.
 
 _JSON params:_
 
@@ -1832,8 +1832,6 @@ _JSON result:_
 ```
 
 _JSON error messages (if any):_ `Missing contact`.
-
-**Warning**: Do not confuse the day of cycle with position in cycle. For example if a follow-up cycle has messages set to days 1, 2, 4, 8, 16 and you set cycle_day = 4 then a contact will get message from day 4 and not message from day 8 because it’s 4th in a row.
 
 ---
 
@@ -1873,7 +1871,7 @@ Conditions:
 * `action` (optional) – Allowed modes are `standard`, `insert`, `update`. If standard mode is chosen then a new contact will be added if not already present in a given campaign otherwise existing contact will be updated including name change and customs list merge. If insert mode is chosen then a contact will be added if it doesn’t exist in a given campaign but no updates will be performed otherwise. If update is chosen then a contact will be updated if it exists in a given campaign but no inserts will be performed otherwise. Default is standard.
 * `name` (optional) – Name value.
 * `email` (mandatory) – Email value.
-* `cycle_day` (optional) – Insert contact on a given day at the follow-up cycle. Value of 0 means the beginning of the cycle. Lack of this param means that a contact will not be inserted into cycle.
+* `cycle_day` (optional) – Insert contact on a given day at the autoresponder cycle. Value of 0 means the beginning of the cycle. Lack of this param means that a contact will not be inserted into cycle.
 * `ip` (optional) – Contact’s IP address used for geo location. Must be given in dotted decimal format.
 * `customs` (optional) – List of contact customs. In case of contact update new customs will be inserted and the existing ones will be updated with the new values. Customs not provided on this list will not be removed. Custom name must be composed using lowercase letters, digits and underscores only.
 
@@ -3511,6 +3509,13 @@ Errors not included in spec:
 
 ##CHANGELOG<a name="changelog"/>
 
+version 1.23.0, 2013-04-05
+
+* [add_follow_up](https://github.com/GetResponse/DevZone/blob/d95effbc61dc2b931703af534b46a6cd1221a4c8/API/README.md#add_follow_up), [set_follow_up_cycle](https://github.com/GetResponse/DevZone/blob/d95effbc61dc2b931703af534b46a6cd1221a4c8/API/README.md#set_follow_up_cycle), [delete_follow_up](https://github.com/GetResponse/DevZone/blob/d95effbc61dc2b931703af534b46a6cd1221a4c8/API/README.md#delete_follow_up) are handled by [add_autoresponder](#add_autoresponder), [set_autoresponder_cycle](#set_autoresponder_cycle), [delete_autoresponder](#delete_autoresponder) - compatibility mapping will be available till the end of the year
+* [add_autoresponder](#add_autoresponder) and [set_autoresponder_cycle](#set_autoresponder_cycle) no longer have `Day of cycle already used` error, it is possible to create many messages for the same day in one campaign.
+* [get_messages](#get_messages) and [get_message](#get_message) return "autoresponder" type instead of "follow-up", requesting "follow-up" in `type` param will be possible till the end of the year
+* [get_contacts](#get_contacts) and [get_contact](#get_contact) may return `cycle_day` greater than maximum `day_of_cycle` within autoresponder messages - contact is no longer "deactivated" after receiving last autoresponder message
+
 version 1.22.0, 2013-01-04
 
 * [get_contacts_subscription_stats](#get_contacts_subscription_stats) returns copied contacts as separate counter
@@ -3568,7 +3573,7 @@ version 1.14.0, 2012-11-09
 
 version 1.13.0, 2012-11-09
 
-* [add_follow_up](#add_follow_up), [set_follow_up_cycle](#set_follow_up_cycle) and [set_contact_cycle](#set_contact_cycle)
+* [add_follow_up](https://github.com/GetResponse/DevZone/blob/d95effbc61dc2b931703af534b46a6cd1221a4c8/API/README.md#add_follow_up), [set_follow_up_cycle](https://github.com/GetResponse/DevZone/blob/d95effbc61dc2b931703af534b46a6cd1221a4c8/API/README.md#set_follow_up_cycle) and [set_contact_cycle](#set_contact_cycle)
   have maximum follow-up day increased from 1000 to 10000.
 
 version 1.12.0, 2012-09-17
@@ -3588,7 +3593,7 @@ version 1.11.0, 2012-07-25
 
 version 1.10.0, 2012-07-12
 
-* [send_newsletter](#send_newsletter) and [add_follow_up](#add_follow_up) allow to send attachments
+* [send_newsletter](#send_newsletter) and [add_follow_up](https://github.com/GetResponse/DevZone/blob/d95effbc61dc2b931703af534b46a6cd1221a4c8/API/README.md#add_follow_up) allow to send attachments
 
 version 1.9.4, 2012-05-15
 
@@ -3626,7 +3631,7 @@ version 1.8.13, 2012-03-12
 
 version 1.8.12, 2012-03-09
 
-* [send_newsletter](#send_newsletter), [add_follow_up](#add_follow_up) and [add_draft](#add_draft) accept `reply_to_field` param
+* [send_newsletter](#send_newsletter), [add_follow_up](https://github.com/GetResponse/DevZone/blob/d95effbc61dc2b931703af534b46a6cd1221a4c8/API/README.md#add_follow_up) and [add_draft](#add_draft) accept `reply_to_field` param
 
 version 1.8.11, 2012-03-08
 
@@ -3671,7 +3676,7 @@ version 1.8.5, 2011-09-20
 
 version 1.8.4, 2011-08-22
 
-* [send_newsletter](#send_newsletter) and [add_follow_up](#add_follow_up) methods can detect [Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) errors in subject and contents
+* [send_newsletter](#send_newsletter) and [add_follow_up](https://github.com/GetResponse/DevZone/blob/d95effbc61dc2b931703af534b46a6cd1221a4c8/API/README.md#add_follow_up) methods can detect [Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) errors in subject and contents
 
 version 1.8.3, 2011-08-10
 
@@ -3704,7 +3709,7 @@ version 1.7.4, 2011-03-02
 
 version 1.7.3, 2011-02-22
 
-* possibility to choose From header in [send_newsletter](#send_newsletter) and [add_follow_up](#add_follow_up) methods
+* possibility to choose From header in [send_newsletter](#send_newsletter) and [add_follow_up](https://github.com/GetResponse/DevZone/blob/d95effbc61dc2b931703af534b46a6cd1221a4c8/API/README.md#add_follow_up) methods
 
 version 1.7.2, 2011-02-11
 

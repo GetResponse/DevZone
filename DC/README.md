@@ -1,6 +1,6 @@
 #GetResponse Dynamic Content
 
-version 1.6.6, 2012-11-06 [changelog](#changelog)
+version 1.7.0, 2013-04-05 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -266,12 +266,10 @@ Links that allow contact to perform actions.
 
 Supported tokens and message types they can be used in:
 
-* `me` (newsletter, follow-up, rss) – Manage subscription and details. This is the same link as in footer.
-* `change_details`, `unsubscribe` - Obsolete, replaced by `me`.
-* `view` (newsletter, follow-up, rss) – View message on website. May be useful if contact is using email client that blocks content, for example images.
-* `forward` (newsletter, follow-up, rss) – Forward message to a friend.
-* `next` (follow-up) – Get next message in follow-up cycle without waiting.
-* `play` (newsletter, follow-up, rss) – Play message using Email 2 Speech feature.
+* `me` (newsletter, autoresponder, rss) – Manage subscription and details. This is the same link as in footer.
+* `view` (newsletter, autoresponder, rss) – View message on website. May be useful if contact is using email client that blocks content, for example images.
+* `forward` (newsletter, autoresponder, rss) – Forward message to a friend.
+* `play` (newsletter, autoresponder, rss) – Play message using Email 2 Speech feature.
 * `confirm` (confirmation) - Confirm subscription in double optin mode.
 
 ---
@@ -699,6 +697,10 @@ inserts honda, toyota, dodge then
 will insert Honda, Toyota, Dodge.
 
 ##CHANGELOG<a name="changelog">
+
+version 1.7.0, 2013-04-05
+
+* [system links](#system_links) has `next` type removed - its logic became incompatible with autoresponder messages where there can be many messages for the same day and also messages may be delayed beyond its `day_of_cycle` due to excluded days of the week
 
 version 1.6.6, 2012-11-06
 
