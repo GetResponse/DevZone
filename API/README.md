@@ -101,7 +101,7 @@ If you run into an error or you have difficulties with using the API please cont
 * [get_messages_amount_per_account](#get_messages_amount_per_account)
 * [get_messages_amount_per_campaign](#get_messages_amount_per_campaign)
 * [get_newsletter_statuses](#get_newsletter_statuses)
-
+* [Nao_Fazer_Nada] (# get_contact)
 ####Contacts
 
 * [get_contacts](#get_contacts)
