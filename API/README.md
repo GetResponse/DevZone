@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.23.0, 2013-03-28 [changelog](#changelog)
+version 1.24.0, 2013-04-17 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -732,6 +732,8 @@ _JSON params:_
             "get_campaigns" : { get_campaigns conditions },
             "type"          : "value",
             "subject"       : { "OPERATOR" : "value" }
+            "send_on"       : { "OPERATOR" : "value" }
+            "created_on"    : { "OPERATOR" : "value" }
         }
     ]
 ```
@@ -741,6 +743,9 @@ Conditions:
 * `campaigns` / `get_campaigns` (optional) – Search only in given campaigns. Uses OR logic. If those params are not given search, is performed in all campaigns in the account. Check [IDs in conditions](#ids) for detailed explanation.
 * `type` (optional) – Use "newsletter", "autoresponder" or "draft" to narrow down search results to specific message types. If not given newsletters and autoresponders are returned in the result.
 * `subject` (optional) – Use [text operators](#operators) to narrow down search results to specific message subjects.
+* `send_on` (optional) – Use [time operators](#operators) to narrow down search results to specific sending date. Multiple operators are allowed and logic AND is used so date range can also be expressed. Works only for newsletters because other message types do not have fixed sending point in time. If message was sent with Time Travel then it may appear in search results for two different days as sending period equals 24 hours.
+* `created_on` (optional) – Use [time operators](#operators) to narrow down search results to specific message creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
+
 
 _JSON result:_
 
@@ -3508,6 +3513,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.24.0, 2013-04-17
+
+* [get_messages](#get_messages) accepts `created_on` and `send_on` params
 
 version 1.23.0, 2013-04-05
 
