@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.24.0, 2013-04-17 [changelog](#changelog)
+version 1.24.1, 2013-04-18 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -3513,6 +3513,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.24.1, 2013-04-18
+
+* [set_contact_name](#set_contact_name) works if character representation of name is the same but octet representation is different
 
 version 1.24.0, 2013-04-17
 
