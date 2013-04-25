@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.24.1, 2013-04-18 [changelog](#changelog)
+version 1.25.0, 2013-04-25 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -3513,6 +3513,11 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.25.0, 2013-04-25
+
+* [get_contacts](#get_contacts) and [get_contact](#get_contact) return "changed_on" value
+* [set_contact_name](#set_contact_name) and [set_contact_customs](#set_contact_customs) update contact "changed_on" value
 
 version 1.24.1, 2013-04-18
 
