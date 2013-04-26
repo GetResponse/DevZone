@@ -1415,19 +1415,21 @@ _JSON result:_
         "CONTACT_ID" : {
             "campaign"      : "CAMPAIGN_ID",
             "name"          : "My Contact Name",
-            "email"         : "my_contact_1@emailaddress.com"
+            "email"         : "my_contact_1@emailaddress.com",
             "origin"        : "www",
             "ip"            : "1.1.1.1",
             "cycle_day"     : 32,
+            "changed_on"    : "2011-11-11 00:00:00",
             "created_on"    : "2010-01-01 00:00:00"
         },
         "CONTACT_ID" : {
             "campaign"      : "CAMPAIGN_ID",
             "name"          : "My Contact Name",
-            "email"         : "my_contact_2@emailaddress.com"
+            "email"         : "my_contact_2@emailaddress.com",
             "origin"        : "api",
             "ip"            : "1.1.1.1",
             "cycle_day"     : null,
+            "changed_on"    : null,
             "created_on"    : "2010-01-01 00:00:00"
         }
 ```
@@ -1467,10 +1469,11 @@ _JSON result:_
         "CONTACT_ID" : {
             "campaign"      : "CAMPAIGN_ID",
             "name"          : "My Contact Name",
-            "email"         : "my_contact_1@emailaddress.com"
+            "email"         : "my_contact_1@emailaddress.com",
             "origin"        : "www",
             "ip"            : "1.1.1.1",
             "cycle_day"     : 32,
+            "changed_on"    : null,
             "created_on"    : "2010-01-01 00:00:00"
         }
     }
