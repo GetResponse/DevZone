@@ -1,7 +1,5 @@
 #GETRESPONSE DEVELOPER ZONE
 
----
-
 [![View documentation][2]][1]
 
 Use our API to easily add the powerful functionality of GetResponse Email Marketing to your favorite applications.
