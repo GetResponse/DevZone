@@ -34,13 +34,9 @@ Browse the GetResponse App Center to find applications such as CRM, CMS or E-com
 [7]: https://github.com/GetResponse/DevZone/tree/master/Plugins
 [8]: https://raw.github.com/GetResponse/DevZone/master/Plugins/icon.png
 
----
-
 #SUPPORT
 
 Please contact us using [this form](http://www.getresponse.com/feedback.html?devzone=yes) and we will provide all the support we can to solve your problems.
-
----
 
 #LICENSE
 
