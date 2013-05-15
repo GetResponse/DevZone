@@ -51,8 +51,6 @@ Check how to use API in following programming languages in our [examples](https:
 
 There are also PHP and Ruby wrappers available in our [wrappers](https://github.com/GetResponse/DevZone/tree/master/API/wrappers) section.
 
----
-
 ##SUPPORT
 
 The GetResponse API is created and maintained by the *GetResponse DevZone Team*.
