@@ -3318,7 +3318,8 @@ _JSON result:_
             "zip_code"      : "24-213",
             "created_on"    : "2010-11-01 07:27:43",
             "API_KEY"       : "09fb76c7d2ecc0298855259f1dd224a5",
-            "api_status"    : "enabled"
+            "api_status"    : "enabled",
+            "blocked_features"  : [ "Multimedia" ]
         },
         "ACCOUNT_ID" : {
              ... another account data ...
@@ -3331,7 +3332,7 @@ _JSON result:_
 
 _JSON error messages (if any):_ `Owner privilege missing`.
 
-Every field is present in response, even if it has null value.
+If account does not have any features blocked then whole "blocked_features" field is not present in result. Every other field is present in result even if it has null value.
 
 ---
 
@@ -3391,8 +3392,9 @@ _JSON params:_
     [
         "API_KEY",
         {
-            "account"   : "ACCOUNT_ID",
-            "status"    : "enabled"
+            "account"           : "ACCOUNT_ID",
+            "status"            : "enabled",
+            "block_features"    : [ "CreateCampaign", "Multimedia" ]
         }
     ]
 ```
@@ -3400,7 +3402,8 @@ _JSON params:_
 Conditions:
 
 * `account` (mandatory) – Identifier of account. If identifier is incorrect then Missing account error will be returned.
-* `status` (mandatory) – May be ‘enabled’ or ‘disabled’.
+* `status` (optional) – May be ‘enabled’ or ‘disabled’. If this param is skipped existing status is not modified.
+* `block_features` (optional) - Prevent account from accessing specific features. Names of those features can be seen on "Owner settings" -> "Accounts List" -> "edit details" -> "Features blocked" pulldown menu. If this param is skipped existing blocks are not modified. If this param is given previous blocks are removed and new list of blocks is applied. Therefore to remove all blocks (enable all features) empty array should be passed as param value. Current list of blocks can be obtained using (get_account)[#get_account] method.
 
 _JSON result:_
 
@@ -3412,7 +3415,7 @@ _JSON result:_
     }
 ```
 
-_JSON error messages (if any):_ `Owner privilege missing`, `Missing account`, `Cannot modify owner account` (owner account cannot set status of itself or another owner account).
+_JSON error messages (if any):_ `Owner privilege missing`, `Missing account`, `Cannot modify owner account` (owner account cannot set status of itself or another owner account), `Invalid feature name`.
 
 ##OPERATORS<a name="operators"/>
 
@@ -3522,7 +3525,8 @@ Errors not included in spec:
 
 version 1.26.0, 2013-05-15
 
-* [get_contacts](#get_contacts) can narrown down result by "changed_on" value
+* [get_contacts](#get_contacts) can narrown down result by `changed_on`
+* [set_account_status](#set_account_status) gained ability to block specific features, [get_accounts](#get_accounts) / [get_account](#get_account) list them under "blocked_features"
 
 version 1.25.0, 2013-04-25
 
