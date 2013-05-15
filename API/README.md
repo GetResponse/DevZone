@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.25.0, 2013-04-25 [changelog](#changelog)
+version 1.26.0, 2013-05-15 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -1358,6 +1358,10 @@ _JSON params:_
                 "OPERATOR"  : "value",
                 "OPERATOR"  : "value"
             },
+            "changed_on"    : {
+                "OPERATOR"  : "value",
+                "OPERATOR"  : "value"
+            },
             "origin"        : "value",
             "cycle_day"     : { "OPERATOR" : "value" },
             "customs"   : [
@@ -1397,6 +1401,7 @@ Conditions:
 * `name` (optional) – Use [text operators](#operators) to narrow down search results to specific contact names.
 * `email` (optional) – Use [text operators](#operators) to narrow down search results to specific contact emails.
 * `created_on` (optional) – Use [time operators](#operators) to narrow down search results to specific contact creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
+* `changed_on` (optional) – Use [time operators](#operators) to narrow down search results to specific contact modification date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
 * `origin` (optional) – Narrow down search results by contacts’ origin (subscription method). Allowed values are `import`, `email`, `www`, `panel`, `leads`, `sale`, `api`, `forward`, `survey`, `iphone`, `copy`.
 * `cycle_day` (optional) – Use [numeric operators](#operators) to narrow down search results to specific  days of the autoresponder cycles assigned to the contacts. To find contacts that are on day 2 you have to use `{ "EQUALS" : 2 }`. To find inactive contacts pass `{ "EQUALS" : null }` condition. Note that the fact that contact is on day 2 does not mean he received all autoresponder messages for day 2, there are factors such as excluded of days of week that may cause message to be delayed beyond its `cycle_day`.
 * `customs` (optional) – Use [text operators](#operators) to narrow down search results to contacts having specific customs. Uses AND logic. Note that if you need OR logic you can use MATCHES operator and use alternative in regular expression. Contacts that don’t have a custom of given name are not returned in results. If custom is multi-value then “any” junction is used: condition is true if any custom value tests true according to the operator used.
@@ -3514,6 +3519,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.26.0, 2013-05-15
+
+* [get_contacts](#get_contacts) can narrown down result by "changed_on" value
 
 version 1.25.0, 2013-04-25
 
