@@ -3384,7 +3384,7 @@ This method is useful to obtain API KEY of newly created account.
 
 ####set_account_status<a name="set_account_status"/>
 
-Enable or disable account.
+Enable or disable account or its features.
 
 _JSON params:_
 
@@ -3403,7 +3403,7 @@ Conditions:
 
 * `account` (mandatory) – Identifier of account. If identifier is incorrect then Missing account error will be returned.
 * `status` (optional) – May be ‘enabled’ or ‘disabled’. If this param is skipped existing status is not modified.
-* `block_features` (optional) - Prevent account from accessing specific features. Names of those features can be seen on "Owner settings" -> "Accounts List" -> "edit details" -> "Features blocked" pulldown menu. If this param is skipped existing blocks are not modified. If this param is given previous blocks are removed and new list of blocks is applied. Therefore to remove all blocks (enable all features) empty array should be passed as param value. Current list of blocks can be obtained using (get_account)[#get_account] method.
+* `block_features` (optional) - Prevent account from accessing specific features. Names of those features can be seen on "Owner settings" -> "Accounts List" -> "edit details" -> "Features blocked" pulldown menu. If this param is skipped existing blocks are not modified. If this param is given previous blocks are removed and new list of blocks is applied. Therefore to remove all blocks (enable all features) empty array should be passed as param value. Current list of blocks can be obtained using [get_account](#get_account) method.
 
 _JSON result:_
 
