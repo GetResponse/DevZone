@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.26.0, 2013-05-15 [changelog](#changelog)
+version 1.27.0, 2013-05-16 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -3319,7 +3319,12 @@ _JSON result:_
             "created_on"    : "2010-11-01 07:27:43",
             "API_KEY"       : "09fb76c7d2ecc0298855259f1dd224a5",
             "api_status"    : "enabled",
-            "blocked_features"  : [ "Multimedia" ]
+            "blocked_features"  : [ "Multimedia" ],
+            "send_limit"    : {
+                "allowed"       : 1048576,
+                "current"       : 8192,
+                "created_on"    : "2013-01-01 00:00:00"
+            }
         },
         "ACCOUNT_ID" : {
              ... another account data ...
@@ -3332,7 +3337,7 @@ _JSON result:_
 
 _JSON error messages (if any):_ `Owner privilege missing`.
 
-If account does not have any features blocked then whole "blocked_features" field is not present in result. Every other field is present in result even if it has null value.
+If account does not have any features blocked then whole "blocked_features" field is not present in result. If account does not have limits for sending emails then whole "send_limit" field is not present in result. Every other field is present in result even if it has null value.
 
 ---
 
@@ -3372,7 +3377,12 @@ _JSON result:_
             "created_on"    : "2010-11-01 07:27:43",
             "API_KEY"       : "09fb76c7d2ecc0298855259f1dd224a5",
             "api_status"    : "enabled",
-            "blocked_features"  : [ "Multimedia" ]
+            "blocked_features"  : [ "Multimedia" ],
+            "send_limit"    : {
+                "allowed"       : 1048576,
+                "current"       : 8192,
+                "created_on"    : "2013-01-01 00:00:00"
+            }
         }
     }
 ``` 
@@ -3395,7 +3405,8 @@ _JSON params:_
         {
             "account"           : "ACCOUNT_ID",
             "status"            : "enabled",
-            "block_features"    : [ "CreateCampaign", "Multimedia" ]
+            "block_features"    : [ "CreateCampaign", "Multimedia" ],
+            "send_limit"        : 1048576
         }
     ]
 ```
@@ -3405,6 +3416,7 @@ Conditions:
 * `account` (mandatory) – Identifier of account. If identifier is incorrect then Missing account error will be returned.
 * `status` (optional) – May be ‘enabled’ or ‘disabled’. If this param is skipped existing status is not modified.
 * `block_features` (optional) - Prevent account from accessing specific features. Names of those features can be seen on "Owner settings" -> "Accounts List" -> "edit details" -> "Features blocked" pulldown menu. If this param is skipped existing blocks are not modified. If this param is given previous blocks are removed and new list of blocks is applied. Therefore to remove all blocks (enable all features) empty array should be passed as param value. Current list of blocks can be obtained using [get_account](#get_account) method.
+* `send_limit` (optional) - Maximum amount of emails that account can send. If this param is skipped existing limit is not modified. If this param is null then any existing limit is removed. If this param is given limit is set but without modifying existing "current" or "created_on" values - which can be checked in [get_account](#get_account) method under "send_limit".
 
 _JSON result:_
 
@@ -3417,6 +3429,15 @@ _JSON result:_
 ```
 
 _JSON error messages (if any):_ `Owner privilege missing`, `Missing account`, `Cannot modify owner account` (owner account cannot set status of itself or another owner account), `Invalid feature name`.
+
+**Warning**: Setting `send_limit` with and without removing previous limit behaves differently. Let's say you have account that was created in January.
+
+* in January `send_limit` was set to 1000, in February `send_limit` was set to 2000, in March `send_limit` was set to 3000
+* in January `send_limit` was set to 1000, in February previous `send_limit` was removed and new `send_limit` was set to 1000, in March previous `send_limit` was removed and new `send_limit` was set to 1000
+
+In both cases account can send 3000 emails within 3 months. But in first case account can use remaining pool from previous months (for example it can send 100 emails in January, 100 emails in February and 2800 emails in March) while in second case it is not possible.
+
+**Warning:** Never use batch call to reset previous limit and set a new one in one call because - according to the spec - server may process those two requests in any order.
 
 ##OPERATORS<a name="operators"/>
 
@@ -3523,6 +3544,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.27.0, 2013-05-16
+
+* [set_account_status](#set_account_status) gained ability to manage send limit, [get_accounts](#get_accounts) / [get_account](#get_account) list it under "send_limit"
 
 version 1.26.0, 2013-05-15
 
