@@ -3371,7 +3371,8 @@ _JSON result:_
             "zip_code"      : "24-213",
             "created_on"    : "2010-11-01 07:27:43",
             "API_KEY"       : "09fb76c7d2ecc0298855259f1dd224a5",
-            "api_status"    : "enabled"
+            "api_status"    : "enabled",
+            "blocked_features"  : [ "Multimedia" ]
         }
     }
 ``` 
