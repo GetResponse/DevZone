@@ -3323,7 +3323,7 @@ _JSON result:_
             "send_limit"    : {
                 "allowed"       : 1048576,
                 "current"       : 8192,
-                "created_on"    : "2013-01-01 00:00:00"
+                "reseted_on"    : "2013-01-01 00:00:00"
             }
         },
         "ACCOUNT_ID" : {
@@ -3380,8 +3380,8 @@ _JSON result:_
             "blocked_features"  : [ "Multimedia" ],
             "send_limit"    : {
                 "allowed"       : 1048576,
-                "current"       : 8192,
-                "created_on"    : "2013-01-01 00:00:00"
+                "used"          : 8192,
+                "reseted_on"    : "2013-01-01 00:00:00"
             }
         }
     }
@@ -3416,7 +3416,7 @@ Conditions:
 * `account` (mandatory) – Identifier of account. If identifier is incorrect then Missing account error will be returned.
 * `status` (optional) – May be ‘enabled’ or ‘disabled’. If this param is skipped existing status is not modified.
 * `block_features` (optional) - Prevent account from accessing specific features. Names of those features can be seen on "Owner settings" -> "Accounts List" -> "edit details" -> "Features blocked" pulldown menu. If this param is skipped existing blocks are not modified. If this param is given previous blocks are removed and new list of blocks is applied. Therefore to remove all blocks (enable all features) empty array should be passed as param value. Current list of blocks can be obtained using [get_account](#get_account) method.
-* `send_limit` (optional) - Maximum amount of emails that account can send. If this param is skipped existing limit is not modified. If this param is null then any existing limit is removed. If this param is given limit is set but without modifying existing "current" or "created_on" values - which can be checked in [get_account](#get_account) method under "send_limit".
+* `send_limit` (optional) - Maximum amount of emails that account can send. If this param is skipped existing limit is not modified. If this param is null then any existing limit is removed. If this param is given limit is set but without modifying existing "used" or "reseted_on" values - which can be checked in [get_account](#get_account) method under "send_limit".
 
 _JSON result:_
 
