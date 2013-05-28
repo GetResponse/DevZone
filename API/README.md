@@ -385,7 +385,7 @@ _JSON result:_
 
  ---
  
- ####get_account_customs<a name="get_account_customs"/>
+####get_account_customs<a name="get_account_customs"/>
  
  Get defined customs for contacts on account.
  
