@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.27.0, 2013-05-16 [changelog](#changelog)
+version 1.28.0, 2013-05-27 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -72,6 +72,10 @@ If you run into an error or you have difficulties with using the API please cont
 * [add_account_from_field](#add_account_from_field)
 * [get_account_domains](#get_account_domains)
 * [get_account_domain](#get_account_domain)
+* [get_account_customs](#get_account_customs)
+* [add_account_custom](#add_account_custom)
+* [set_account_custom_contents](#set_account_custom_contents)
+* [delete_account_custom](#delete_account_custom)
 
 ####Campaigns
 
@@ -379,6 +383,158 @@ _JSON result:_
     }
  ```
 
+ ---
+ 
+ ####get_account_customs<a name="get_account_customs"/>
+ 
+ Get defined customs for contacts on account.
+ 
+
+ _JSON params:_
+
+ ```json
+     [
+         "API_KEY"
+     ]
+ ```
+
+ _JSON result:_
+
+ ```json
+    {
+        "CUSTOM_ID": {
+            "name"         : "age",
+            "input_type"   : "text",
+            "value_type"   : "number",
+            "is_hidden"    : "no"
+        },
+        "CUSTOM_ID": {
+            "name"         : "comment",
+            "input_type"   : "textarea",
+            "value_type"   : "string",
+            "is_hidden"    : "yes"
+        },
+        "CUSTOM_ID": {
+            "name"         : "likes_food",
+            "input_type"   : "text",
+            "value_type"   : "multi_select",
+            "is_hidden"    : "no",
+            "contents"     : [ "meat", "fruits" ]
+        }
+    }
+```    
+
+---
+
+####add_account_custom<a name="add_account_custom"/>
+
+Add contact custom definition to account.
+
+_JSON params:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "name"          : "value",
+            "content_type"  : "value",
+            "input_type"    : "value",
+            "is_hidden"     : "value",
+            "contents"      : [ "value", "value", "value" ]
+        }
+    ]
+```
+
+Conditions:
+
+* `name` (mandatory) – Name of custom, must be composed using lowercase letters, digits and underscores only.
+* `content_type` (mandatory) – Allowed values are `string`, `number`, `date` and `phone`.
+* `input_type` (mandatory) – Allowed values are `text`, `textarea`, `radio`, `checkbox`, `single_select` and `multi_select`.
+* `is_hidden` (mandatory) – Allowed values are `true` and `false`. Hidden custom is not visible for contact on his unsubscribe / manage details page.
+* `contents` (mandatory if `input_type` is one of `radio`, `checkbox`, `single_select`, `multi_select`) - Provide list of contents to be available for selection from those input types.
+
+ _JSON result:_
+
+ ```json
+     {
+         "CUSTOM_ID"    : "abc123",
+         "added"        : 1
+     }
+ ```
+ 
+_JSON error messages (if any):_ `Name already taken`, `Missing contents`.
+
+***Hint:*** You don't have to use this method unless you need to enforce specific content type or define multi content custom. Single content string customs are created on the fly when using methods such as [add_contact](#add_contact) or [set_contact_customs](#set_contact_customs).
+
+---
+
+####set_account_custom_contents<a name="set_account_custom_contents"/>
+
+Modify list of custom contents available for selection.
+
+_JSON params:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "custom"    : "CUSTOM_ID",
+            "contents"  : [ "value", "value", "value" ]
+        }
+    ]
+```
+
+Conditions:
+
+* `custom` (mandatory) – `CUSTOM_ID` obtained from [get_account_customs](#get_account_customs) or [add_account_custom](#add_account_custom).
+* `contents` (mandatory) - New list of contents to be available for selection in `radio`, `checkbox`, `single_select`, `multi_select` input types.
+
+_JSON result:_
+
+```json
+    {
+        "added"     : 2,
+        "deleted"   : 1
+    }
+```
+
+_JSON error messages (if any):_ `Missing custom`, `Not selectable input type`.
+
+***Warning:*** All custom contents that were present in already existing custom but are not present in new `contents` list will be removed from contacts that have them assigned! This action is ***NOT reversible***!
+
+---
+
+####delete_account_custom<a name="delete_account_custom"/>
+
+Remove custom from account and all contacts.
+
+_JSON params:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "custom"    : "CUSTOM_ID"
+        }
+    ]
+```
+
+Conditions:
+
+* `custom` (mandatory) – `CUSTOM_ID` obtained from [get_account_customs](#get_account_customs) or [add_account_custom](#add_account_custom).
+
+_JSON result:_
+
+```json
+    {
+        "deleted"   : 1
+    }
+```
+
+_JSON error messages (if any):_ `Missing custom`.
+
+***Warning:*** This action is ***NOT reversible***!
+
 ---
 
 ####get_campaigns<a name="get_campaigns"/>
@@ -513,7 +669,7 @@ _JSON result:_
 
 ```json
     {
-        "CAMPAIGN_ID"   : "abc123"
+        "CAMPAIGN_ID"   : "abc123",
         "added"         : 1
     }
 ```
@@ -3544,6 +3700,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.28.0, 2013-05-27
+
+* [get_account_customs](#get_account_customs),[add_account_custom](#add_account_custom), [set_account_custom_contents](#set_account_custom_contents), [delete_account_custom](#delete_account_custom) methods added for custom definitions management
 
 version 1.27.0, 2013-05-16
 
