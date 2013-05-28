@@ -453,14 +453,14 @@ Conditions:
 * `is_hidden` (mandatory) – Allowed values are `true` and `false`. Hidden custom is not visible for contact on his unsubscribe / manage details page.
 * `contents` (mandatory if `input_type` is one of `radio`, `checkbox`, `single_select`, `multi_select`) - Provide list of contents to be available for selection from those input types.
 
- _JSON result:_
+_JSON result:_
 
- ```json
-     {
-         "CUSTOM_ID"    : "abc123",
-         "added"        : 1
-     }
- ```
+```json
+    {
+        "CUSTOM_ID"    : "abc123",
+        "added"        : 1
+    }
+```
  
 _JSON error messages (if any):_ `Name already taken`, `Missing contents`.
 
