@@ -404,20 +404,20 @@ _JSON result:_
     {
         "CUSTOM_ID": {
             "name"          : "age",
-            "input_type"    : "text",
             "content_type"  : "number",
+            "input_type"    : "text",
             "is_hidden"     : "no"
         },
         "CUSTOM_ID": {
             "name"          : "comment",
-            "input_type"    : "textarea",
             "content_type"  : "string",
+            "input_type"    : "textarea",
             "is_hidden"     : "yes"
         },
         "CUSTOM_ID": {
             "name"          : "likes_food",
-            "input_type"    : "text",
-            "content_type"  : "multi_select",
+            "content_type"  : "string",
+            "input_type"    : "multi_select",
             "is_hidden"     : "no",
             "contents"      : [ "meat", "fruits" ]
         }
