@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.28.0, 2013-05-27 [changelog](#changelog)
+version 1.28.1, 2013-05-28 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -403,23 +403,23 @@ _JSON result:_
  ```json
     {
         "CUSTOM_ID": {
-            "name"         : "age",
-            "input_type"   : "text",
-            "value_type"   : "number",
-            "is_hidden"    : "no"
+            "name"          : "age",
+            "input_type"    : "text",
+            "content_type"  : "number",
+            "is_hidden"     : "no"
         },
         "CUSTOM_ID": {
-            "name"         : "comment",
-            "input_type"   : "textarea",
-            "value_type"   : "string",
-            "is_hidden"    : "yes"
+            "name"          : "comment",
+            "input_type"    : "textarea",
+            "content_type"  : "string",
+            "is_hidden"     : "yes"
         },
         "CUSTOM_ID": {
-            "name"         : "likes_food",
-            "input_type"   : "text",
-            "value_type"   : "multi_select",
-            "is_hidden"    : "no",
-            "contents"     : [ "meat", "fruits" ]
+            "name"          : "likes_food",
+            "input_type"    : "text",
+            "content_type"  : "multi_select",
+            "is_hidden"     : "no",
+            "contents"      : [ "meat", "fruits" ]
         }
     }
 ```    
