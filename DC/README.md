@@ -1,6 +1,6 @@
 #GetResponse Dynamic Content
 
-version 1.7.0, 2013-04-05 [changelog](#changelog)
+version 1.8.0, 2013-06-12 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -75,6 +75,8 @@ Supported tokens:
 * `campaign_from_name`
 * `campaign_from_email`
 * `campaign_reply_to_email`
+* `campaign_link_protocol`
+* `campaign_link_domain`
 * `message_from_name`
 * `message_from_email`
 * `message_reply_to_email`
@@ -697,6 +699,10 @@ inserts honda, toyota, dodge then
 will insert Honda, Toyota, Dodge.
 
 ##CHANGELOG<a name="changelog">
+
+version 1.8.0, 2013-06-12
+
+* [campaign info](#campaign_or_contact_or_message_info) accepts `campaign_link_protocol` and `campaign_link_domain`
 
 version 1.7.0, 2013-04-05
 
