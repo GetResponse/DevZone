@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.29.0, 2013-06-17 [changelog](#changelog)
+version 1.29.1, 2013-06-17 [changelog](#changelog)
 
 ##GETTING STARTED
 
