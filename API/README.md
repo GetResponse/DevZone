@@ -1002,6 +1002,8 @@ _JSON response:_
     }
 ```
 
+_JSON error messages (if any):_ `Missing message`.
+
 **Hint**: Result may be empty (draft messages from web interface do not require content) or contain only `plain`, only `html` or both.
 
 **Hint**: All merge-words in contents are [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
@@ -1065,6 +1067,8 @@ _JSON response:_
         }
     }
 ```
+
+_JSON error messages (if any):_ `Missing message`.
 
 **Hint**: It is normal to have stats for given date with `sent` equals 0 and other values positive because opens, clicks, bounces and complaints take place also during a few days after message was sent.
 
@@ -1669,7 +1673,7 @@ _JSON response:_
     }
 ```
 
-_JSON error messages (if any):_  `Missing contact`.
+_JSON error messages (if any):_ `Missing contact`.
 
 ---
 
@@ -1700,6 +1704,8 @@ _JSON response:_
         "bike"  : [ "blue", "white" ]
     }
 ```
+
+_JSON error messages (if any):_ `Missing contact`.
 
 **Hint**: If custom has more than one value (multi-value) then it will be returned as an sorted array.
 
@@ -1820,6 +1826,8 @@ _JSON response:_
     }
 ```
 
+_JSON error messages (if any):_ `Missing contact`.
+
 **Warning**: Geo location data is based on the IP address from which a contact subscribed, so not every contact has it (for example imported contacts do not have this information) and for some ISPs it points to where the gateway of this ISP is.
 
 ---
@@ -1851,6 +1859,8 @@ _JSON response:_
         "MESSAGE_ID"    : "2010-01-02 00:00:00"
     }
 ```
+
+_JSON error messages (if any):_ `Missing contact`.
 
 Note that if a contact opened the same message multiple times, only the newest date is listed.
 
@@ -1886,6 +1896,8 @@ _JSON response:_
     }
 ```
 
+_JSON error messages (if any):_ `Missing contact`.
+
 Note that if a contact clicked the same link multiple times only newest date is listed.
 
 **Hint**: If you want to keep clicks synchronized with external database, then setting click [callback](https://github.com/GetResponse/DevZone/tree/master/Callback/README.md) is much more efficient than querying this method periodically.
@@ -1919,6 +1931,8 @@ _JSON response:_
         "GOAL_ID"   : "2010-01-02 00:00:00"
     }
 ```
+
+_JSON error messages (if any):_ `Missing contact`.
 
 Note that if a contact reached the same goal multiple times only newest date is listed.
 
@@ -1960,6 +1974,8 @@ _JSON response:_
     	}
 	}
 ```
+
+_JSON error messages (if any):_ `Missing contact`.
 
 Questions that do not have predetermined answers (text fields) have response returned as string while questions with predetermined answers (single/multi selects) have array of selected options returned.
 
@@ -2723,6 +2739,8 @@ _JSON response:_
 	}
 ```
 
+_JSON error messages (if any):_ `Missing survey`.
+
 Questions that do not have predetermined answers (text fields) have total amount of responses returned while questions with predetermined answers (single/multi selects) have amount of responses for every option returned.
 
 Meaning of every `QUESTION_ID` and `OPTION_ID` can be found by calling [get_surveys](#get_surveys) method.
@@ -2803,7 +2821,7 @@ _JSON response:_
     }
 ```
 
-_JSON error messages (if any):_  `Cannot set mask` (some masks are forbidden to manage), `Invalid mask syntax`.
+_JSON error messages (if any):_ `Cannot set mask` (some masks are forbidden to manage), `Invalid mask syntax`.
 
 ---
 
@@ -3720,6 +3738,12 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.29.1, 2013-06-17
+
+* [get_contact_customs](#get_contact_customs), [get_contact_geoip](#get_contact_geoip), [get_contact_opens](#get_contact_opens), [get_contact_clicks](#get_contact_clicks), [get_contact_goals](#get_contact_goals), [get_contact_surveys](#get_contact_surveys) return `Missing contact` error instead of empty result when contact is not present
+* [get_message_contents](#get_message_contents) [get_message_stats](#get_message_stats) return `Missing message` error instead of empty result when message is not present
+* [get_survey_stats](#get_survey_stats) returns `Missing survey` error instead of empty result when survey is not present
 
 version 1.29.0, 2013-06-17
 
