@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.28.1, 2013-05-28 [changelog](#changelog)
+version 1.29.0, 2013-06-17 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -2737,9 +2737,22 @@ _JSON params:_
 
 ```json
     [
-        "API_KEY"
+        "API_KEY",
+        {
+            "mask"          : { "OPERATOR" : "value" },
+            "created_on"    : {
+                "OPERATOR"  : "value",
+                "OPERATOR"  : "value"
+            }
+        }
     ]
 ```
+
+Conditions:
+
+* `mask` (optional) – Use [text operators](#operators) to narrow down search results to specific masks.
+* `created_on` (optional) – Use [time operators](#operators) to narrow down search results to specific mask creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
+
 
 _JSON result:_
 
@@ -2835,7 +2848,12 @@ _JSON params:_
     [
         "API_KEY",
         {
-            "campaign" : "CAMPAIGN_ID"
+            "campaign" : "CAMPAIGN_ID",
+            "mask"          : { "OPERATOR" : "value" },
+            "created_on"    : {
+                "OPERATOR"  : "value",
+                "OPERATOR"  : "value"
+            }
         }
     ]
 ```
@@ -2843,6 +2861,8 @@ _JSON params:_
 Conditions:
 
 * `campaign` (mandatory) – `CAMPAIGN_ID`.
+* `mask` (optional) – Use [text operators](#operators) to narrow down search results to specific masks.
+* `created_on` (optional) – Use [time operators](#operators) to narrow down search results to specific mask creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
 
 _JSON result:_
 
@@ -2853,7 +2873,7 @@ _JSON result:_
     }
 ```
 
-**Hint**: Check blacklist masks for available formats.
+**Hint**: Check [blacklist masks](#mask_format) for available formats.
 
 ---
 
@@ -3700,6 +3720,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.29.0, 2013-06-17
+
+* [get_account_blacklist](#get_account_blacklist) and [get_campaign_blacklist](#get_campaign_blacklist) allow to narrow down result by "mask" or "created_on" date
 
 version 1.28.0, 2013-05-27
 
