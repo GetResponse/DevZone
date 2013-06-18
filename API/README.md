@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.28.1, 2013-05-28 [changelog](#changelog)
+version 1.29.1, 2013-06-17 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -189,7 +189,7 @@ If you run into an error or you have difficulties with using the API please cont
 
 Test connection with API.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -197,7 +197,7 @@ _JSON params:_
     ]
 ```
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -211,7 +211,7 @@ _JSON result:_
 
 Get basic info about your account.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -219,7 +219,7 @@ _JSON params:_
     ]
 ```
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -236,7 +236,7 @@ _JSON result:_
 
 Get list of email addresses assigned to account.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -244,7 +244,7 @@ _JSON params:_
     ]
 ```
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -267,7 +267,7 @@ _JSON result:_
 
 Get single email address assigned to account using `FROM_FIELD_ID`.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -281,7 +281,7 @@ Conditions:
 
 * `account_from_field` (mandatory) – `FROM_FIELD_ID`.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -299,7 +299,7 @@ _JSON result:_
 
 Assign email address to account. It can be used in newly created campaigns.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -311,7 +311,7 @@ _JSON params:_
     ]
 ```
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -330,7 +330,7 @@ _JSON error messages (if any):_ `Invalid email syntax`.
 
 Get domains assigned to account using web interface.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -338,7 +338,7 @@ _JSON params:_
     ]
 ```
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -361,7 +361,7 @@ _JSON result:_
 
 Get single domain assigned to account using web interface. Comes in handy when you need to check which domain has campaign assigned.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -372,7 +372,7 @@ _JSON params:_
     ]
 ```
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -390,7 +390,7 @@ _JSON result:_
  Get defined customs for contacts on account.
  
 
- _JSON params:_
+ _JSON request:_
 
  ```json
      [
@@ -398,7 +398,7 @@ _JSON result:_
      ]
  ```
 
- _JSON result:_
+ _JSON response:_
 
  ```json
     {
@@ -430,7 +430,7 @@ _JSON result:_
 
 Add contact custom definition to account.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -453,7 +453,7 @@ Conditions:
 * `is_hidden` (mandatory) – Allowed values are `true` and `false`. Hidden custom is not visible for contact on his unsubscribe / manage details page.
 * `contents` (mandatory if `input_type` is one of `radio`, `checkbox`, `single_select`, `multi_select`) - Provide list of contents to be available for selection from those input types.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -472,7 +472,7 @@ _JSON error messages (if any):_ `Name already taken`, `Missing contents`.
 
 Modify list of custom contents available for selection.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -489,7 +489,7 @@ Conditions:
 * `custom` (mandatory) – `CUSTOM_ID` obtained from [get_account_customs](#get_account_customs) or [add_account_custom](#add_account_custom).
 * `contents` (mandatory) - New list of contents to be available for selection in `radio`, `checkbox`, `single_select`, `multi_select` input types.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -508,7 +508,7 @@ _JSON error messages (if any):_ `Missing custom`, `Not selectable input type`.
 
 Remove custom from account and all contacts.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -523,7 +523,7 @@ Conditions:
 
 * `custom` (mandatory) – `CUSTOM_ID` obtained from [get_account_customs](#get_account_customs) or [add_account_custom](#add_account_custom).
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -541,7 +541,7 @@ _JSON error messages (if any):_ `Missing custom`.
 
 Get list of campaigns in account.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -556,7 +556,7 @@ Conditions:
 
 * `name` (optional) – Use [text operators](#operators) to narrow down search results to specific campaign names.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -601,7 +601,7 @@ and the only one key from response is `CAMPAIGN_ID`.
 Get single campaign using `CAMPAIGN_ID`.
 Useful for checking which campaign the contact or message belongs to.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -616,7 +616,7 @@ Conditions:
 
 * `campaign` (mandatory) – `CAMPAIGN_ID`.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -638,7 +638,7 @@ _JSON result:_
 
 Add campaign to account.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -665,7 +665,7 @@ Conditions:
 * `confirmation_body` (mandatory) – `CONFIRMATION_BODY_ID` obtained from [get_confirmation_bodies](#get_confirmation_bodies). Used in confirmation messages sent from this campaign if double-optin is set for given subscription method.
 * `language_code` (optional) – Language of subscription reminder and change details / unsubscribe footer. List of available ISO 639-1 (2-letter) codes is available [here](http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes). If we don’t have version in requested language then English version will be used.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -686,7 +686,7 @@ _JSON error messages (if any):_ `Total limit of campaigns exceeded`, `Invalid em
 
 Check if any account domain is assigned to campaign. Assigned domain will be used in links in messages sent from this campaign.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -701,7 +701,7 @@ Conditions:
 
 * `campaigns` (mandatory) – `CAMPAIGN_ID` obtained from [get_campaigns](#get_campaigns).
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -722,7 +722,7 @@ _JSON error messages (if any):_ `Missing campaign`.
 
 Assign account domain to campaign. Assigned domain will be used in links in messages sent from this campaign.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -739,7 +739,7 @@ Conditions:
 * `campaigns` (mandatory) – `CAMPAIGN_ID` obtained from [get_campaigns](#get_campaigns).
 * `account_domain` (mandatory) – `ACCOUNT_DOMAIN_ID` obtained from [get_account_domains](#get_account_domains).
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -757,7 +757,7 @@ _JSON error messages (if any):_ `Missing campaign`, `Missing account domain`.
 
 Detach account domain from campaign. Unassigned domain will no longer be used in links in messages sent from this campaign.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -772,7 +772,7 @@ Conditions:
 
 * `campaigns` (mandatory) – `CAMPAIGN_ID` obtained from [get_campaigns](#get_campaigns).
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -792,7 +792,7 @@ _JSON error messages (if any):_ `Missing campaign`.
 
 Get postal address and postal design (formatting) in campaign. Postal address is attached to every message sent from campaign.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -807,7 +807,7 @@ Conditions:
 
 * `campaigns` (mandatory) – `CAMPAIGN_ID` obtained from [get_campaigns](#get_campaigns).
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -831,7 +831,7 @@ _JSON error messages (if any):_ `Missing campaign`.
 
 Set postal address and postal design (formatting) in campaign. Postal address is attached to every message sent from campaign.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -860,7 +860,7 @@ Conditions:
 * `country` (mandatory) – Country. Name must be compatible with the one on web interface.
 * `design` (mandatory) – How your postal address will be formatted. Fields above marked as mandatory must also be present in design! Do not insert HTML tags here, this will be converted in HTML part of messages automatically.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -876,7 +876,7 @@ _JSON error messages (if any):_ `Missing campaign`, `Token missing in design`.
 
 Get messages in account.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -901,7 +901,7 @@ Conditions:
 * `created_on` (optional) – Use [time operators](#operators) to narrow down search results to specific message creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
 
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -942,7 +942,7 @@ Array `flags` may be present with following items:<a name="message_flags"/>
 
 Get single message using `MESSAGE_ID`.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -957,7 +957,7 @@ Conditions:
 
 * `message` (mandatory) – `MESSAGE_ID`.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -978,7 +978,7 @@ _JSON result:_
 
 Get message contents (parts).
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -993,7 +993,7 @@ Conditions:
 
 * `message` (mandatory) – `MESSAGE_ID`.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -1001,6 +1001,8 @@ _JSON result:_
         "html"  : "<h1>Hello</h1>there"
     }
 ```
+
+_JSON error messages (if any):_ `Missing message`.
 
 **Hint**: Result may be empty (draft messages from web interface do not require content) or contain only `plain`, only `html` or both.
 
@@ -1012,7 +1014,7 @@ _JSON result:_
 
 Get message statistics.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -1029,7 +1031,7 @@ Conditions:
 * `message` (mandatory) – `MESSAGE_ID`.
 * `grouping` (optional) – Determines period of time by which stats are aggregated. Allowed values are: `hourly` (result keys in "YYYY-MM-DD HH" format), `daily` (result keys in "YYYY-MM-DD" format), `monthly` (result keys in "YYYY-MM" format) and `yearly` (result keys in "YYYY" format). Default is `daily`.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -1066,6 +1068,8 @@ _JSON result:_
     }
 ```
 
+_JSON error messages (if any):_ `Missing message`.
+
 **Hint**: It is normal to have stats for given date with `sent` equals 0 and other values positive because opens, clicks, bounces and complaints take place also during a few days after message was sent.
 
 **Warning**: Graduation may not be continuous. Given time period is present in result only if it has at least one positive value in it.
@@ -1076,7 +1080,7 @@ _JSON result:_
 
 Queue a newsletter to be sent.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -1126,7 +1130,7 @@ Conditions:
 * `contacts` / `get_contacts` or `segments` / `get_segments` - Recipients that should receive a newsletter obtained from [get_contacts](#get_contacts) or [get_segments](#get_segments). Only one type of selection can be used at a time. See [IDs in conditions](#ids) for detailed explanation.
 * `suppressions` / `get_suppressions` (optional) – Suppressions to use with that message. Any contact email address that matches any of the masks in those suppressions will be skipped when sending. See [IDs in conditions](#ids) for detailed explanation.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -1209,7 +1213,7 @@ Correct way of sending personalized content is to use [GetResponse Dynamic Conte
 
 Add a autoresponder to the campaign at the specific day of cycle.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -1252,7 +1256,7 @@ Conditions:
 * `flags` (optional) – Enables extra functionality for a message, see [message_flags](#message_flags) for available values.
 * `day_of_cycle` – Number of days between the day when a contact subscribed to a campaign and the day when the autoresponder is sent. Must be in the range of 0..10000.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -1269,7 +1273,7 @@ _JSON error messages (if any):_ `Missing campaign`, `Missing From field`, `Missi
 
 Add a draft of given message type to the campaign. Useful for autosave features.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -1297,7 +1301,7 @@ Conditions:
 * `contents` (mandatory) – Allowed keys are `plain` and `html`, at least one is mandatory. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax. Maximum length is 524288 characters each.
 * `flags` (optional) – Enables extra functionality for a message, see [message_flags](#message_flags) for available values.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -1316,7 +1320,7 @@ _JSON error messages (if any):_ `Missing campaign`, `Missing From field`, `Missi
 
 Delete newsletter from campaign.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -1331,7 +1335,7 @@ Conditions:
 
 * `message` (mandatory) – `MESSAGE_ID` obtained from [get_messages](#get_messages) or [send_newsletter](#send_newsletter).
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -1349,7 +1353,7 @@ _JSON error messages (if any):_ `Missing message`, `Message is not newsletter`, 
 
 Delete autoresponder from campaign.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -1364,7 +1368,7 @@ Conditions:
 
 * `message` (mandatory) – `MESSAGE_ID` obtained from [get_messages](#get_messages) or [add_autoresponder](#add_autoresponder).
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -1380,7 +1384,7 @@ _JSON error messages (if any):_ `Missing message`, `Message is not autoresponder
 
 Set day of cycle of existing autoresponder.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -1397,7 +1401,7 @@ Conditions:
 * `message` (mandatory) – `MESSAGE_ID` obtained [get_messages](#get_messages) or [add_autoresponder](#add_autoresponder).
 * `day_of_cycle` – Number of days between the day when a contact subscribed to a campaign and the day when the autoresponder is sent. Must be in the range of 0..10000.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -1413,7 +1417,7 @@ _JSON error messages (if any):_ `Missing message`, `Message is not autoresponder
 
 Get total messages amount on your account.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -1428,7 +1432,7 @@ Conditions:
 
 * `type` (optional) – Use newsletter, autoresponder or draft to narrow down count results to specific message types.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -1442,7 +1446,7 @@ _JSON result:_
 
 Get total messages amount in every campaign on your account.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -1457,7 +1461,7 @@ Conditions:
 
 * `type` (optional) – Use newsletter, autoresponder or draft to narrow down count results to specific message types.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -1476,7 +1480,7 @@ _JSON result:_
 
 Get statuses of newsletter messages.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -1484,7 +1488,7 @@ _JSON params:_
     ]
 ```
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -1500,7 +1504,7 @@ _JSON result:_
 
 Get list of contacts from the account.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -1567,7 +1571,7 @@ Conditions:
 * `goals` / `get_goals` (optional) – Use to narrow down search results to contacts that reached specific goals. Uses AND logic. See [IDs in conditions](#ids) for detailed explanation.
 * `segmentation` (optional) – Allows to fetch big results in smaller packs. Split value defines the number of packs to which contacts will be split. Group defines which pack will be returned in results. For example to get all results in 10 packs call [get_contacts](#get_contacts) 10 times. Set split to 10 and increase pack from 1 to 10.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -1606,7 +1610,7 @@ _JSON result:_
 
 Get a single contact using `CONTACT_ID`.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -1621,7 +1625,7 @@ Conditions:
 
 * `contact` (mandatory) – `CONTACT_ID`.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -1644,7 +1648,7 @@ _JSON result:_
 
 Set contact name.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -1661,7 +1665,7 @@ Conditions:
 * `contact` (mandatory) – `CONTACT_ID`.
 * `name` (mandatory) – New value of name.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -1669,7 +1673,7 @@ _JSON result:_
     }
 ```
 
-_JSON error messages (if any):_  `Missing contact`.
+_JSON error messages (if any):_ `Missing contact`.
 
 ---
 
@@ -1677,7 +1681,7 @@ _JSON error messages (if any):_  `Missing contact`.
 
 Get list of contact customs.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -1692,7 +1696,7 @@ Conditions:
 
 * `contact` (mandatory) – `CONTACT_ID`.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -1700,6 +1704,8 @@ _JSON result:_
         "bike"  : [ "blue", "white" ]
     }
 ```
+
+_JSON error messages (if any):_ `Missing contact`.
 
 **Hint**: If custom has more than one value (multi-value) then it will be returned as an sorted array.
 
@@ -1709,7 +1715,7 @@ _JSON result:_
 
 Set contact customs.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -1743,7 +1749,7 @@ Custom of a given name is:
 
 Name is case insensitive.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -1788,7 +1794,7 @@ This will clear all content values of multi-value custom and set two new ones.
 
 Get contact geo location based on IP address from which the subscription was processed.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -1803,7 +1809,7 @@ Conditions:
 
 * `contact` (mandatory) – `CONTACT_ID`.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -1820,6 +1826,8 @@ _JSON result:_
     }
 ```
 
+_JSON error messages (if any):_ `Missing contact`.
+
 **Warning**: Geo location data is based on the IP address from which a contact subscribed, so not every contact has it (for example imported contacts do not have this information) and for some ISPs it points to where the gateway of this ISP is.
 
 ---
@@ -1828,7 +1836,7 @@ _JSON result:_
 
 List dates when the messages were opened by contact.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -1843,7 +1851,7 @@ Conditions:
 
 * `contact` (mandatory) – `CONTACT_ID`.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -1851,6 +1859,8 @@ _JSON result:_
         "MESSAGE_ID"    : "2010-01-02 00:00:00"
     }
 ```
+
+_JSON error messages (if any):_ `Missing contact`.
 
 Note that if a contact opened the same message multiple times, only the newest date is listed.
 
@@ -1862,7 +1872,7 @@ Note that if a contact opened the same message multiple times, only the newest d
 
 List dates when the links in messages were clicked by contact.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -1877,7 +1887,7 @@ Conditions:
 
 * `contact` (mandatory) – `CONTACT_ID`.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -1885,6 +1895,8 @@ _JSON result:_
         "LINK_ID"   : "2010-01-02 00:00:00"
     }
 ```
+
+_JSON error messages (if any):_ `Missing contact`.
 
 Note that if a contact clicked the same link multiple times only newest date is listed.
 
@@ -1896,7 +1908,7 @@ Note that if a contact clicked the same link multiple times only newest date is 
 
 List dates when the goals were reached by contacts.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -1911,7 +1923,7 @@ Conditions:
 
 * `contact` (mandatory) – `CONTACT_ID`.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -1919,6 +1931,8 @@ _JSON result:_
         "GOAL_ID"   : "2010-01-02 00:00:00"
     }
 ```
+
+_JSON error messages (if any):_ `Missing contact`.
 
 Note that if a contact reached the same goal multiple times only newest date is listed.
 
@@ -1930,7 +1944,7 @@ Note that if a contact reached the same goal multiple times only newest date is 
 
 List survey results filled by contacts.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -1945,7 +1959,7 @@ Conditions:
 
 * `contact` (mandatory) – `CONTACT_ID`.
 
-_JSON result:_
+_JSON response:_
 
 ```json
 	{
@@ -1961,6 +1975,8 @@ _JSON result:_
 	}
 ```
 
+_JSON error messages (if any):_ `Missing contact`.
+
 Questions that do not have predetermined answers (text fields) have response returned as string while questions with predetermined answers (single/multi selects) have array of selected options returned.
 
 Meaning of every `QUESTION_ID` and `OPTION_ID` can be found by calling [get_survey](#get_survey) method with given `SURVEY_ID`.
@@ -1973,7 +1989,7 @@ Meaning of every `QUESTION_ID` and `OPTION_ID` can be found by calling [get_surv
 
 Place a contact on a desired day of the autoresponder cycle or deactivate a contact.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -1990,7 +2006,7 @@ Conditions:
 * `contact` (mandatory) – `CONTACT_ID`.
 * `cycle_day` (mandatory) – New value of cycle day, must be in the range of 0..10000. If cycle_day is null it deactivates contact.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -2006,7 +2022,7 @@ _JSON error messages (if any):_ `Missing contact`.
 
 Add contact to the list.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -2042,7 +2058,7 @@ Conditions:
 * `ip` (optional) – Contact’s IP address used for geo location. Must be given in dotted decimal format.
 * `customs` (optional) – List of contact customs. In case of contact update new customs will be inserted and the existing ones will be updated with the new values. Customs not provided on this list will not be removed. Custom name must be composed using lowercase letters, digits and underscores only.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -2064,7 +2080,7 @@ _JSON error messages (if any):_ `Invalid email syntax`, `Missing campaign`, `Con
 
 Move contact from one campaign to another.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -2081,7 +2097,7 @@ Conditions:
 * `contact` (mandatory) – `CONTACT_ID`.
 * `campaign` (mandatory) – `CAMPAIGN_ID` to which contact should be moved to.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -2097,7 +2113,7 @@ _JSON error messages (if any):_ `Missing contact`, `Missing campaign`, `Contact 
 
 Delete contact.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -2112,7 +2128,7 @@ Conditions:
 
 * `contact` (mandatory) – `CONTACT_ID`.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -2128,7 +2144,7 @@ _JSON result:_
 
 Get deleted contacts.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -2161,7 +2177,7 @@ Conditions:
 * `created_on` (optional) – Use [time operators](#operators) to narrow down search results to specific contact creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
 * `deleted_on` (optional) – Use [time operators](#operators) to narrow down search results to specific contact deletion date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -2205,7 +2221,7 @@ _JSON result:_
 
 Get contacts subscription stats aggregated by time period, campaign and contact’s origin.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -2228,7 +2244,7 @@ Conditions:
 * `created_on` (optional) – Use [time operators](#operators) to narrow down search results to specific contact creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
 * `grouping` (optional) – Determines period of time by which stats are aggregated. Allowed values are: `hourly` (result keys in "YYYY-MM-DD HH" format), `daily` (result keys in "YYYY-MM-DD" format), `monthly` (result keys in "YYYY-MM" format) and `yearly` (result keys in "YYYY" format). Default is `daily`.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -2299,7 +2315,7 @@ _JSON result:_
 
 Get total contacts amount on your account.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -2307,7 +2323,7 @@ _JSON params:_
     ]
 ```
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -2321,7 +2337,7 @@ _JSON result:_
 
 Get total contacts amount in every campaign on your account.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -2329,7 +2345,7 @@ _JSON params:_
     ]
 ```
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -2352,7 +2368,7 @@ Get amount of unique email addresses of your contacts.
 This method is useful for pre-estimating amount of recipients in [send_newsletter](#send_newsletter) method.
 Also can help in tracking redundancy when combined with [get_contacts_amount_per_campaign](#get_contacts_amount_per_campaign) method.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -2368,7 +2384,7 @@ Conditions:
 
 * `campaigns` / `get_campaigns` (optional) – Count distinct emails only in given campaigns. Uses OR logic. If those params are not given statistics are returned from all campaigns on the account. Check [IDs in conditions](#ids) for detailed explanation.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     64
@@ -2380,7 +2396,7 @@ _JSON result:_
 
 Get contact segments saved on web interface to use in [send_newsletter](#send_newsletter).
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -2395,7 +2411,7 @@ Conditions:
 
 * `name` (optional) – Use [text operators](#operators) to narrow down search results to specific names.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -2416,7 +2432,7 @@ _JSON result:_
 
 Get clicktracked links.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -2434,7 +2450,7 @@ Conditions:
 * `messages` / `get_messages` (optional) – Search only in given messages. Uses OR logic. If those params are not given search is performed in all messages on the account. Check [IDs in conditions](#ids) for detailed explanation.
 * `url` (optional) – Use [text operators](#operators) to narrow down search results to specific URL addresses.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -2463,7 +2479,7 @@ _JSON result:_
 
 Get single click-tracked link using LINK_ID.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -2474,7 +2490,7 @@ _JSON params:_
     ]
 ```
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -2493,7 +2509,7 @@ _JSON result:_
 
 Get goals.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -2514,7 +2530,7 @@ Conditions:
 * `name` (optional) – Use [text operators](#operators) to narrow down search results to specific goal name.
 * `url` (optional) – Use [text operators](#operators) to narrow down search results to specific goal URL.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -2539,7 +2555,7 @@ _JSON result:_
 
 Get single goal using GOAL_ID.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -2550,7 +2566,7 @@ _JSON params:_
     ]
 ```
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -2575,7 +2591,7 @@ _JSON result:_
 
 Get surveys.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -2592,7 +2608,7 @@ Conditions:
 * `status` (optional) – Allowed values are `unpublished`, `published` and `closed`.
 * `name` (optional) – Use [text operators](#operators) to narrow down search results to specific survey name.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -2645,7 +2661,7 @@ _JSON result:_
 
 Get single survey using SURVEY_ID.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -2656,7 +2672,7 @@ _JSON params:_
     ]
 ```
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -2692,7 +2708,7 @@ _JSON result:_
 
 Get message statistics with summarized amount of every choices.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -2709,7 +2725,7 @@ Conditions:
 * `survey` (mandatory) – `SURVEY_ID`, may be obtained from [get_surveys](#get_surveys).
 * `anonymous` (optional) – Allowed values are `true` and `false`. Survey may be filled by contact (for example when it was sent by email and `CONTACT_ID` is known) or by anonymous visitor (for example when survey is linked on www page). When this param is skipped all responses are counted without distinguishing who filled the survey.
 
-_JSON result:_
+_JSON response:_
 
 ```json
 	{
@@ -2723,6 +2739,8 @@ _JSON result:_
 	}
 ```
 
+_JSON error messages (if any):_ `Missing survey`.
+
 Questions that do not have predetermined answers (text fields) have total amount of responses returned while questions with predetermined answers (single/multi selects) have amount of responses for every option returned.
 
 Meaning of every `QUESTION_ID` and `OPTION_ID` can be found by calling [get_surveys](#get_surveys) method.
@@ -2733,15 +2751,28 @@ Meaning of every `QUESTION_ID` and `OPTION_ID` can be found by calling [get_surv
 
 Get blacklist masks on account level.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
-        "API_KEY"
+        "API_KEY",
+        {
+            "mask"          : { "OPERATOR" : "value" },
+            "created_on"    : {
+                "OPERATOR"  : "value",
+                "OPERATOR"  : "value"
+            }
+        }
     ]
 ```
 
-_JSON result:_
+Conditions:
+
+* `mask` (optional) – Use [text operators](#operators) to narrow down search results to specific masks.
+* `created_on` (optional) – Use [time operators](#operators) to narrow down search results to specific mask creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
+
+
+_JSON response:_
 
 ```json
     {
@@ -2767,7 +2798,7 @@ Format of mask can be:<a name="mask_format"/>
 
 Adds blacklist mask on account level.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -2782,7 +2813,7 @@ Conditions:
 
 * `mask` (mandatory) – Mask to blacklist, check [available formats](#mask_format).
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -2790,7 +2821,7 @@ _JSON result:_
     }
 ```
 
-_JSON error messages (if any):_  `Cannot set mask` (some masks are forbidden to manage), `Invalid mask syntax`.
+_JSON error messages (if any):_ `Cannot set mask` (some masks are forbidden to manage), `Invalid mask syntax`.
 
 ---
 
@@ -2798,7 +2829,7 @@ _JSON error messages (if any):_  `Cannot set mask` (some masks are forbidden to 
 
 Delete blacklist mask on account level.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -2813,7 +2844,7 @@ Conditions:
 
 * `mask` (mandatory) – Mask to remove from blacklist, check [available formats](#mask_format).
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -2829,13 +2860,18 @@ _JSON error messages (if any):_ `Cannot set mask` (some masks are forbidden to m
 
 Get blacklist masks on campaign level.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
         "API_KEY",
         {
-            "campaign" : "CAMPAIGN_ID"
+            "campaign" : "CAMPAIGN_ID",
+            "mask"          : { "OPERATOR" : "value" },
+            "created_on"    : {
+                "OPERATOR"  : "value",
+                "OPERATOR"  : "value"
+            }
         }
     ]
 ```
@@ -2843,8 +2879,10 @@ _JSON params:_
 Conditions:
 
 * `campaign` (mandatory) – `CAMPAIGN_ID`.
+* `mask` (optional) – Use [text operators](#operators) to narrow down search results to specific masks.
+* `created_on` (optional) – Use [time operators](#operators) to narrow down search results to specific mask creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -2853,7 +2891,7 @@ _JSON result:_
     }
 ```
 
-**Hint**: Check blacklist masks for available formats.
+**Hint**: Check [blacklist masks](#mask_format) for available formats.
 
 ---
 
@@ -2861,7 +2899,7 @@ _JSON result:_
 
 Adds blacklist mask on campaign level.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -2878,7 +2916,7 @@ Conditions:
 * `campaign` (mandatory) – `CAMPAIGN_ID`.
 * `mask` (mandatory) – Mask to blacklist, check [available formats](#mask_format).
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -2894,7 +2932,7 @@ _JSON error messages (if any):_ `Missing campaign`, `Cannot set mask` (some mask
 
 Delete blacklist mask on campaign level.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -2911,7 +2949,7 @@ Conditions:
 * `campaign` (mandatory) – `CAMPAIGN_ID`.
 * `mask` (mandatory) – Mask to remove from blacklist, check [available formats](#mask_format).
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -2927,7 +2965,7 @@ _JSON error messages (if any):_ `Missing campaign`, `Cannot set mask` (some mask
 
 Get list of defined suppression lists on your account.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -2935,7 +2973,7 @@ _JSON params:_
     ]
 ```
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -2956,7 +2994,7 @@ _JSON result:_
 
 Get single suppression using `SUPPRESSION_ID`.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -2971,7 +3009,7 @@ Conditions:
 
 * `suppression` (mandatory) – `SUPPRESSION_ID`.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -2990,7 +3028,7 @@ Add suppression list to your account.
 
 This method registers named container for masks, which can be added using add_suppression_skiplist.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -3005,7 +3043,7 @@ Conditions:
 
 * `name` (mandatory) – Name of your suppression list, must be unique within account.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -3022,7 +3060,7 @@ _JSON error messages (if any):_ `Name already used`.
 
 Delete suppression list from your account.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -3037,7 +3075,7 @@ Conditions:
 
 * `suppression` (mandatory) – `SUPPRESSION_ID`.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -3057,7 +3095,7 @@ _JSON error messages (if any):_ `Missing suppression`.
 
 Skiplist is a set of masks for suppression. If contact’s email address matches any of those masks in message that uses this suppression then it will be skipped.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -3072,7 +3110,7 @@ Conditions:
 
 * `suppression` (mandatory) – `SUPPRESSION_ID` obtained from [get_suppressions](#get_suppressions).
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -3094,7 +3132,7 @@ _JSON error messages (if any):_ `Missing suppression`.
 
 Add mask to a set of masks for suppression.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -3111,7 +3149,7 @@ Conditions:
 * `suppression` (mandatory) – `SUPPRESSION_ID` obtained from [get_suppressions](#get_suppressions).
 * `mask` (mandatory) – Mask to skip, check [available formats](#mask_format).
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -3127,7 +3165,7 @@ _JSON error messages (if any):_ `Missing suppression`, `Invalid mask syntax`.
 
 Delete mask from a set of masks for suppression.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -3144,7 +3182,7 @@ Conditions:
 * `suppression` (mandatory) – `SUPPRESSION_ID` obtained from [get_suppressions](#get_suppressions).
 * `mask` (mandatory) – Mask to delete, check [available formats](#mask_format).
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -3162,7 +3200,7 @@ _JSON error messages (if any):_ `Missing suppression`, `Invalid mask syntax`, `M
 
 Get list of available subjects for confirmation messages. They can be used in campaign settings.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -3177,7 +3215,7 @@ Conditions:
 
 * `language_code` (optional) – Use [text operators](#operators) to narrow down search results to specific languages. List of available ISO 639-1 (2-letter) codes is available [here](http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes).
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -3198,7 +3236,7 @@ _JSON result:_
 
 Get single subject for confirmation message using `CONFIRMATION_SUBJECT_ID`.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -3213,7 +3251,7 @@ Conditions:
 
 * `confirmation_subject` (mandatory) – `CONFIRMATION_SUBJECT_ID`.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -3230,7 +3268,7 @@ _JSON result:_
 
 Get list of available bodies for confirmation messages. They can be used in campaign settings.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -3245,7 +3283,7 @@ Conditions:
 
 * `language_code` (optional) – Use [text operators](#operators) to narrow down search results to specific languages. List of available ISO 639-1 (2-letter) codes is available [here](http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes).
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -3268,7 +3306,7 @@ _JSON result:_
 
 Get single body for confirmation message using `CONFIRMATION_BODY_ID`.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -3283,7 +3321,7 @@ Conditions:
 
 * `confirmation_body` (mandatory) – `CONFIRMATION_BODY_ID`.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -3301,7 +3339,7 @@ _JSON result:_
 
 Get [callbacks](https://github.com/GetResponse/DevZone/tree/master/Callback/README.md) configuration for account.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -3309,7 +3347,7 @@ _JSON params:_
     ]
 ```
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -3324,7 +3362,7 @@ _JSON result:_
 
 Set [callbacks](https://github.com/GetResponse/DevZone/tree/master/Callback/README.md) configuration for account.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -3341,7 +3379,7 @@ Conditions:
 * `uri` (mandatory) – Location of callback listener.
 * `actions` (mandatory) – List of actions that will be reported to callback listener. Allowed values are `subscribe`, `open`, `click`, `goal`, `survey`, `unsubscribe` with at least one value required.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -3355,7 +3393,7 @@ _JSON result:_
 
 Delete [callbacks](https://github.com/GetResponse/DevZone/tree/master/Callback/README.md) configuration for account.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -3363,7 +3401,7 @@ _JSON params:_
     ]
 ```
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -3377,7 +3415,7 @@ _JSON result:_
 
 Add new account to server.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -3427,7 +3465,7 @@ Conditions:
 * campaign `from_field` / `reply_to_field` – Are not passed because default campaign inherits account email address.
 * campaign `optin` (optional) – Allows to set campaign optin mode to single (unconfirmed) or double (confirmed). Note that campaign `confirmation_subject` / `confirmation_body` are mandatory even if optin is single.
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -3446,7 +3484,7 @@ _JSON error messages (if any):_ `Owner privilege missing`, `Login already taken`
 
 List all accounts on server.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -3454,7 +3492,7 @@ _JSON params:_
     ]
 ```
     
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -3501,7 +3539,7 @@ If account does not have any features blocked then whole "blocked_features" fiel
 
 Get one account on server using `ACCOUNT_ID`.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -3512,7 +3550,7 @@ _JSON params:_
     ]
 ```
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -3553,7 +3591,7 @@ This method is useful to obtain API KEY of newly created account.
 
 Enable or disable account or its features.
 
-_JSON params:_
+_JSON request:_
 
 ```json
     [
@@ -3574,7 +3612,7 @@ Conditions:
 * `block_features` (optional) - Prevent account from accessing specific features. Names of those features can be seen on "Owner settings" -> "Accounts List" -> "edit details" -> "Features blocked" pulldown menu. If this param is skipped existing blocks are not modified. If this param is given previous blocks are removed and new list of blocks is applied. Therefore to remove all blocks (enable all features) empty array should be passed as param value. Current list of blocks can be obtained using [get_account](#get_account) method.
 * `send_limit` (optional) - Maximum amount of emails that account can send. If this param is skipped existing limit is not modified. If this param is null then any existing limit is removed. If this param is given limit is set but without modifying existing "used" or "reseted_on" values - which can be checked in [get_account](#get_account) method under "send_limit".
 
-_JSON result:_
+_JSON response:_
 
 ```json
     {
@@ -3700,6 +3738,16 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.29.1, 2013-06-17
+
+* [get_contact_customs](#get_contact_customs), [get_contact_geoip](#get_contact_geoip), [get_contact_opens](#get_contact_opens), [get_contact_clicks](#get_contact_clicks), [get_contact_goals](#get_contact_goals), [get_contact_surveys](#get_contact_surveys) return `Missing contact` error instead of empty result when contact is not present
+* [get_message_contents](#get_message_contents) [get_message_stats](#get_message_stats) return `Missing message` error instead of empty result when message is not present
+* [get_survey_stats](#get_survey_stats) returns `Missing survey` error instead of empty result when survey is not present
+
+version 1.29.0, 2013-06-17
+
+* [get_account_blacklist](#get_account_blacklist) and [get_campaign_blacklist](#get_campaign_blacklist) allow to narrow down result by "mask" or "created_on" date
 
 version 1.28.0, 2013-05-27
 
