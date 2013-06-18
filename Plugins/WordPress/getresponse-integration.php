@@ -187,38 +187,26 @@ class Gr_Integration
 									(leave empty to disable)
 			
 									<?php
-									if (get_option($this->GrOptionDbPrefix . 'style_id') == 1)
-									{
-										$webform = "selected";
-									}
-									else
-									{
-										$wordpress = "selected";
-									}
+                                    $style_type	= get_option($this->GrOptionDbPrefix . 'style_id');
 									?>
-									<br /> <label class="GR_label" for="style_id">Style:</label> <select
+									<br />
+                                    <label class="GR_label" for="style_id">Style:</label>
+                                    <select
 										class="GR_select" name="style_id">
-										<option value="1" <?php echo $webform;?>>Web Form</option>
-										<option value="0" <?php echo $wordpress;?>>Wordpress</option>
+										<option value="1" <?php selected($style_type, 1); ?>>Web Form</option>
+										<option value="0" <?php selected($style_type, 0); ?>>Wordpress</option>
 									</select>
 			
 									<h3>
 										<?php _e('Subscribe via Comment', 'Gr_Integration'); ?>
 									</h3>
 									<?php
-									if (get_option($this->GrOptionDbPrefix . 'comment_on') == 1)
-									{
-										$on = "selected";
-									}
-									else
-									{
-										$off = "selected";
-									}
+                                    $comment_type = get_option($this->GrOptionDbPrefix . 'comment_on');
 									?>
 									<label class="GR_label" for="comment_on"><?php _e('Comment integration:', 'Gr_Integration'); ?>
 									</label> <select class="GR_select2" name="comment_on">
-										<option value="1" <?php echo $on;?>>On</option>
-										<option value="0" <?php echo $off;?>>Off</option>
+										<option value="1" <?php selected($comment_type, 1); ?>>On</option>
+										<option value="0" <?php selected($comment_type, 0); ?>>Off</option>
 									</select> (allow subscriptions when visitors comment) <br /> <label
 										class="GR_label" for="comment_label"><?php _e('Additional text:', 'Gr_Integration'); ?>
 									</label> <input class="GR_input2" type="text" name="comment_label"
@@ -226,21 +214,14 @@ class Gr_Integration
 
                                     <?php if ( $woocommerce == 'on' )
                                     {
-                                        if (get_option($this->GrOptionDbPrefix . 'checkout_on') == 1)
-                                        {
-                                            $ch_on = "selected";
-                                        }
-                                        else
-                                        {
-                                            $ch_off = "selected";
-                                        }
-                                        ?>
+                                        $checkout_type = get_option($this->GrOptionDbPrefix . 'checkout_on');
+                                    ?>
                                         <h3>Subscribe via Checkout Page</h3>
                                         <label class="GR_label" for="checkout_on"><?php _e('Checkout integration:', 'Gr_Integration'); ?>
                                         </label>
                                         <select class="GR_select2" name="checkout_on">
-                                            <option value="1" <?php echo $ch_on;?>>On</option>
-                                            <option value="0" <?php echo $ch_off;?>>Off</option>
+                                            <option value="1" <?php selected($checkout_type, 1); ?>>On</option>
+                                            <option value="0" <?php selected($checkout_type, 0); ?>>Off</option>
                                         </select> (allow subscriptions visitors via the checkout page) <br /> <label
                                             class="GR_label" for="comment_label"><?php _e('Additional text:', 'Gr_Integration'); ?>
                                         </label>
