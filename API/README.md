@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.29.1, 2013-06-17 [changelog](#changelog)
+version 1.29.2, 2013-06-24 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -3387,6 +3387,8 @@ _JSON response:_
     }
 ```
 
+_JSON error messages (if any):_ `Invalid URI`.
+
 ---
 
 ####delete_account_callbacks<a name="delete_account_callbacks"/>
@@ -3739,6 +3741,10 @@ Errors not included in spec:
 
 ##CHANGELOG<a name="changelog"/>
 
+version 1.29.2, 2013-06-24
+
+* [set_account_callbacks](#set_account_callbacks) has "Invalid URI" error added
+
 version 1.29.1, 2013-06-17
 
 * [get_contact_customs](#get_contact_customs), [get_contact_geoip](#get_contact_geoip), [get_contact_opens](#get_contact_opens), [get_contact_clicks](#get_contact_clicks), [get_contact_goals](#get_contact_goals), [get_contact_surveys](#get_contact_surveys) return `Missing contact` error instead of empty result when contact is not present
@@ -3834,7 +3840,7 @@ version 1.15.0, 2012-11-14
 
 version 1.14.0, 2012-11-09
 
-* [get_account_callbacks](#get_account_callbacks), [set_account_callbacks](#get_account_callbacks) and [delete_account_callbacks](#delete_account_callbacks)
+* [get_account_callbacks](#get_account_callbacks), [set_account_callbacks](#set_account_callbacks) and [delete_account_callbacks](#delete_account_callbacks)
   for callback management added
 
 version 1.13.0, 2012-11-09
