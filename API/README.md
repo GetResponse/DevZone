@@ -6,7 +6,7 @@ version 1.30.0, 2013-06-25 [changelog](#changelog)
 
 ####Authentication
 
-![API KEY](https://app.getresponse.com/images/core/dashboard-icons/use-getresponse-api.png)
+![API KEY](https://d3p2zxbkhhu56x.cloudfront.net/images/core/global/default/icons/use-getresponse-api_1.png)
 
 In order to use GetResponse API the API KEY is required.
 
@@ -41,7 +41,7 @@ GetResponse API is [JSON-RPC](http://www.jsonrpc.org/) based and supports both 1
 Check how to use API in following programming languages in our [examples](https://github.com/GetResponse/DevZone/tree/master/API/examples) section.
 
 <img src="http://upload.wikimedia.org/wikipedia/commons/7/72/Logo_C_Sharp.png" height="64" title="C#" alt="C#"/>
-<img src="http://upload.wikimedia.org/wikipedia/en/thumb/3/39/Java_logo.svg/300px-Java_logo.svg.png" height="64" title="Java" alt="Java"/>
+<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Java_logo_and_wordmark.svg/200px-Java_logo_and_wordmark.svg.png" height="64" title="Java" alt="Java"/>
 <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/JavaScript-logo.png/600px-JavaScript-logo.png" height="64" title="JavaScript" alt="JavaScript"/>
 <img src="http://upload.wikimedia.org/wikipedia/en/0/00/Perl-camel-small.png" height="64" title="Perl" alt="Perl"/>
 <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/2/27/PHP-logo.svg/220px-PHP-logo.svg.png" height="64" title="PHP" alt="PHP"/>
