@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.31.0, 2013-07-24 [changelog](#changelog)
+version 1.32.0, 2013-07-29 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -1041,6 +1041,7 @@ _JSON response:_
             "clicked"   : 128,
 			"forwarded"	: 2,
             "bounces_user_unknown"  : 8,
+            "bounces_user_recycled" : 1,
             "bounces_mailbox_full"  : 2,
             "bounces_block_content" : 0,
             "bounces_block_timeout" : 0,
@@ -1056,6 +1057,7 @@ _JSON response:_
             "clicked"   : 16,
 			"forwarded"	: 0,
             "bounces_user_unknown"  : 0,
+            "bounces_user_recycled" : 0,
             "bounces_mailbox_full"  : 1,
             "bounces_block_content" : 0,
             "bounces_block_timeout" : 0,
@@ -2173,7 +2175,7 @@ Conditions:
 * `campaigns` / `get_campaigns` (optional) – Search only in given campaigns. Uses OR logic. If those params are not given search is performed in all campaigns on the account. Check [IDs in conditions](#ids) for detailed explanation.
 * `messages` / `get_messages` (optional) – Search only contacts removed from given messages, this info is known for example if contact clicked unsubscribe link. Uses OR logic. Check [IDs in conditions](#ids) for detailed explanation.
 * `email` (optional) – Use [text operators](#operators) to narrow down search results to specific contact emails.
-* `reason` (optional) – Narrow down search results only to contacts removed due to specific reason, allowed values are: `unsubscribe`, `user`, `support`, `automation` (or more specific `automation::remove-on-remove`, `automation::remove-on-sale`, `automation::remove-on-subscribe`), `complaint`, `blacklisted`, `api`, `bounce` (or more specific `bounce::mailbox_full`, `bounce::other_hard`, `bounce::other_soft`, `bounce::user_unknown`), `other`.
+* `reason` (optional) – Narrow down search results only to contacts removed due to specific reason, allowed values are: `unsubscribe`, `user`, `support`, `automation` (or more specific `automation::remove-on-remove`, `automation::remove-on-sale`, `automation::remove-on-subscribe`), `complaint`, `blacklisted`, `api`, `bounce` (or more specific `bounce::mailbox_full`, `bounce::other_hard`, `bounce::other_soft`, `bounce::user_unknown`, `bounce::user_recycled`), `other`.
 * `created_on` (optional) – Use [time operators](#operators) to narrow down search results to specific contact creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
 * `deleted_on` (optional) – Use [time operators](#operators) to narrow down search results to specific contact deletion date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
 
@@ -3740,6 +3742,9 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.32.0, 2013-07-29
+* [get_message_stats](#get_message_stats) and [get_contacts_deleted](#get_contacts_deleted) support new `user_recycled` bounce introduced by Require-Recipient-Valid-Since header
 
 version 1.31.0, 2013-07-24
 * [get_contacts_deleted](#get_contacts_deleted) allows to request more specific reason
