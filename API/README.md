@@ -2215,6 +2215,8 @@ _JSON response:_
 
 **Warning**: Unsubscribe link allows contact to unsubscribe from multiple campaigns, even if message was not sent from those campaigns or to contact in those campaigns.
 
+**Warning**: Value of `CONTACT_ID` does not change after contact is deleted but you can no longer use it in other API calls, `Missing contact` error will be returned.
+
 **Hint**: If you want to keep unsubscribes synchronized with external database, then setting unsubscribe [callback](https://github.com/GetResponse/DevZone/tree/master/Callback/README.md) is much more efficient than querying this method periodically.
 
 ---
