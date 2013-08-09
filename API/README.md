@@ -3428,11 +3428,11 @@ _JSON request:_
         "API_KEY",
         {
             "password"      : "12#$qwER",
-            "first_name"    : "Andrzej",
-            "last_name"     : "Cholewiusz",
-            "email"         : "andrzej.cholewiusz@implix.com",
+            "first_name"    : "John",
+            "last_name"     : "Doe",
+            "email"         : "john.doe@example.mail",
             "company_name"  : "Implix",
-            "phone"         : "+48587321918",
+            "phone"         : "+48111111111",
             "country_code"  : "PL",
             "country"       : "Poland",
             "city"          : "Gdańsk",
@@ -3445,7 +3445,7 @@ _JSON request:_
                 "confirmation_subject"  : "CONFIRMATION_SUBJECT_ID",
                 "confirmation_body"     : "CONFIRMATION_BODY_ID",
                 "language_code"         : "PL",
-                "optin"                 : "single",
+                "optin"                 : "single"
             }
         }
     ]
@@ -3505,11 +3505,11 @@ _JSON response:_
         "ACCOUNT_ID" : {
             "login"         : "andee",
             "status"        : "enabled",
-            "first_name"    : "Andrzej",
-            "last_name"     : "Cholewiusz",
-            "email"         : "andrzej.cholewiusz@implix.com",
+            "first_name"    : "Jonh",
+            "last_name"     : "Doe",
+            "email"         : "john.doe@example.mail",
             "company_name"  : "Implix",
-            "phone"         : "+48587321918",
+            "phone"         : "+48111111111",
             "country_code"  : "pl",
             "country"       : "Polska",
             "city"          : "Gdańsk",
@@ -3563,11 +3563,11 @@ _JSON response:_
         "ACCOUNT_ID" : {
             "login"         : "andee",
             "status"        : "enabled",
-            "first_name"    : "Andrzej",
-            "last_name"     : "Cholewiusz",
-            "email"         : "andrzej.cholewiusz@implix.com",
+            "first_name"    : "Jonh",
+            "last_name"     : "Doe",
+            "email"         : "john.doe@example.mail",
             "company_name"  : "Implix",
-            "phone"         : "+48587321918",
+            "phone"         : "+48111111111",
             "country_code"  : "pl",
             "country"       : "Polska",
             "city"          : "Gdańsk",
