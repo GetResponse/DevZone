@@ -1,6 +1,6 @@
 #Prestashop plugin
 
-version 2.0, 2013-02-01 [changelog](#changelog)
+version 2.1, 2013-08-12 [changelog](#changelog)
 
 ##INFO
 
@@ -20,7 +20,7 @@ New subscribers can also be added via the newsletter subscription on your checko
 
 ##INSTALLATION
 
-Download module [plugin_prestashop-2.0.zip](https://github.com/GetResponse/DevZone/raw/master/Plugins/Prestashop/plugin_prestashop-2.0.zip).
+Download module [plugin_prestashop-2.1.zip](https://github.com/GetResponse/DevZone/raw/master/Plugins/Prestashop/plugin_prestashop-2.1.zip).
 
 1.  Add plugi-in to your PrestaShop store in the modules tab. <br/><br/>
 	![Screenshot 1](https://github.com/GetResponse/DevZone/raw/master/Plugins/Prestashop/prestashop_01.jpg)
@@ -65,10 +65,14 @@ contacts subscribed up to that point from the Prestashop data base.
 
 ##Update to the latest version
 
-When you update from v1.0 to v2.0 please make sure you first uninstall the v1.0 module and then delete it.
-Then install the new v2.0 module.
+When you update from v1.0 to v2.1 please make sure you first uninstall the v1.0 module and then delete it.
+Then install the new v2.1 module.
 
 ##CHANGELOG<a name="changelog">
+
+version 2.1, 2013-08-12
+
+* Fixed issue with export contacts. "API request error" removed. "Not added" status added.
 
 version 2.0, 2013-02-01
 
