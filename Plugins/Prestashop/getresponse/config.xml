@@ -2,7 +2,7 @@
         <module>
             <name>getresponse</name>
             <displayName><![CDATA[GetResponse Integration]]></displayName>
-            <version><![CDATA[2.0]]></version>
+            <version><![CDATA[2.1]]></version>
             <description><![CDATA[Connects PrestaShop with GetResponse.]]></description>
             <author><![CDATA[GetResponse]]></author>
             <tab><![CDATA[]]></tab>

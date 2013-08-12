@@ -282,6 +282,7 @@ class DbConnection
         $duplicated = 0;
         $queued = 0;
         $contact = 0;
+        $not_added = 0;
 
         if ( !empty($customers))
         {
@@ -296,13 +297,13 @@ class DbConnection
 
                 $r = $this->addContactToGR($apikey, $campaign_id, $customer['firstname'], $customer['lastname'], $customer['email'], $customs);
 
+                $contact++;
+
                 if ( $r === false)
                 {
-                    return array('status'=>'0' , 'message' => 'API request error.');
+                    $not_added++;
                 }
-
-                $contact++;
-                if (isset($r['duplicated']) and $r['duplicated']==1)
+                else if (isset($r['duplicated']) and $r['duplicated']==1)
                 {
                     $duplicated++;
                 }
@@ -313,7 +314,7 @@ class DbConnection
             }
         }
 
-        return array('status'=>'1' , 'message' =>'Export completed. <br /> Contacts: ' .$contact. '. Queued:' .$queued. '. Updated: ' .$duplicated. '.');
+        return array('status'=>'1' , 'message' =>'Export completed. <br /> Contacts: ' .$contact. '. Queued:' .$queued. '. Updated: ' .$duplicated. '. Not added: ' .$not_added. '.');
     }
 
     private function mapCustoms($customer, $customer_post, $type)

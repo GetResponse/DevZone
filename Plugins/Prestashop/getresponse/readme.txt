@@ -1,8 +1,8 @@
 === GetResponse Integration ===
 Contributors: GetResponse
 Requires at least: 1.5.0.0
-Tested up to: 1.5.2.0
-Stable tag: 2.0
+Tested up to: 1.5.4.1
+Stable tag: 2.1
 
 == Description ==
 
@@ -35,6 +35,10 @@ Please note:
 If you want to use the GetResponse web form within Prestashop instead of the default web form, please disable
 the "Newsletter block" module first and export the contacts. Deleting this module will also delete all the
 contacts subscribed up to that point from the Prestashop data base.
+
+= v2.1 =
+
+* Fixed issue with export contacts. "API request error" removed. "Not added" status added.
 
 = v2.0 =
 
