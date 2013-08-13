@@ -39,6 +39,7 @@ contacts subscribed up to that point from the Prestashop data base.
 = v2.1 =
 
 * Fixed issue with export contacts. "API request error" removed. "Not added" status added.
+* PrestaShop Coding standards.
 
 = v2.0 =
 

@@ -1,6 +1,6 @@
 #Prestashop plugin
 
-version 2.1, 2013-08-12 [changelog](#changelog)
+version 2.1, 2013-08-13 [changelog](#changelog)
 
 ##INFO
 
@@ -70,9 +70,10 @@ Then install the new v2.1 module.
 
 ##CHANGELOG<a name="changelog">
 
-version 2.1, 2013-08-12
+version 2.1, 2013-08-13
 
 * Fixed issue with export contacts. "API request error" removed. "Not added" status added.
+* PrestaShop Coding standards.
 
 version 2.0, 2013-02-01
 
