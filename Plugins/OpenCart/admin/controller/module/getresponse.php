@@ -150,7 +150,7 @@ class ControllerModuleGetresponse extends Controller {
 		
 		$this->load->model('module/getresponse');
 		$contacts = $this->model_module_getresponse->getContacts();
-		
+
 		$this->gr_apikey = $this->request->post['api_key'];
 		
 		$this->campaign = $this->request->post['campaign'];		
@@ -170,36 +170,67 @@ class ControllerModuleGetresponse extends Controller {
 			$duplicated = 0;
 			$queued = 0;
 			$contact = 0;
+			$not_added = 0;
+
+			$allow_fields = array('telephone', 'country', 'city', 'address', 'postcode');
+			$campaign_id = key($result);
+
 			foreach ($contacts as $row)
 			{
-				$r = $client->add_contact($this->gr_apikey,
-						array (
-								'campaign'  => key($result),
-								'name'      => $row['firstname'] . ' ' . $row['lastname'],
-								'email'     => $row['email'],
-								'cycle_day' => '0',
-								'customs' => array(
-										array(	'name'       => 'ref',
-												'content'    => 'OpenCart'
-										),
-										array(	'name'       => 'telephone',
-												'content'    => $row['telephone']
-										),
-										array(	'name'       => 'country',
-												'content'    => $row['country']
-										),
-										array(	'name'       => 'city',
-												'content'    => $row['city']
-										)
-								)
+				$customs = array();
+				$customs[] = array('name'  => 'ref', 'content' => 'OpenCart');
+
+				foreach ($allow_fields as $af)
+				{
+					if ( !empty($row[$af]))
+					{
+						$customs[] = array(	'name'       => $af,
+											'content'    => $row[$af]
+										);
+					}
+				}
+
+				$check_cycle_day = $client->get_contacts(
+					$this->gr_apikey,
+					array (
+						'campaigns' => array($campaign_id),
+						'email' => array (
+							'EQUALS' => $row['email']
 						)
+					)
 				);
-				$contact++;
-				if  (array_key_exists('queued',$r)) {	$queued++;	}
-				else if (array_key_exists('duplicated',$r))  { $duplicated++; }	
+
+				if ( !empty($check_cycle_day) and is_array($check_cycle_day))
+				{
+					$res = array_shift($check_cycle_day);
+					$cycle_day = $res['cycle_day'];
+				}
+				else
+				{
+					$cycle_day = '0';
+				}
+
+				$params = array (
+					'campaign'  => $campaign_id,
+					'name'      => $row['firstname'] . ' ' . $row['lastname'],
+					'email'     => $row['email'],
+					'cycle_day' => $cycle_day,
+					'customs'   => $customs
+				);
+
+				try {
+					$r = $client->add_contact($this->gr_apikey, $params);
+
+					$contact++;
+					if  (array_key_exists('queued',$r)) {	$queued++;	}
+					else if (array_key_exists('duplicated',$r))  { $duplicated++; }
+				}
+				catch (Exception $e) {
+					$not_added++;
+				}
 			}
-			
-			$results = array('status' => 1,	'response' =>'  Export completed. Contacts: ' .$contact. '. Queued:' .$queued. '. Updated: ' .$duplicated. '.');
+
+			$results = array('status' => 1,	'response' =>'  Export completed. Contacts: ' .$contact. '. Queued:' .$queued. '. Updated: ' .$duplicated. '. Not added (Contact already queued): ' .$not_added . '.');
 		}
 	$this->response->setOutput(json_encode($results));
 	}	
