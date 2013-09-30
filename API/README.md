@@ -3579,32 +3579,34 @@ _JSON response:_
 
 ```json
     {
-        "login"         : "bbkr",
-        "status"        : "enabled",
-        "email"         : "pawel.pabian@implix.com",
-        "first_name"    : "Pawel",
-        "last_name"     : "Pabian",
-        "company_name"  : "My company",
-        "country"       : "Poland",
-        "country_code"  : "PL",
-        "state"         : "pomorskie",
-        "city"          : "Gdansk",
-        "street"        : "Zakopianska",
-        "zip_code"      : "80-124",
-        "from_name"     : "My From Name",
-        "from_email"    : "me@emailaddress.com",
-        "phone"         : "+48000000000",
-        "affiliate"     : "someone",
-        "created_ip"    : "91.192.79.136",
-        "time_zone"     : "Europe/Warsaw",
-        "created_on"    : "2000-01-01 00:00:00",
-        "API_KEY"       : "09fb76c7d2ecc0298855259f1dd224a5",
-        "api_status"    : "enabled",
-        "blocked_features"  : [ "Multimedia" ],
-        "send_limit"    : {
-            "allowed"       : 1048576,
-            "current"       : 8192,
-            "reseted_on"    : "2013-01-01 00:00:00"
+        "ACCOUNT_ID" : {
+            "login"         : "bbkr",
+            "status"        : "enabled",
+            "email"         : "pawel.pabian@implix.com",
+            "first_name"    : "Pawel",
+            "last_name"     : "Pabian",
+            "company_name"  : "My company",
+            "country"       : "Poland",
+            "country_code"  : "PL",
+            "state"         : "pomorskie",
+            "city"          : "Gdansk",
+            "street"        : "Zakopianska",
+            "zip_code"      : "80-124",
+            "from_name"     : "My From Name",
+            "from_email"    : "me@emailaddress.com",
+            "phone"         : "+48000000000",
+            "affiliate"     : "someone",
+            "created_ip"    : "91.192.79.136",
+            "time_zone"     : "Europe/Warsaw",
+            "created_on"    : "2000-01-01 00:00:00",
+            "API_KEY"       : "09fb76c7d2ecc0298855259f1dd224a5",
+            "api_status"    : "enabled",
+            "blocked_features"  : [ "Multimedia" ],
+            "send_limit"    : {
+                "allowed"       : 1048576,
+                "current"       : 8192,
+                "reseted_on"    : "2013-01-01 00:00:00"
+            }
         }
     }
 ``` 
