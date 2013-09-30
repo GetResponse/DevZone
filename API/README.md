@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.33.0, 2013-09-30 [changelog](#changelog)
+version 1.34.0, 2013-09-30 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -899,8 +899,9 @@ _JSON request:_
             "campaigns"     : [ "CAMPAIGN_ID", "CAMPAIGN_ID" ],
             "get_campaigns" : { get_campaigns conditions },
             "type"          : "value",
-            "subject"       : { "OPERATOR" : "value" }
-            "send_on"       : { "OPERATOR" : "value" }
+            "subject"       : { "OPERATOR" : "value" },
+            "name"          : { "OPERATOR" : "value" },
+            "send_on"       : { "OPERATOR" : "value" },
             "created_on"    : { "OPERATOR" : "value" }
         }
     ]
@@ -911,6 +912,7 @@ Conditions:
 * `campaigns` / `get_campaigns` (optional) – Search only in given campaigns. Uses OR logic. If those params are not given search, is performed in all campaigns in the account. Check [IDs in conditions](#ids) for detailed explanation.
 * `type` (optional) – Use "newsletter", "autoresponder" or "draft" to narrow down search results to specific message types. If not given newsletters and autoresponders are returned in the result.
 * `subject` (optional) – Use [text operators](#operators) to narrow down search results to specific message subjects.
+* `name` (optional) – Use [text operators](#operators) to narrow down search results to specific message names.
 * `send_on` (optional) – Use [time operators](#operators) to narrow down search results to specific sending date. Multiple operators are allowed and logic AND is used so date range can also be expressed. Works only for newsletters because other message types do not have fixed sending point in time. If message was sent with Time Travel then it may appear in search results for two different days as sending period equals 24 hours.
 * `created_on` (optional) – Use [time operators](#operators) to narrow down search results to specific message creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
 
@@ -923,6 +925,7 @@ _JSON response:_
             "campaign"      : "CAMPAIGN_ID",
             "type"          : "autoresponder",
             "subject"       : "My autoresponder",
+            "name"          : "Second week start",
             "day_of_cycle"  : 8,
             "flags"         : ["clicktrack", "openrate"],
             "created_on"    : "2010-01-01 00:00:00"
@@ -931,6 +934,7 @@ _JSON response:_
             "campaign"      : "CAMPAIGN_ID",
             "type"          : "newsletter",
             "subject"       : "My newsletter",
+            "name"          : null,
             "send_on"       : "2010-01-01 00:00:00",
             "created_on"    : "2010-01-01 00:00:00"
         }
@@ -979,6 +983,7 @@ _JSON response:_
             "campaign"      : "CAMPAIGN_ID",
             "type"          : "autoresponder",
             "subject"       : "My autoresponder",
+            "name"          : null,
             "day_of_cycle"  : 8,
             "flags"         : ["clicktrack", "openrate"],
             "created_on"    : "2010-01-01 00:00:00"
@@ -1106,6 +1111,7 @@ _JSON request:_
             "from_field"        : "FROM_FIELD_ID",
             "reply_to_field"    : "FROM_FIELD_ID",
             "subject"   : "My newsletter",
+            "name"      : "Say hi",
             "contents"  : {
                 "plain" : "Hello there",
                 "html"  : "<h1>Hello</h1>there"
@@ -1140,6 +1146,7 @@ Conditions:
 * `from_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It represents From header (name and email) in message and will be taken from campaign if not given.
 * `reply_to_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It represents Reply-To header (email) in message and will not be present if not given.
 * `subject` (mandatory) – Subject value. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax. Maximum length is 512 characters.
+* `name` (optional) – Name value that describes message. Contacts won't see it.
 * `contents` (mandatory) – Allowed keys are `plain` and `html`, at least one is mandatory. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax. Maximum length is 524288 characters each.
 * `attachments` (optional) - Files that will be attached to message. Field `data` must be encoded using [Base64](http://en.wikipedia.org/wiki/Base64) algorithm. Filed `name` represents name of file. Field `mime` represents [media type](http://en.wikipedia.org/wiki/Internet_media_type) of file.
 * `flags` (optional) – Enables extra functionality for a message, see [message_flags](#message_flags) for available values.
@@ -1239,6 +1246,7 @@ _JSON request:_
             "from_field"        : "FROM_FIELD_ID",
             "reply_to_field"    : "FROM_FIELD_ID",
             "subject"   : "My autoresponder",
+            "name"      : "Say hi",
             "contents"  : {
                 "plain" : "Hello there",
                 "html"  : "<h1>Hello</h1>there"
@@ -1267,6 +1275,7 @@ Conditions:
 * `from_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It represents From header (name and email) in message and will be taken from campaign if not given.
 * `reply_to_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It represents Reply-To header (email) in message and will not be present if not given.
 * `subject` (mandatory) – Subject value. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax. Maximum length is 512 characters.
+* `name` (optional) – Name value to help distinguish messages. Contacts won't see it.
 * `contents` (mandatory) – Allowed keys are `plain` and `html`, at least one is mandatory. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax. Maximum length is 524288 characters each.
 * `attachments` (optional) - Files that will be attached to message. Field `data` must be encoded using [Base64](http://en.wikipedia.org/wiki/Base64) algorithm. Filed `name` represents name of file. Field `mime` represents [media type](http://en.wikipedia.org/wiki/Internet_media_type) of file.
 * `flags` (optional) – Enables extra functionality for a message, see [message_flags](#message_flags) for available values.
@@ -1299,6 +1308,7 @@ _JSON request:_
             "from_field"        : "FROM_FIELD_ID",
             "reply_to_field"    : "FROM_FIELD_ID",
             "subject"   : "My draft",
+            "name"      : "I will finish this later",
             "contents"  : {
                 "plain" : "Hello there",
                 "html"  : "<h1>Hello</h1>there"
@@ -1314,6 +1324,7 @@ Conditions:
 * `from_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It represents From header (name and email) in message and will be taken from campaign if not given.
 * `reply_to_field` (optional) – `FROM_FIELD_ID` obtained from [get_account_from_fields](#get_account_from_fields). It represents Reply-To header (email) in message and will not be present if not given.
 * `subject` (mandatory) – Subject value. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax. Maximum length is 512 characters.
+* `name` (optional) – Name value to help distinguish messages. Contacts won't see it.
 * `contents` (mandatory) – Allowed keys are `plain` and `html`, at least one is mandatory. All merge-words should be written as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax. Maximum length is 524288 characters each.
 * `flags` (optional) – Enables extra functionality for a message, see [message_flags](#message_flags) for available values.
 
@@ -3769,10 +3780,15 @@ Errors not included in spec:
 
 ##CHANGELOG<a name="changelog"/>
 
+version 1.34.0, 2013-09-30
+
+* [get_messages](#get_messages) and [get_message](#get_message) returns "name" and allow to search by it
+* [send_newsletter](#send_newsletter), [add_autoresponder](#add_autoresponder) and [add_draft](#add_draft) allow to pass message name
+
 version 1.33.0, 2013-09-30
 
 * [get_account_info](#get_account_info) is more verbose
-* [get_accounts](#get_accounts), [get_account](#get_account) includes all fields from [get_account_info](#get_account_info)
+* [get_accounts](#get_accounts) and [get_account](#get_account) include all fields from [get_account_info](#get_account_info)
 
 version 1.32.0, 2013-07-29
 * [get_message_stats](#get_message_stats) and [get_contacts_deleted](#get_contacts_deleted) support new `user_recycled` bounce introduced by Require-Recipient-Valid-Since header
