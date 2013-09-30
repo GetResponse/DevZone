@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.32.0, 2013-07-29 [changelog](#changelog)
+version 1.33.0, 2013-09-30 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -223,10 +223,24 @@ _JSON response:_
 
 ```json
     {
-        "login"         : "my_login",
+        "login"         : "bbkr",
+        "email"         : "pawel.pabian@implix.com",
+        "first_name"    : "Pawel",
+        "last_name"     : "Pabian",
+        "company_name"  : "My company",
+        "country"       : "Poland",
+        "country_code"  : "PL",
+        "state"         : "pomorskie",
+        "city"          : "Gdansk",
+        "street"        : "Zakopianska",
+        "zip_code"      : "80-124",
         "from_name"     : "My From Name",
         "from_email"    : "me@emailaddress.com",
-        "created_on"    : "2010-01-01"
+        "phone"         : "+48000000000",
+        "affiliate"     : "someone",
+        "created_ip"    : "91.192.79.136",
+        "time_zone"     : "Europe/Warsaw",
+        "created_on": "2000-01-01 00:00:00"
     }
 ```
 
@@ -3503,20 +3517,25 @@ _JSON response:_
 ```json
     {
         "ACCOUNT_ID" : {
-            "login"         : "andee",
+            "login"         : "bbkr",
             "status"        : "enabled",
-            "first_name"    : "Jonh",
-            "last_name"     : "Doe",
-            "email"         : "john.doe@example.mail",
-            "company_name"  : "Implix",
-            "phone"         : "+48111111111",
-            "country_code"  : "pl",
-            "country"       : "Polska",
-            "city"          : "Gdańsk",
+            "email"         : "pawel.pabian@implix.com",
+            "first_name"    : "Pawel",
+            "last_name"     : "Pabian",
+            "company_name"  : "My company",
+            "country"       : "Poland",
+            "country_code"  : "PL",
             "state"         : "pomorskie",
-            "street"        : "Żabianska",
-            "zip_code"      : "24-213",
-            "created_on"    : "2010-11-01 07:27:43",
+            "city"          : "Gdansk",
+            "street"        : "Zakopianska",
+            "zip_code"      : "80-124",
+            "from_name"     : "My From Name",
+            "from_email"    : "me@emailaddress.com",
+            "phone"         : "+48000000000",
+            "affiliate"     : "someone",
+            "created_ip"    : "91.192.79.136",
+            "time_zone"     : "Europe/Warsaw",
+            "created_on"    : "2000-01-01 00:00:00",
             "API_KEY"       : "09fb76c7d2ecc0298855259f1dd224a5",
             "api_status"    : "enabled",
             "blocked_features"  : [ "Multimedia" ],
@@ -3560,29 +3579,32 @@ _JSON response:_
 
 ```json
     {
-        "ACCOUNT_ID" : {
-            "login"         : "andee",
-            "status"        : "enabled",
-            "first_name"    : "Jonh",
-            "last_name"     : "Doe",
-            "email"         : "john.doe@example.mail",
-            "company_name"  : "Implix",
-            "phone"         : "+48111111111",
-            "country_code"  : "pl",
-            "country"       : "Polska",
-            "city"          : "Gdańsk",
-            "state"         : "pomorskie",
-            "street"        : "Żabianska",
-            "zip_code"      : "24-213",
-            "created_on"    : "2010-11-01 07:27:43",
-            "API_KEY"       : "09fb76c7d2ecc0298855259f1dd224a5",
-            "api_status"    : "enabled",
-            "blocked_features"  : [ "Multimedia" ],
-            "send_limit"    : {
-                "allowed"       : 1048576,
-                "used"          : 8192,
-                "reseted_on"    : "2013-01-01 00:00:00"
-            }
+        "login"         : "bbkr",
+        "status"        : "enabled",
+        "email"         : "pawel.pabian@implix.com",
+        "first_name"    : "Pawel",
+        "last_name"     : "Pabian",
+        "company_name"  : "My company",
+        "country"       : "Poland",
+        "country_code"  : "PL",
+        "state"         : "pomorskie",
+        "city"          : "Gdansk",
+        "street"        : "Zakopianska",
+        "zip_code"      : "80-124",
+        "from_name"     : "My From Name",
+        "from_email"    : "me@emailaddress.com",
+        "phone"         : "+48000000000",
+        "affiliate"     : "someone",
+        "created_ip"    : "91.192.79.136",
+        "time_zone"     : "Europe/Warsaw",
+        "created_on"    : "2000-01-01 00:00:00",
+        "API_KEY"       : "09fb76c7d2ecc0298855259f1dd224a5",
+        "api_status"    : "enabled",
+        "blocked_features"  : [ "Multimedia" ],
+        "send_limit"    : {
+            "allowed"       : 1048576,
+            "current"       : 8192,
+            "reseted_on"    : "2013-01-01 00:00:00"
         }
     }
 ``` 
@@ -3744,6 +3766,11 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.33.0, 2013-09-30
+
+* [get_account_info](#get_account_info) is more verbose
+* [get_accounts](#get_accounts), [get_account](#get_account) includes all fields from [get_account_info](#get_account_info)
 
 version 1.32.0, 2013-07-29
 * [get_message_stats](#get_message_stats) and [get_contacts_deleted](#get_contacts_deleted) support new `user_recycled` bounce introduced by Require-Recipient-Valid-Since header
