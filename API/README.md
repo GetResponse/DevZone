@@ -1766,7 +1766,7 @@ _JSON request:_
 Conditions:
 
 * `contact` (mandatory) – `CONTACT_ID`.
-* `customs` (mandatory) – List of one or more customs to set. Value of name must be composed of letters, digits and underscores only.
+* `customs` (mandatory) – List of one or more customs to set. Custom name must be composed using up to 32: lowercase a-z letters, digits or underscores. Custom content maximum length is 255 characters.
 
 Custom of a given name is:
 
@@ -2083,7 +2083,7 @@ Conditions:
 * `email` (mandatory) – Email value.
 * `cycle_day` (optional) – Insert contact on a given day at the autoresponder cycle. Value of 0 means the beginning of the cycle. Lack of this param means that a contact will not be inserted into cycle.
 * `ip` (optional) – Contact’s IP address used for geo location. Must be given in dotted decimal format.
-* `customs` (optional) – List of contact customs. In case of contact update new customs will be inserted and the existing ones will be updated with the new values. Customs not provided on this list will not be removed. Custom name must be composed using lowercase letters, digits and underscores only.
+* `customs` (optional) – List of contact customs. In case of contact update new customs will be inserted and the existing ones will be updated with the new values. Customs not provided on this list will not be removed. Custom name must be composed using up to 32: lowercase a-z letters, digits or underscores. Custom content maximum length is 255 characters.
 
 _JSON response:_
 
