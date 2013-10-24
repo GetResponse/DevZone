@@ -441,7 +441,7 @@ Convert between price currencies in your email depending on which country is you
 ```
 (will insert "1000 USD" if contacts country code based on GeoIP is "US" (or not defined) and will insert "3097.20 PLN" if contacts country code is PL)
 
-Source currency must be given as 3-letters code defined in [ISO 4217](http://iso4217.com/).
+Source currency must be given as 3-letters code defined in [ISO 4217](http://iso4217.net/).
 
 Target currency is determined by 2-letters `{{CUSTOM "country_code"}}` value or `{{GEO "country_code"}}` if contact custom field value is not present. Conversion rates are taken from [European Central Bank](http://www.ecb.int) when message is sent.
 
