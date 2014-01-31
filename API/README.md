@@ -3803,7 +3803,7 @@ Errors not included in spec:
 
 version 1.35.0, 2014-01-31
 
-* [get_contacts_amount_per_account](#get_contacts_amount_per_account), [get_contacts_amount_per_campaign](#get_contacts_amount_per_campaign) and [get_newsletter_statuses](#get_newsletter_statuses) allow to narrow down result by "send_on" or "created_on" date
+* [get_messages_amount_per_account](#get_messages_amount_per_account), [get_messages_amount_per_campaign](#get_messages_amount_per_campaign) and [get_newsletter_statuses](#get_newsletter_statuses) allow to narrow down result by "send_on" or "created_on" date
 * [get_newsletter_statuses](#get_newsletter_statuses) allows to display results only from specific campaigns
 
 version 1.34.0, 2013-09-30
