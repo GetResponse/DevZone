@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.34.0, 2013-09-30 [changelog](#changelog)
+version 1.35.0, 2014-01-31 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -1450,7 +1450,9 @@ _JSON request:_
     [
         "API_KEY",
         {
-            "type"  : "value"
+            "type"          : "value",
+            "send_on"       : { "OPERATOR" : "value" },
+            "created_on"    : { "OPERATOR" : "value" }
         }
     ]
 ```
@@ -1458,6 +1460,8 @@ _JSON request:_
 Conditions:
 
 * `type` (optional) – Use newsletter, autoresponder or draft to narrow down count results to specific message types.
+* `send_on` (optional) – Use [time operators](#operators) to narrow down count results to specific sending date. Multiple operators are allowed and logic AND is used so date range can also be expressed. Works only for newsletters because other message types do not have fixed sending point in time. If message was sent with Time Travel then it may appear in search results for two different days as sending period equals 24 hours.
+* `created_on` (optional) – Use [time operators](#operators) to narrow down count results to specific message creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
 
 _JSON response:_
 
@@ -1479,7 +1483,9 @@ _JSON request:_
     [
         "API_KEY",
         {
-            "type"  : "value"
+            "type"          : "value",
+            "send_on"       : { "OPERATOR" : "value" },
+            "created_on"    : { "OPERATOR" : "value" }
         }
     ]
 ```
@@ -1487,6 +1493,8 @@ _JSON request:_
 Conditions:
 
 * `type` (optional) – Use newsletter, autoresponder or draft to narrow down count results to specific message types.
+* `send_on` (optional) – Use [time operators](#operators) to narrow down count results to specific sending date. Multiple operators are allowed and logic AND is used so date range can also be expressed. Works only for newsletters because other message types do not have fixed sending point in time. If message was sent with Time Travel then it may appear in search results for two different days as sending period equals 24 hours.
+* `created_on` (optional) – Use [time operators](#operators) to narrow down count results to specific message creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
 
 _JSON response:_
 
@@ -1511,9 +1519,22 @@ _JSON request:_
 
 ```json
     [
-        "API_KEY"
+        "API_KEY",
+        {
+            "campaigns"     : [ "CAMPAIGN_ID", "CAMPAIGN_ID" ],
+            "get_campaigns" : { get_campaigns conditions },
+            "send_on"       : { "OPERATOR" : "value" },
+            "created_on"    : { "OPERATOR" : "value" }
+        }
     ]
 ```
+
+Conditions:
+
+* `campaigns` / `get_campaigns` (optional) – Count only in given campaigns. Uses OR logic. If those params are not given count, is performed in all campaigns in the account. Check [IDs in conditions](#ids) for detailed explanation.
+* `send_on` (optional) – Use [time operators](#operators) to narrow down count results to specific sending date. Multiple operators are allowed and logic AND is used so date range can also be expressed. Works only for newsletters because other message types do not have fixed sending point in time. If message was sent with Time Travel then it may appear in search results for two different days as sending period equals 24 hours.
+* `created_on` (optional) – Use [time operators](#operators) to narrow down count results to specific message creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
+
 
 _JSON response:_
 
@@ -3779,6 +3800,11 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.35.0, 2014-01-31
+
+* [get_contacts_amount_per_account](#get_contacts_amount_per_account), [get_contacts_amount_per_campaign](#get_contacts_amount_per_campaign) and [get_newsletter_statuses](#get_newsletter_statuses) allow to narrow down result by "send_on" or "created_on" date
+* [get_newsletter_statuses](#get_newsletter_statuses) allows to display results only from specific campaigns
 
 version 1.34.0, 2013-09-30
 
