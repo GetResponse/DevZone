@@ -2836,15 +2836,15 @@ _JSON response:_
 
 ```json
     {
-        "WEBFORM_ID": {
+        "WEBFORM_ID"    : {
             "campaign"  : "CAMPAIGN_ID",
             "name"      : "My webform",
             "url"       : "http://app.getresponse.com/view_webform.js?wid=123&u=ABC"
         },
-        "WEBFORM_ID": {
-            "campaign": "CAMPAIGN_ID",
-            "name": "My other webform",
-            "url": "http://app.getresponse.com/view_webform.js?wid=456&u=ABC"
+        "WEBFORM_ID"    : {
+            "campaign"  : "CAMPAIGN_ID",
+            "name"      : "My other webform",
+            "url"       : "http://app.getresponse.com/view_webform.js?wid=456&u=ABC"
         }
     }
 ```
