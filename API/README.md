@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.35.0, 2014-01-31 [changelog](#changelog)
+version 1.36.0, 2014-02-18 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -142,6 +142,11 @@ If you run into an error or you have difficulties with using the API please cont
 * [get_surveys](#get_surveys)
 * [get_survey](#get_survey)
 * [get_survey_stats](#get_survey_stats)
+
+####WebForms
+
+* [get_webforms](#get_webforms)
+* [get_webform](#get_webform)
 
 ####Blacklists
 
@@ -1055,10 +1060,14 @@ _JSON response:_
 ```json
     {
         "2010-01-01" : {
-            "sent"      : 1024,
-            "opened"    : 512,
-            "clicked"   : 128,
-			"forwarded"	: 2,
+            "sent"              : 1024,
+            "opened"            : 512,
+            "unique_opened"     : 256,
+            "clicked"           : 128,
+            "unique_clicked"    : 64,
+            "goals"             : 8,
+            "unique_goals"      : 4,
+			"forwarded"	        : 2,
             "bounces_user_unknown"  : 8,
             "bounces_user_recycled" : 1,
             "bounces_mailbox_full"  : 2,
@@ -1071,10 +1080,14 @@ _JSON response:_
             "complaints_unhandled"  : 0
         },
         "2010-01-02" : {
-            "sent"      : 0,
-            "opened"    : 64,
-            "clicked"   : 16,
-			"forwarded"	: 0,
+            "sent"              : 0,
+            "opened"            : 64,
+            "unique_opened"     : 32,
+            "clicked"           : 16,
+            "unique_clicked"    : 8,
+            "goals"             : 2,
+            "unique_goals"      : 0,
+			"forwarded"	        : 0,
             "bounces_user_unknown"  : 0,
             "bounces_user_recycled" : 0,
             "bounces_mailbox_full"  : 1,
@@ -1094,6 +1107,8 @@ _JSON error messages (if any):_ `Missing message`.
 **Hint**: It is normal to have stats for given date with `sent` equals 0 and other values positive because opens, clicks, bounces and complaints take place also during a few days after message was sent.
 
 **Warning**: Graduation may not be continuous. Given time period is present in result only if it has at least one positive value in it.
+
+**Warning**: Unique action is always counted in period of time where action first occured. If contact opened message on day A and on day B then only day A will have positive `unique_opened`.
 
 ---
 
@@ -2797,6 +2812,75 @@ Meaning of every `QUESTION_ID` and `OPTION_ID` can be found by calling [get_surv
 
 ---
 
+####get_webforms<a name="get_webforms"/>
+
+Get webforms.
+
+_JSON request:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "campaigns"     : [ "CAMPAIGN_ID", "CAMPAIGN_ID" ],
+            "get_campaigns" : { get_campaigns conditions }
+        }
+    ]
+```
+
+Conditions:
+
+* `campaigns` / `get_campaigns` (optional) – Search only in given campaigns. Uses OR logic. If those params are not given search, is performed in all campaigns in the account. Check [IDs in conditions](#ids) for detailed explanation.
+
+_JSON response:_
+
+```json
+    {
+        "WEBFORM_ID": {
+            "campaign"  : "CAMPAIGN_ID",
+            "name"      : "My webform",
+            "url"       : "http://app.getresponse.com/view_webform.js?wid=123&u=ABC"
+        },
+        "WEBFORM_ID": {
+            "campaign": "CAMPAIGN_ID",
+            "name": "My other webform",
+            "url": "http://app.getresponse.com/view_webform.js?wid=456&u=ABC"
+        }
+    }
+```
+
+
+---
+
+####get_webform<a name="get_webform"/>
+
+Get single webform using WEBFORM_ID.
+
+_JSON request:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "webform"  : "WEBFORM_ID"
+        }
+    ]
+```
+
+_JSON response:_
+
+```json
+    {
+        "WEBFORM_ID": {
+            "campaign"  : "CAMPAIGN_ID",
+            "name"      : "My webform",
+            "url"       : "http://app.getresponse.com/view_webform.js?wid=123&u=ABC"
+        }
+    }
+```
+
+---
+
 ####get_account_blacklist<a name="get_account_blacklist"/>
 
 Get blacklist masks on account level.
@@ -3800,6 +3884,11 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.36.0, 2014-02-18
+
+* [get_message_stats](#get_message_stats) has unique "unique_opened", "unique_clicked", "goals" and "unique_goals" counters added
+* [get_webforms](#get_webforms), [get_webform](#get_webform) methods added
 
 version 1.35.0, 2014-01-31
 
