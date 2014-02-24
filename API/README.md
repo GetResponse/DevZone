@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.36.0, 2014-02-18 [changelog](#changelog)
+version 1.37.0, 2014-02-24 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -100,6 +100,7 @@ If you run into an error or you have difficulties with using the API please cont
 * [set_autoresponder_cycle](#set_autoresponder_cycle)
 * [delete_autoresponder](#delete_autoresponder)
 * [add_draft](#add_draft)
+* [delete_draft](#delete_draft)
 * [get_messages_amount_per_account](#get_messages_amount_per_account)
 * [get_messages_amount_per_campaign](#get_messages_amount_per_campaign)
 * [get_newsletter_statuses](#get_newsletter_statuses)
@@ -1419,6 +1420,37 @@ _JSON response:_
 ```
 
 _JSON error messages (if any):_ `Missing message`, `Message is not autoresponder`.
+
+---
+
+####delete_draft<a name="delete_draft"/>
+
+Delete draft from campaign.
+
+_JSON request:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "message"   : "MESSAGE_ID"
+        }
+    ]
+```
+
+Conditions:
+
+* `message` (mandatory) – `MESSAGE_ID` obtained from [get_messages](#get_messages) or [add_draft](#add_draft).
+
+_JSON response:_
+
+```json
+    {
+        "deleted" : 1
+    }
+```
+
+_JSON error messages (if any):_ `Missing message`, `Message is not draft`.
 
 ---
 
@@ -3884,6 +3916,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.37.0, 2014-02-24
+
+* [delete_draft](#delete_draft) method added
 
 version 1.36.0, 2014-02-18
 
