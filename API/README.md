@@ -930,10 +930,13 @@ _JSON response:_
         "MESSAGE_ID" : {
             "campaign"      : "CAMPAIGN_ID",
             "type"          : "autoresponder",
+            "based_on"      : "time",
+            "status"        : "active",
             "subject"       : "My autoresponder",
             "name"          : "Second week start",
             "day_of_cycle"  : 8,
             "flags"         : ["clicktrack", "openrate"],
+            "content_types" : ["plain", "html"],
             "created_on"    : "2010-01-01 00:00:00"
         },
         "MESSAGE_ID" : {
@@ -941,7 +944,9 @@ _JSON response:_
             "type"          : "newsletter",
             "subject"       : "My newsletter",
             "name"          : null,
+            "flags"         : [],
             "send_on"       : "2010-01-01 00:00:00",
+            "content_types" : ["plain"],
             "created_on"    : "2010-01-01 00:00:00"
         }
     }
@@ -956,7 +961,7 @@ Array `flags` may be present with following items:<a name="message_flags"/>
 
 **Hint**: All merge-words in subject are returned as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
 
-**Hint**: If type is autoresponder then `day_of_cycle` is returned and if type is newsletter then `send_on` is returned. Those fields are not present in drafts.
+**Hint**: If type is autoresponder then `status` ("active"/"inactive") and `based_on` ("time"/"action") are also returned. If autoresponder is time based `day_of_cycle` is also returned. If type is newsletter then `send_on` is returned.
 
 **Hint**: If you need plain and HTML contents of your message use [get_message_contents](#get_message_contents) method.
 
@@ -988,10 +993,13 @@ _JSON response:_
         "MESSAGE_ID" : {
             "campaign"      : "CAMPAIGN_ID",
             "type"          : "autoresponder",
+            "based_on"      : "time",
+            "status"        : "active",
             "subject"       : "My autoresponder",
-            "name"          : null,
+            "name"          : "Second week start",
             "day_of_cycle"  : 8,
             "flags"         : ["clicktrack", "openrate"],
+            "content_types" : ["plain", "html"],
             "created_on"    : "2010-01-01 00:00:00"
         }
     }
@@ -3917,9 +3925,11 @@ Errors not included in spec:
 
 ##CHANGELOG<a name="changelog"/>
 
-version 1.37.0, 2014-02-24
+version 1.37.0, 2014-02-25
 
 * [delete_draft](#delete_draft) method added
+* [get_messages](#get_messages) and [get_message](#get_message) return every kind of autoresponder messages with their "status" and have "based_on" added to distinguish them
+* [get_messages](#get_messages) and [get_message](#get_message) allow to check "content_types" without fetching content
 
 version 1.36.0, 2014-02-18
 
