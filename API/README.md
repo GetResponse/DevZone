@@ -3015,7 +3015,7 @@ _JSON response:_
 
 ---
 
-####get_import_stats_<a name="get_import_stats_"/>
+####get_import_stats_<a name="get_import_stats"/>
 
 Get statistics of import using IMPORT_ID.
 
