@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.37.0, 2014-02-24 [changelog](#changelog)
+version 1.38.0, 2014-02-26 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -148,6 +148,12 @@ If you run into an error or you have difficulties with using the API please cont
 
 * [get_webforms](#get_webforms)
 * [get_webform](#get_webform)
+
+####Imports
+
+* [get_imports](#get_imports)
+* [get_import](#get_import)
+* [get_import_stats](#get_import_stats)
 
 ####Blacklists
 
@@ -2921,6 +2927,136 @@ _JSON response:_
 
 ---
 
+####get_imports<a name="get_imports"/>
+
+Get imports.
+
+_JSON request:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "campaigns"     : [ "CAMPAIGN_ID", "CAMPAIGN_ID" ],
+            "get_campaigns" : { get_campaigns conditions }
+        }
+    ]
+```
+
+Conditions:
+
+* `campaigns` / `get_campaigns` (optional) – Search only in given campaigns. Uses OR logic. If those params are not given search, is performed in all campaigns in the account. Check [IDs in conditions](#ids) for detailed explanation.
+
+_JSON response:_
+
+```json
+    {
+        "IMPORT_ID": {
+            "campaign"      : "CAMPAIGN_ID",
+            "action"        : "standard",
+            "name"          : "My import",
+            "optin"         : "single",
+            "status"        : "finished",
+            "created_on"    : "2014-01-01 00:00:00"
+        },
+        "IMPORT_ID": {
+            "campaign"      : "CAMPAIGN_ID",
+            "action"        : "insert",
+            "name"          : "My other import",
+            "optin"         : "double",
+            "status"        : "to_review",
+            "created_on"    : "2014-01-02 00:00:00"
+        }
+    }
+```
+
+Values of `status` can be:
+
+* uploaded - data was successfully transfered
+* to_review - awaits privacy and deliverability review
+* review - privacy and deliverability review is in progress
+* sample - only some contacts were imported, sample mailing to them is required to import remaining ones
+* rejected - failed privacy and deliverability review
+* approved - passed privacy and deliverability review
+* finished - whole import is complete
+* canceled - import was interrupted
+
+---
+
+####get_import<a name="get_import"/>
+
+Get single import using IMPORT_ID.
+
+_JSON request:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "import"  : "IMPORT_ID"
+        }
+    ]
+```
+
+_JSON response:_
+
+```json
+    {
+        "IMPORT_ID": {
+            "campaign"      : "CAMPAIGN_ID",
+            "action"        : "standard",
+            "name"          : "My import",
+            "optin"         : "single",
+            "status"        : "finished",
+            "created_on"    : "2014-01-01 00:00:00"
+        }
+    }
+```
+
+---
+
+####get_import_stats_<a name="get_import_stats_"/>
+
+Get statistics of import using IMPORT_ID.
+
+_JSON request:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "import"  : "IMPORT_ID"
+        }
+    ]
+```
+
+_JSON response:_
+
+```json
+    {
+        "uploaded"          : 32,
+        "already_in_queue"  : 8,
+        "blacklists"        : 2,
+        "invalid_domains"   : 1,
+        "policy_failures"   : 4,
+        "syntax_errors"     : 1,
+        "actions": {
+            "inserts"   : 32,
+            "replaces"  : 0,
+            "updates"   : 16
+        }
+    }
+```
+
+_JSON error messages (if any):_ `Missing import`.
+
+**Hint:** Finished import should match equation: `uploaded` - `already_in_queue` - `blacklists` - `invalid_domains` - `policy_failures` - `syntax_errors` = `inserts` + `replaces` + `updates`.
+
+**Hint:** Duplicated email address within single import will be counted as `already_in_queue`.
+
+
+---
+
 ####get_account_blacklist<a name="get_account_blacklist"/>
 
 Get blacklist masks on account level.
@@ -3924,6 +4060,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.38.0, 2014-02-26
+
+* [get_imports](#get_imports), [get_import](#get_import), [get_import_stats](#get_import_stats) methods added
 
 version 1.37.0, 2014-02-25
 
