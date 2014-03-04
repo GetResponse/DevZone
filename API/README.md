@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.38.1, 2014-03-04 [changelog](#changelog)
+version 1.38.2, 2014-03-04 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -1400,9 +1400,11 @@ _JSON response:_
     }
 ```
 
-_JSON error messages (if any):_ `Missing message`, `Message is not newsletter`, `Message send event already passed`.
+_JSON error messages (if any):_ `Missing message`, `Message is not newsletter`, `Message send event already passed`, `Message cannot be deleted`.
 
 **Warning**: You can delete only newsletters that have `send_on` date in future.
+
+**Warning**: Message must not be in use by another entity such as segment or action based autoresponder, otherwise `Message cannot be deleted` error will be thrown.
 
 ---
 
@@ -1433,9 +1435,11 @@ _JSON response:_
     }
 ```
 
-_JSON error messages (if any):_ `Missing message`, `Message is not time based autoresponder`.
+_JSON error messages (if any):_ `Missing message`, `Message is not time based autoresponder`, `Message cannot be deleted`.
 
 **Warning**: This method can be used on time based autoresponders only, [get_messages](#get_messages) provides `based_on` field to distinguish time and action based autoresponders.
+
+**Warning**: Message must not be in use by another entity such as segment or action based autoresponder, otherwise `Message cannot be deleted` error will be thrown.
 
 ---
 
@@ -1466,7 +1470,9 @@ _JSON response:_
     }
 ```
 
-_JSON error messages (if any):_ `Missing message`, `Message is not draft`.
+_JSON error messages (if any):_ `Missing message`, `Message is not draft`, `Message cannot be deleted`.
+
+**Warning**: Message must not be in use by another entity such as segment or action based autoresponder, otherwise `Message cannot be deleted` error will be thrown.
 
 ---
 
@@ -4065,6 +4071,9 @@ Errors not included in spec:
 
 ##CHANGELOG<a name="changelog"/>
 
+version 1.38.2, 2014-03-04
+
+* [delete_newsletter](#delete_newsletter), [delete_autoresponder](#delete_autoresponder), [delete_draft](#delete_draft) return `Message cannot be deleted` when message is in use (for exmple by segment or action based autoresponder)
 
 version 1.38.1, 2014-03-04
 
