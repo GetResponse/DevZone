@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.38.0, 2014-02-26 [changelog](#changelog)
+version 1.38.1, 2014-03-04 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -1264,7 +1264,7 @@ Correct way of sending personalized content is to use [GetResponse Dynamic Conte
 
 ####add_autoresponder<a name="add_autoresponder"/>
 
-Add a autoresponder to the campaign at the specific day of cycle.
+Add a time based autoresponder to the campaign at the specific day of cycle.
 
 _JSON request:_
 
@@ -1408,7 +1408,7 @@ _JSON error messages (if any):_ `Missing message`, `Message is not newsletter`, 
 
 ####delete_autoresponder<a name="delete_autoresponder"/>
 
-Delete autoresponder from campaign.
+Delete time based autoresponder from campaign.
 
 _JSON request:_
 
@@ -1433,7 +1433,9 @@ _JSON response:_
     }
 ```
 
-_JSON error messages (if any):_ `Missing message`, `Message is not autoresponder`.
+_JSON error messages (if any):_ `Missing message`, `Message is not time based autoresponder`.
+
+**Warning**: This method can be used on time based autoresponders only, [get_messages](#get_messages) provides `based_on` field to distinguish time and action based autoresponders.
 
 ---
 
@@ -1470,7 +1472,7 @@ _JSON error messages (if any):_ `Missing message`, `Message is not draft`.
 
 ####set_autoresponder_cycle<a name="set_autoresponder_cycle"/>
 
-Set day of cycle of existing autoresponder.
+Set day of cycle of existing time based autoresponder.
 
 _JSON request:_
 
@@ -1486,7 +1488,7 @@ _JSON request:_
 
 Conditions:
 
-* `message` (mandatory) – `MESSAGE_ID` obtained [get_messages](#get_messages) or [add_autoresponder](#add_autoresponder).
+* `message` (mandatory) – `MESSAGE_ID` obtained from [get_messages](#get_messages) or [add_autoresponder](#add_autoresponder).
 * `day_of_cycle` – Number of days between the day when a contact subscribed to a campaign and the day when the autoresponder is sent. Must be in the range of 0..10000.
 
 _JSON response:_
@@ -1497,7 +1499,9 @@ _JSON response:_
     }
 ```
 
-_JSON error messages (if any):_ `Missing message`, `Message is not autoresponder`.
+_JSON error messages (if any):_ `Missing message`, `Message is not time based autoresponder`.
+
+**Warning**: This method can be used on time based autoresponders only, [get_messages](#get_messages) provides `based_on` field to distinguish time and action based autoresponders.
 
 ---
 
@@ -4060,6 +4064,11 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+
+version 1.38.1, 2014-03-04
+
+* [set_autoresponder_cycle](#set_autoresponder_cycle) and [delete_autoresponder](#delete_autoresponder) give more detailed error when used on not time based autoresponder
 
 version 1.38.0, 2014-02-26
 
