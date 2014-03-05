@@ -101,7 +101,6 @@ http://dev.getresponse.com
 						API_KEY,
 						{
 							"campaign"  : CAMPAIGN_ID,
-							"action"    : "standard",
 							"name"      : "Sample Name",
 							"email"     : "sample@email.com",
 							"cycle_day" : "0",
