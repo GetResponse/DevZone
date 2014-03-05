@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.38.2, 2014-03-04 [changelog](#changelog)
+version 1.39.0, 2014-03-05 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -2148,7 +2148,6 @@ _JSON request:_
         "API_KEY",
         {
             "campaign"  : "CAMPAIGN_ID",
-            "action"    : "action_value",
             "name"      : "name_value",
             "email"     : "email_value",
             "cycle_day" : cycle_day_value,
@@ -2170,7 +2169,6 @@ _JSON request:_
 Conditions:
 
 * `campaign` (mandatory) – `CAMPAIGN_ID` obtained from [get_campaigns](#get_campaigns).
-* `action` (optional) – Allowed modes are `standard`, `insert`, `update`. If standard mode is chosen then a new contact will be added if not already present in a given campaign otherwise existing contact will be updated including name change and customs list merge. If insert mode is chosen then a contact will be added if it doesn’t exist in a given campaign but no updates will be performed otherwise. If update is chosen then a contact will be updated if it exists in a given campaign but no inserts will be performed otherwise. Default is standard.
 * `name` (optional) – Name value.
 * `email` (mandatory) – Email value.
 * `cycle_day` (optional) – Insert contact on a given day at the autoresponder cycle. Value of 0 means the beginning of the cycle. Lack of this param means that a contact will not be inserted into cycle.
@@ -2185,11 +2183,11 @@ _JSON response:_
     }
 ```
 
-_JSON error messages (if any):_ `Invalid email syntax`, `Missing campaign`, `Contact already queued for target campaign`.
+_JSON error messages (if any):_ `Invalid email syntax`, `Missing campaign`, `Contact already queued for target campaign`, `Contact already added to target campaign`.
 
 **Warning**: Adding contact is not an instant action. It will appear on your list after validation or after validation and confirmation (in case of double-optin procedure). You can set subscribe [callback](https://github.com/GetResponse/DevZone/tree/master/Callback/README.md) to be notified about successful adding.
 
-**Hint**: It is legal to add a contact already existing in the campaign (check action param for more details) but it is illegal to have the same email added to queue twice.
+**Warning**: To update existing contact use methods such as [set_contact_name](#set_contact_name), [set_contact_customs](#set_contact_customs) or [set_contact_cycle](#set_contact_cycle). Old param `action` is deprecated and ignored. 
 
 **Warning**: Optin setting is locked to double optin by default - confirmation email will be sent to newly added contacts. If you want to add contacts already confirmed on your side please contact us using [this form](http://www.getresponse.com/feedback.html?devzone=yes) and provide us with your campaign name and the description of your business model. We will set single optin for this campaign after short verification.
 
@@ -4070,6 +4068,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.39.0, 2014-03-05
+
+* [add_contact](#add_contact) can no longer update contact and throws `Contact already added to target campaign` on such attempt. Param `action` is ignored and will be removed soon.
 
 version 1.38.2, 2014-03-04
 
