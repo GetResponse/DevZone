@@ -1083,6 +1083,7 @@ _JSON response:_
             "goals"             : 8,
             "unique_goals"      : 4,
 			"forwarded"	        : 2,
+            "unsubscribes"	    : 1,
             "bounces_user_unknown"  : 8,
             "bounces_user_recycled" : 1,
             "bounces_mailbox_full"  : 2,
@@ -1103,6 +1104,7 @@ _JSON response:_
             "goals"             : 2,
             "unique_goals"      : 0,
 			"forwarded"	        : 0,
+            "unsubscribes"	    : 0,
             "bounces_user_unknown"  : 0,
             "bounces_user_recycled" : 0,
             "bounces_mailbox_full"  : 1,
@@ -4068,6 +4070,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.39.0, 2014-03-05
+
+* [get_message_stats](#get_message_stats) has "unsubscribes" counter added
 
 version 1.39.0, 2014-03-05
 
