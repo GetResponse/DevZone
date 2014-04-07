@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.39.0, 2014-03-05 [changelog](#changelog)
+version 1.40.0, 2014-04-07 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -936,13 +936,36 @@ _JSON response:_
         "MESSAGE_ID" : {
             "campaign"      : "CAMPAIGN_ID",
             "type"          : "autoresponder",
-            "based_on"      : "time",
             "status"        : "active",
             "subject"       : "My autoresponder",
-            "name"          : "Second week start",
-            "day_of_cycle"  : 8,
-            "flags"         : ["clicktrack", "openrate"],
             "content_types" : ["plain", "html"],
+            "name"          : "Second week start",
+            "based_on"      : "time",
+            "day_of_cycle"  : 8,
+            "days_of_week"  : ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "delay_hours"   : 4,
+            "time_travel"   : "yes",
+            "flags"         : ["clicktrack", "openrate"],
+            "created_on"    : "2010-01-01 00:00:00"
+        },
+        "MESSAGE_ID" : {
+            "campaign"      : "CAMPAIGN_ID",
+            "type"          : "autoresponder",
+            "status"        : "active",
+            "subject"       : "My autoresponder",
+            "content_types" : ["plain", "html"],
+            "name"          : "Second week start",
+            "based_on"      : "action",
+            "action"        : {
+                "event"     : "custom_changed",
+                "custom"    : "CUSTOM_ID",
+                "value"     : "New value",
+                "recurrent" : "no"
+            },
+            "days_of_week"  : ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+            "at_hour"       : 16,
+            "time_travel"   : "no",
+            "flags"         : ["clicktrack", "openrate"],
             "created_on"    : "2010-01-01 00:00:00"
         },
         "MESSAGE_ID" : {
@@ -967,7 +990,12 @@ Array `flags` may be present with following items:<a name="message_flags"/>
 
 **Hint**: All merge-words in subject are returned as [GetResponse Dynamic Content](https://github.com/GetResponse/DevZone/tree/master/DC) syntax.
 
-**Hint**: If type is autoresponder then `status` ("active"/"inactive") and `based_on` ("time"/"action") are also returned. If autoresponder is time based `day_of_cycle` is also returned. If type is newsletter then `send_on` is returned.
+***Hint***: Additional fields:
+
+* When `type` is "newsletter" then `send_on` is also returned.
+* When `type` is "autoresponder" then `status` ("active"/"inactive"), `based_on` ("time"/"action"), `time_travel` ("yes"/"no") and `days_of_week` are also returned. Optional `at_hour` and `delay_hours` may also be returned and they are mutually exclusive.
+* When `type` is "autoresponder" and `based_on` is "time" then `day_of_cycle` is also returned.
+* When `type` is "autoresponder" and `based_on` is "action" then `action` object is also returned. It always contains `event` and more fields that depends on its value: "contact_subscribed" = `day_of_cycle`, "mail_opened" = `message` + `recurrent`, "link_clicked" = `link` + `recurrent`, "goal_reached" = `goal` + `recurrent`, "custom_changed" = `custom` + `value` (optional) + `recurrent`, "autoresponder_action_happened" = `recurrent`, "birthday" = `custom`.
 
 **Hint**: If you need plain and HTML contents of your message use [get_message_contents](#get_message_contents) method.
 
@@ -999,13 +1027,16 @@ _JSON response:_
         "MESSAGE_ID" : {
             "campaign"      : "CAMPAIGN_ID",
             "type"          : "autoresponder",
-            "based_on"      : "time",
             "status"        : "active",
             "subject"       : "My autoresponder",
-            "name"          : "Second week start",
-            "day_of_cycle"  : 8,
-            "flags"         : ["clicktrack", "openrate"],
             "content_types" : ["plain", "html"],
+            "name"          : "Second week start",
+            "based_on"      : "time",
+            "day_of_cycle"  : 8,
+            "days_of_week"  : ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "delay_hours"   : 4,
+            "time_travel"   : "yes",
+            "flags"         : ["clicktrack", "openrate"],
             "created_on"    : "2010-01-01 00:00:00"
         }
     }
@@ -4071,9 +4102,10 @@ Errors not included in spec:
 
 ##CHANGELOG<a name="changelog"/>
 
-version 1.39.0, 2014-03-05
+version 1.40.0, 2014-04-07
 
 * [get_message_stats](#get_message_stats) has "unsubscribes" counter added
+* [get_messages](#get_messages) and [get_message](#get_message) have many additional time and action related informations about autoresponders
 
 version 1.39.0, 2014-03-05
 
