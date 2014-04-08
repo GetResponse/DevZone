@@ -1,0 +1,200 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: getresponse-integration\n"
+"POT-Creation-Date: 2014-04-07 08:38+0100\n"
+"PO-Revision-Date: 2014-04-07 08:39+0100\n"
+"Last-Translator: \n"
+"Language-Team: GetResponse\n"
+"Language: pl_PL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.4\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-SearchPath-0: ../.\n"
+
+#: .././getresponse-integration.php:89 .././getresponse-integration.php:90
+msgid "GetResponse"
+msgstr "GetResponse"
+
+#: .././getresponse-integration.php:109
+msgid "Settings"
+msgstr "Ustawienia"
+
+#: .././getresponse-integration.php:163
+msgid "Settings saved"
+msgstr "Ustawienia zapisane"
+
+#: .././getresponse-integration.php:188 .././getresponse-integration.php:200
+msgid "Settings error"
+msgstr "Błąd podczas zapisu"
+
+#: .././getresponse-integration.php:188
+msgid " - Invalid API Key"
+msgstr " - Niepoprawny klucz API"
+
+#: .././getresponse-integration.php:189
+msgid ", or crypto"
+msgstr ", lub krypto"
+
+#: .././getresponse-integration.php:200
+msgid " - API Key can't be empty."
+msgstr " - pole z Kluczem API nie może być puste"
+
+#: .././getresponse-integration.php:213
+msgid "GetResponse Plugin Settings"
+msgstr "Ustawienia GetResponse"
+
+#: .././getresponse-integration.php:223
+msgid "API Key:"
+msgstr "Klucz API:"
+
+#: .././getresponse-integration.php:229
+msgid ""
+"Enter your API key. You can find it on your GetResponse profile in Account "
+"Details -> GetResponse API"
+msgstr ""
+"Wprowadź klucz API. Możesz go znaleźć w Twoim koncie GetResponse: Ustawienia "
+"konta -> GetResponse API"
+
+#: .././getresponse-integration.php:237 .././getresponse-integration.php:425
+msgid "Save"
+msgstr "Zapisz"
+
+#: .././getresponse-integration.php:242
+msgid "Subscribe via Web Form"
+msgstr "Zapis przez Formularz Zapisu"
+
+#: .././getresponse-integration.php:247
+msgid ""
+"To activate a GetResponse Web Form widget drag it to a sidebar or click on "
+"it."
+msgstr ""
+"Aby aktywować Formularze Zapisu GetResponse, przeciąnij wtyczkę lub kliknij "
+"w nią."
+
+#: .././getresponse-integration.php:248
+msgid "Go to Widgets site"
+msgstr "Przejdź do Wtyczek"
+
+#: .././getresponse-integration.php:253
+msgid "Subscribe via Comment"
+msgstr "Zapis przez komentarz"
+
+#: .././getresponse-integration.php:261
+msgid "Comment integration:"
+msgstr "Integracja z komentarzami"
+
+#: .././getresponse-integration.php:263 .././getresponse-integration.php:331
+msgid "Off"
+msgstr "Wyłączona"
+
+#: .././getresponse-integration.php:264 .././getresponse-integration.php:332
+msgid "On"
+msgstr "Włączona"
+
+#: .././getresponse-integration.php:265
+msgid "(allow subscriptions when visitors comment)"
+msgstr "(pozwala na zapis, gdy goście komentują)"
+
+#: .././getresponse-integration.php:279
+msgid "Target Campaign:"
+msgstr "Kampania:"
+
+#: .././getresponse-integration.php:291 .././getresponse-integration.php:352
+msgid "No Campaigns."
+msgstr "Brak kampanii"
+
+#: .././getresponse-integration.php:298 .././getresponse-integration.php:359
+msgid "Additional text:"
+msgstr "Dodatkowy tekst:"
+
+#: .././getresponse-integration.php:299 .././getresponse-integration.php:360
+msgid "Sign up to our newsletter!"
+msgstr "Zapisz się do naszego newslettera!"
+
+#: .././getresponse-integration.php:304
+msgid "Subscribe checkbox checked by default"
+msgstr "Zapisanie do kampanii zaznaczone domyślnie"
+
+#: .././getresponse-integration.php:325
+msgid "Subscribe via Checkout Page"
+msgstr "Zapis na stronie z płatnościami"
+
+#: .././getresponse-integration.php:329
+msgid "Checkout integration:"
+msgstr "Integracja ze stroną płatności"
+
+#: .././getresponse-integration.php:333
+msgid "(allow subscriptions at the checkout stage)"
+msgstr "(pozwala na zapis na stronie płatności)"
+
+#: .././getresponse-integration.php:339
+msgid "Target campaign:"
+msgstr "Kampania:"
+
+#: .././getresponse-integration.php:365
+msgid "Sign up box checked by default"
+msgstr "Formularz zapisu zaznaczony domyślnie"
+
+#: .././getresponse-integration.php:371
+msgid "Map custom fields:"
+msgstr "Zmapuj pola:"
+
+#: .././getresponse-integration.php:377
+msgid ""
+"Check to update customer details. Each input can be max. 32 characters and "
+"include lowercase, a-z letters, digits or underscores. Incorrect or empty "
+"entries won’t be added."
+msgstr ""
+"Sprawdź zaktualizowane dane klientów. Każdy element może zawierać do 32 "
+"znaków i składać się z małych liter a-z, liczb lub podkreśleń. Niepoprawne "
+"lub puste wpisy nie będą dodane."
+
+#: .././getresponse-integration.php:428
+msgid "Web Form Shortcode"
+msgstr "Kod Formularza Zapisu"
+
+#: .././getresponse-integration.php:429
+msgid ""
+"With the GetResponse Wordpress plugin, you can use shortcodes to place web "
+"forms in blog posts. Simply place the following tag in your post wherever "
+"you want the web form to appear:"
+msgstr ""
+"Dzięki wtyczce GetResponse WordPress możesz użyć krótkiej wersji kodu, aby "
+"umieścić formularz zapisu na blogu. Wystarczy umieścić następujący tag w "
+"poście, w którym ma pojawić się formularz zapisu:"
+
+#: .././getresponse-integration.php:433
+msgid ""
+"Set the CSS parameter to ON, and the web form will be displayed in "
+"GetResponse format; set it to OFF, and the web form will be displayed in the "
+"standard Wordpress format."
+msgstr ""
+"Ustaw parametr CSS w pozycji ON żeby formularz zapisu wyświetlał się w "
+"formacie GetResponse; przestaw go na pozycję OFF, a formularz zapisu będzie "
+"wyświetlać się w standardowym formacie Wordpress."
+
+#: .././lib/class-gr-widget-webform.php:18
+msgid "GetResponse Web Form"
+msgstr "Formularz Zapisu GetResponse"
+
+#: .././lib/class-gr-widget-webform.php:19
+msgid "Dispaly a GetResponse Web Form on your site."
+msgstr "Wyświetl Formularz Zapisu GetResponse na Twojej stronie"
+
+#: .././lib/class-gr-widget-webform.php:91
+msgid "Web Form:"
+msgstr "Formularz Zapisu:"
+
+#: .././lib/class-gr-widget-webform.php:107
+msgid "Use Wordpress CSS styles"
+msgstr "Użyj stylów CSS z Wordpressa"
+
+#: .././lib/class-gr-widget-webform.php:113
+msgid "API key is not set."
+msgstr "Klucz API nie jest ustawiony."
