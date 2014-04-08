@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.40.0, 2014-04-07 [changelog](#changelog)
+version 1.41.0, 2014-04-08 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -123,6 +123,7 @@ If you run into an error or you have difficulties with using the API please cont
 * [delete_contact](#delete_contact)
 * [get_contacts_deleted](#get_contacts_deleted)
 * [get_contacts_subscription_stats](#get_contacts_subscription_stats)
+* [get_contacts_unsubscription_stats](#get_contacts_unsubscription_stats)
 * [get_contacts_amount_per_account](#get_contacts_amount_per_account)
 * [get_contacts_amount_per_campaign](#get_contacts_amount_per_campaign)
 * [get_contacts_distinct_amount](#get_contacts_distinct_amount)
@@ -2463,6 +2464,61 @@ _JSON response:_
 
 ---
 
+####get_contacts_ununsubscription_stats<a name="get_contacts_unsubscription_stats"/>
+
+Get contacts unsubscription stats aggregated by time period, campaign and reason.
+
+_JSON request:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "campaigns"     : [ "CAMPAIGN_ID", "CAMPAIGN_ID" ],
+            "get_campaigns" : { get_campaigns conditions },
+            "created_on"    : {
+                "OPERATOR" : "value",
+                "OPERATOR" : "value"
+            },
+            "grouping"      : "monthly"
+        }
+    ]
+```
+
+Conditions:
+
+* `campaigns` / `get_campaigns` (optional) – Get statistics only for given campaigns. Uses OR logic. If those params are not given statistics are returned from all campaigns on the account. Check [IDs in conditions](#ids) for detailed explanation.
+* `created_on` (optional) – Use [time operators](#operators) to narrow down search results to specific contact creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
+* `grouping` (optional) – Determines period of time by which stats are aggregated. Allowed values are: `hourly` (result keys in "YYYY-MM-DD HH" format), `daily` (result keys in "YYYY-MM-DD" format), `monthly` (result keys in "YYYY-MM" format) and `yearly` (result keys in "YYYY" format). Default is `daily`.
+
+_JSON response:_
+
+```json
+    {
+        "2010-01-01" : {
+            "CAMPAIGN_ID"   : {
+                "unsubscribe"   : 16,
+                "api"           : 8
+            },
+            "CAMPAIGN_ID"   : {
+                "user"          : 128
+            }
+        },
+        "2010-01-02"    : {
+            "CAMPAIGN_ID"   : {
+                "automation"    : 4,
+                "unsubscribe"   : 2
+            }
+        }
+    }
+```
+
+**Warning**: Graduation may not be continuous. Given time period is present in result only if it has at least one positive value in it.
+
+**Hint**: Possible reasons are: `unsubscribe`, `user`, `support`, `automation`, `complaint`, `blacklisted`, `api`, `bounce`, `other`.
+
+---
+
 ####get_contacts_amount_per_account<a name="get_contacts_amount_per_account"/>
 
 Get total contacts amount on your account.
@@ -4101,6 +4157,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.41.0, 2014-04-08
+
+* [get_contacts_unsubscription_stats](#get_contacts_unsubscription_stats) method added
 
 version 1.40.0, 2014-04-07
 
