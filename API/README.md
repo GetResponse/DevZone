@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.41.0, 2014-04-08 [changelog](#changelog)
+version 1.42.0, 2014-04-09 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -97,6 +97,7 @@ If you run into an error or you have difficulties with using the API please cont
 * [send_newsletter](#send_newsletter)
 * [delete_newsletter](#delete_newsletter)
 * [add_autoresponder](#add_autoresponder)
+* [get_autoresponder_contacts_amount](#get_autoresponder_contacts_amount)
 * [set_autoresponder_cycle](#set_autoresponder_cycle)
 * [delete_autoresponder](#delete_autoresponder)
 * [add_draft](#add_draft)
@@ -1508,6 +1509,41 @@ _JSON error messages (if any):_ `Missing message`, `Message is not draft`, `Mess
 
 **Warning**: Message must not be in use by another entity such as segment or action based autoresponder, otherwise `Message cannot be deleted` error will be thrown.
 
+
+---
+
+####get_autoresponder_contacts_amount<a name="get_autoresponder_contacts_amount"/>
+
+Get amount of contacts for time based autoresponer with matching day of cycle.
+
+_JSON request:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "message"       : "MESSAGE_ID"
+        }
+    ]
+```
+
+Conditions:
+
+* `message` (mandatory) – `MESSAGE_ID` obtained from [get_messages](#get_messages) or [add_autoresponder](#add_autoresponder).
+
+_JSON response:_
+
+```json
+    42
+```
+
+_JSON error messages (if any):_ `Missing message`, `Message is not time based autoresponder`.
+
+**Warning**: This method can be used on time based autoresponders only, [get_messages](#get_messages) provides `based_on` field to distinguish time and action based autoresponders.
+
+**Hint**: Result may be slightly different than amount of contacts with specific `cycle_day` obtained from [get_contacts](#get_contacts) because this method works in specific message context - for example it takes under consideration time travel usage. It is more precise.
+
+
 ---
 
 ####set_autoresponder_cycle<a name="set_autoresponder_cycle"/>
@@ -1756,6 +1792,8 @@ _JSON response:_
 
 * Contacts stay in their packs forever. Contact once found in the pack 23/100 will always be located in it no matter if the list was altered. This property can be used for shard-oriented synchronization.
 * Packs don’t overlap. The sum of contacts in packs 1/3, 2/3 and 3/3 is the same as in search without segmentation. This property is important if you want to parallelize operation on contacts.
+
+**Hint**: Value of `cycle_day` is approximate. To count contacts for specific time-based autoresponder message use [get_autoresponder_contacts_amount](#get_autoresponder_contacts_amount).
 
 ---
 
@@ -4157,6 +4195,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.42.0, 2014-04-09
+
+* [get_autoresponder_contacts_amount](#get_autoresponder_contacts_amount) method added
 
 version 1.41.0, 2014-04-08
 
