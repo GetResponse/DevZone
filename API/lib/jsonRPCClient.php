@@ -221,9 +221,9 @@ class jsonRPCClient
 
         // check http status code
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        if (isset($this->http_errors[$httpCode]))
+        if (isset($this->httpErrors[$httpCode]))
         {
-            throw new RuntimeException('Response Http Error - ' . $this->http_errors[$httpCode]);
+            throw new RuntimeException('Response Http Error - ' . $this->httpErrors[$httpCode]);
         }
         // check for curl error
         if (0 < curl_errno($ch))
