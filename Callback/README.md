@@ -1,6 +1,6 @@
 #GetResponse Callback
 
-version 1.2.1, 2012-11-30 [changelog](#changelog)
+version 1.2.2, 2014-04-30 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -64,7 +64,7 @@ _Params:_
 * `contact_name` (optional)
 * `contact_email`
 * `contact_ip` (optional) - In case of double-optin this is the IP than confirmation link was clicked from.
-* `contact_origin` - One of `import`, `email`, `www`, `panel`, `leads`, `sale`, `api`, `forward`, `survey`, `iphone`.
+* `contact_origin` - One of `import`, `email`, `www`, `panel`, `leads`, `sale`, `api`, `forward`, `survey`, `iphone`, `copy`, `landing_page`.
 
 ---
 
@@ -176,6 +176,10 @@ _Params:_
 **Warning**: This callback is generated only when contact use unsubscribe link. Other removal reasons such as bounces of complaints are not reported through this callback.
 
 ##CHANGELOG<a name="changelog">
+
+version 1.2.2, 2014-04-30
+
+* [subscribe](#subscribe) has updated origins
 
 version 1.2.1, 2012-11-30
 

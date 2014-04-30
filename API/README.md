@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.42.0, 2014-04-09 [changelog](#changelog)
+version 1.43.0, 2014-04-30 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -1751,7 +1751,7 @@ Conditions:
 * `email` (optional) – Use [text operators](#operators) to narrow down search results to specific contact emails.
 * `created_on` (optional) – Use [time operators](#operators) to narrow down search results to specific contact creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
 * `changed_on` (optional) – Use [time operators](#operators) to narrow down search results to specific contact modification date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
-* `origin` (optional) – Narrow down search results by contacts’ origin (subscription method). Allowed values are `import`, `email`, `www`, `panel`, `leads`, `sale`, `api`, `forward`, `survey`, `iphone`, `copy`.
+* `origin` (optional) – Narrow down search results by contacts’ origin (subscription method). Allowed values are `import`, `email`, `www`, `panel`, `leads`, `sale`, `api`, `forward`, `survey`, `iphone`, `copy`, `landing_page`.
 * `cycle_day` (optional) – Use [numeric operators](#operators) to narrow down search results to specific  days of the autoresponder cycles assigned to the contacts. To find contacts that are on day 2 you have to use `{ "EQUALS" : 2 }`. To find inactive contacts pass `{ "EQUALS" : null }` condition. Note that the fact that contact is on day 2 does not mean he received all autoresponder messages for day 2, there are factors such as excluded of days of week that may cause message to be delayed beyond its `cycle_day`.
 * `customs` (optional) – Use [text operators](#operators) to narrow down search results to contacts having specific customs. Uses AND logic. Note that if you need OR logic you can use MATCHES operator and use alternative in regular expression. Contacts that don’t have a custom of given name are not returned in results. If custom is multi-value then “any” junction is used: condition is true if any custom value tests true according to the operator used.
 * `geo` (optional) – Use operators to narrow down search results to specific contact geo location. Precisely [text operators](#operators) are allowed for country, country_code, city, [numeric operators](#operators) are allowed for latitude and longitude (values are decimal numbers, like -54.5). Uses AND logic. Contacts that don’t have a geo location data are not returned in results.
@@ -2441,58 +2441,62 @@ _JSON response:_
     {
         "2010-01-01" : {
             "CAMPAIGN_ID"   : {
-                "iphone"    : 0,
-                "www"       : 32,
-                "sale"      : 64,
-                "leads"     : 2,
-                "forward"   : 0,
-                "panel"     : 4,
-                "api"       : 128,
-                "import"    : 0,
-                "email"     : 16,
-                "survey"    : 1,
-                "copy"      : 0
+                "iphone"        : 0,
+                "www"           : 32,
+                "sale"          : 64,
+                "leads"         : 2,
+                "forward"       : 0,
+                "panel"         : 4,
+                "api"           : 128,
+                "import"        : 0,
+                "email"         : 16,
+                "survey"        : 1,
+                "copy"          : 0,
+                "landing_page"  : 0
             },
             "CAMPAIGN_ID"   : {
-                "iphone"    : 8,
-                "www"       : 0,
-                "sale"      : 0,
-                "leads"     : 64,
-                "forward"   : 0,
-                "panel"     : 0,
-                "api"       : 512,
-                "import"    : 16,
-                "email"     : 0,
-                "survey"    : 0,
-                "copy"      : 1
+                "iphone"        : 8,
+                "www"           : 0,
+                "sale"          : 0,
+                "leads"         : 64,
+                "forward"       : 0,
+                "panel"         : 0,
+                "api"           : 512,
+                "import"        : 16,
+                "email"         : 0,
+                "survey"        : 0,
+                "copy"          : 1,
+                "landing_page"  : 0
             }
         },
         "2010-01-02"    : {
             "CAMPAIGN_ID"   : {
-                "iphone"    : 0,
-                "www"       : 64,
-                "sale"      : 128,
-                "leads"     : 8,
-                "forward"   : 1,
-                "panel"     : 8,
-                "api"       : 1024,
-                "import"    : 0,
-                "email"     : 2,
-                "survey"    : 8,
-                "copy"      : 0
+                "iphone"        : 0,
+                "www"           : 64,
+                "sale"          : 128,
+                "leads"         : 8,
+                "forward"       : 1,
+                "panel"         : 8,
+                "api"           : 1024,
+                "import"        : 0,
+                "email"         : 2,
+                "survey"        : 8,
+                "copy"          : 0,
+                "landing_page"  : 0
             },
             "CAMPAIGN_ID"   : {
-                "iphone"    : 0,
-                "www"       : 0,
-                "sale"      : 0,
-                "leads"     : 128,
-                "forward"   : 0,
-                "panel"     : 0,
-                "api"       : 2048,
-                "import"    : 0,
-                "email"     : 0,
-                "survey"    : 0,
-                "copy"      : 0
+                "iphone"        : 0,
+                "www"           : 0,
+                "sale"          : 0,
+                "leads"         : 128,
+                "forward"       : 0,
+                "panel"         : 0,
+                "api"           : 2048,
+                "import"        : 0,
+                "email"         : 0,
+                "survey"        : 0,
+                "copy"          : 0,
+                "landing_page"  : 0
             }
         }
     }
@@ -4195,6 +4199,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.43.0, 2014-04-30
+
+* [get_contacts](#get_contacts) and [get_contacts_subscription_stats](#get_contacts_subscription_stats) support "landing_page" `origin`
 
 version 1.42.0, 2014-04-09
 
