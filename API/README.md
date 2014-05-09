@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.43.0, 2014-04-30 [changelog](#changelog)
+version 1.44.0, 2014-05-09 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -591,6 +591,7 @@ _JSON response:_
         "CAMPAIGN_ID" : {
             "name"              : "my_campaign_1",
             "description"       : "My campaign",
+            "is_default"        : "yes",
             "optin"             : "single",
             "from_name"         : "My From Name",
             "from_email"        : "me@emailaddress.com",
@@ -600,6 +601,7 @@ _JSON response:_
         "CAMPAIGN_ID" : {
             "name"              : "my_campaign_2",
             "description"       : null,
+            "is_default"        : "no",
             "optin"             : "double",
             "from_name"         : "My From Name",
             "from_email"        : "me@emailaddress.com",
@@ -651,6 +653,7 @@ _JSON response:_
         "CAMPAIGN_ID" : {
             "name"              : "my_campaign_1",
             "description"       : "My campaign",
+            "is_default"        : "yes",
             "optin"             : "single",
             "from_name"         : "My From Name",
             "from_email"        : "me@emailaddress.com",
@@ -4199,6 +4202,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.44.0, 2014-05-09
+
+* [get_campaigns](#get_campaigns) returns `is_default` attribute
 
 version 1.43.0, 2014-04-30
 
