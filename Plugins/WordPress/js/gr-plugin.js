@@ -1,34 +1,39 @@
 (function() {
-	tinymce.create('tinymce.plugins.GrShortcodes', {
+	tinymce.PluginManager.add('GrShortcodes', function(editor, url) {
 
-		init : function(ed, url) {
-		},
-		createControl : function(n, cm) {
+		function getValues() {
+			var wf = [];
 
-			if (n=='webform'){
-				var mlb = cm.createListBox('GR Web Form Shortcode', {
-					title : 'GR Web Form Shortcode',
-					onselect : function(v) {
-						if (tinyMCE.activeEditor.selection.getContent() == '' && v != null){
-							var shortcode = '[grwebform url="' + v + '" css="on"/]';
-							tinyMCE.activeEditor.selection.setContent( shortcode )
-						}
-					}
-				});
+			if (my_webforms != null) {
+				for (var i in my_webforms) {
 
-				if (my_webforms != null && my_campaigns != null) {
-					for (var i in my_webforms) {
-						mlb.add(my_webforms[i].name + ' (' + my_campaigns[my_webforms[i].campaign].name + ')', my_webforms[i].url);
-					}
+					var webforms = {};
+					var webform_name = (my_campaigns != null) ? my_webforms[i].name + ' (' + my_campaigns[my_webforms[i].campaign].name + ')' : my_webforms[i].name;
+
+					webforms.text = webform_name;
+					webforms.url = my_webforms[i].url;
+
+					wf.push(webforms);
 				}
-				else {
-					mlb.add('No webforms', null);
-				}
-
-				return mlb;
 			}
-			return null;
+			else {
+				return [{text:"No web forms", url:null}];
+			}
+			return wf;
 		}
+
+		editor.addButton('GrShortcodes', {
+			type: 'listbox',
+			title: 'GetResponse Web form integration',
+			text: 'GR Web form',
+			values: getValues(),
+			onselect: function(v) {
+				if (v.control.settings.url != null && v.control.settings.text != 'No web forms') {
+					var shortcode = '[grwebform url="' + v.control.settings.url + '" css="on"/]';
+					editor.insertContent(shortcode);
+				}
+			}
+		});
 	});
-	tinymce.PluginManager.add('gr', tinymce.plugins.GrShortcodes);
+
 })();

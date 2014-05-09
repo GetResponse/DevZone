@@ -2,8 +2,8 @@
 Contributors: GetResponse
 Tags: getresponse, email, newsletter, signup, marketing, plugin, widget, mailing list, subscriber, contacts, subscribe form, woocommerce
 Requires at least: 3.3.0
-Tested up to: 3.8.1
-Stable tag: 2.0
+Tested up to: 3.9.1
+Stable tag: 2.1
 
 The GetResponse Integration plugin allows you to quickly and easily add a sign-up form to your site.
 
@@ -46,15 +46,60 @@ You can find it on your GetResponse profile in Account Details -> GetResponse AP
 
 == Screenshots ==
 
-1. Widgets view
-2. Plugin settings view
-3. WYSIWYG editor view
+1. Widgets
+2. Plugin settings
+3. WYSIWYG editor
 4. Webform view
 5. Site view
-6. Leave a comment view
+6. Leave a comment
 
 
 == Changelog ==
+
+= v2.1 =
+
+* Added subscribe via the registration page
+* Campaign names and Web Forms are now sorted by name
+* Added checking if curl extension is set and curl_init method is callable
+* Removed typo and deprecated unused params
+* Tested up to: 3.9.1
+
+= v2.0.7 =
+
+* Fixed Class name changed in class-gr-widget-webform
+
+= v2.0.6 =
+
+* Class name changed from GetResponse to GetResponseIntegration, in some cases caused error: Cannot redeclare class GetResponse
+
+= v2.0.5 =
+
+* Tested up to: 3.9
+* Shortcode updated to TinyMCE 4
+
+= v2.0.4 =
+
+* Changelog updated
+* Screenshot updated
+* Default ref custom (ref => wordpress) added to API request
+
+= v2.0.3 =
+
+* Fixed typo, Thanks to @Reza
+* Tested up to: 3.8.3
+
+= v2.0.2 =
+
+* Fixed curl error notification
+* Trigger error deleted
+
+= v2.0.1 =
+
+* Fixed Strict standards: non-static method
+* Fixed empty variables
+* Fixed empty campaigns notice
+* Register actions moved to constructor
+* Tested up to: 3.8.2
 
 = v2.0 =
 

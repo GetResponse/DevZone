@@ -33,11 +33,8 @@ class GR_Widget extends WP_Widget {
 		$style_id = $instance['style'];
 
 		$api_key = get_option($this->GrOptionDbPrefix . 'api_key');
-		$account_type = get_option($this->GrOptionDbPrefix . 'account_type');
-		$api_crypto = get_option($this->GrOptionDbPrefix . 'api_crypto');
-
 		if ( !empty($api_key)) {
-			$api = new GetResponse($api_key, $account_type, $api_crypto);
+			$api = new GetResponseIntegration($api_key);
 			$webform = $api->getWebform($webform_id);
 		}
 
@@ -51,9 +48,12 @@ class GR_Widget extends WP_Widget {
 			$form .= '</p>';
 		}
 
-		echo $args['before_widget'];
-		echo __( $form, 'text_domain' );
-		echo $args['after_widget'];
+		if (!empty($form))
+		{
+			echo $args['before_widget'];
+			echo __( $form, 'text_domain' );
+			echo $args['after_widget'];
+		}
 	}
 
 	/**
@@ -69,11 +69,8 @@ class GR_Widget extends WP_Widget {
 		$select = ($instance) ? esc_attr($instance['select']) : '';
 		$style = ($instance) ? esc_attr($instance['style']) : '';
 		$api_key = get_option($this->GrOptionDbPrefix . 'api_key');
-		$account_type = get_option($this->GrOptionDbPrefix . 'account_type');
-		$api_crypto = get_option($this->GrOptionDbPrefix . 'api_crypto');
-
 		if ( !empty($api_key)) {
-			$api = new GetResponse($api_key, $account_type, $api_crypto);
+			$api = new GetResponseIntegration($api_key);
 			$campaigns = $api->getCampaigns();
 
 			if ( !empty($campaigns)) {
@@ -82,31 +79,33 @@ class GR_Widget extends WP_Widget {
 					$campaign_id[$cid] = $campaign->name;
 				}
 				$webforms = $api->getWebforms();
+				$webforms = Gr_Integration::SortByKeyValue($webforms, 'name');
 			}
 		}
 		?>
 
 		<?php if ($api_key) { ?>
 		<p>
+			<?php
+			if ( !empty($webforms) and false === (is_array($webforms) and isset($webforms['type']) and $webforms['type'] == 'error')) { ?>
 			<label for="<?php echo $this->get_field_id( 'select' ); ?>"><?php _e( 'Web Form:' ); ?></label>
 			<select name="<?php echo $this->get_field_name('select'); ?>" id="<?php echo $this->get_field_id( 'select' ); ?>" class="widefat">
 				<?php
-					if (!empty($webforms)) {
-						foreach ($webforms as $wid => $webform) {
-							echo '<option value="' . $wid . '" id="' . $wid . '"', $select == $wid ? ' selected="selected"' : '', '>', $webform->name . ' (' . $campaign_id[$webform->campaign] . ')', '</option>';
-						}
-					}
-					else {
-						?>No Webforms.<?php
+					foreach ($webforms as $webform) {
+						echo '<option value="' . $webform->id . '" id="' . $webform->id . '"', $select == $webform->id ? ' selected="selected"' : '', '>', $webform->name . ' (' . $campaign_id[$webform->campaign] . ')', '</option>';
 					}
 				?>
 			</select>
+			<?php }else {
+				_e('No Webforms', 'Gr_Integration');
+				}
+			?>
 		</p>
 		<p>
 			<input id="<?php echo $this->get_field_id('style'); ?>" name="<?php echo $this->get_field_name('style'); ?>" type="checkbox" value="1" <?php checked( '1', $style ); ?> />
 			<label for="<?php echo $this->get_field_id('style'); ?>"><?php _e('Use Wordpress CSS styles', 'Gr_Integration'); ?></label>
 		</p>
-	<?php
+		<?php
 		}
 		else {
 			?>

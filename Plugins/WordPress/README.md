@@ -1,6 +1,6 @@
 #Wordpress plugin
 
-version 2.0, 2014-04-07 [changelog](#changelog)
+version 2.1, 2014-05-09 [changelog](#changelog)
 
 ##INFO
 
@@ -9,7 +9,7 @@ This plug-in enables installation of a GetResponse fully customizable sign up fo
 
 ##AUTHORS
 
-GetResponse
+GetResponse, Grzegorz Struczynski
 
 [Implix](http://implix.com)
 [Dev Getresponse](http://dev.getresponse.com)
@@ -58,6 +58,14 @@ You can embed your web form in the sidebar or in a lightbox. In order to use a l
 6. Leave a comment view ![Leaving a comment view](https://github.com/GetResponse/DevZone/raw/master/Plugins/WordPress/screenshot-6.png)
 
 ##CHANGELOG<a name="changelog">
+
+version v2.1, 2014-05-09
+
+* Added subscribe via the registration page
+* Campaign names and Web Forms are now sorted by name
+* Added checking if curl extension is set and curl_init method is callable
+* Removed typo and deprecated unused params
+* Tested up to: 3.9.1
 
 version v2.0, 2014-04-07
 

@@ -3,7 +3,7 @@
 Plugin Name: GetResponse Integration Plugin
 Plugin URI: http://wordpress.org/extend/plugins/getresponse-integration/
 Description: This plug-in enables installation of a GetResponse fully customizable sign up form on your WordPress site or blog. Once a web form is created and added to the site the visitors are automatically added to your GetResponse contact list and sent a confirmation email. The plug-in additionally offers sign-up upon leaving a comment.
-Version: 2.0
+Version: 2.1
 Author: GetResponse
 Author: Grzegorz Struczynski
 Author URI: http://getresponse.com/
@@ -25,9 +25,9 @@ License: GPL2
 
 class Gr_Integration {
 	/**
-	 * URL
+	 * Db Prefix
 	 **/
-	var $GrOptionDbPrefix = 'GrIntegrationOptions_'; // plugin db prefix
+	var $GrOptionDbPrefix = 'GrIntegrationOptions_';
 
 	/**
 	 * Billing fields - custom fields map
@@ -55,7 +55,7 @@ class Gr_Integration {
 		add_action('admin_menu', array(&$this, 'Init'));
 		
 		// settings link in plugin page
-		if (is_admin())  {
+		if (is_admin()) {
 			add_filter( 'plugin_action_links', array(&$this, 'AddPluginActionLink'), 10, 2 );
 		}
 
@@ -64,6 +64,11 @@ class Gr_Integration {
 			if ( get_option($this->GrOptionDbPrefix . 'comment_on')) {
 				add_action('comment_form',array(&$this,'AddCheckboxToComment'));
 				add_action('comment_post',array(&$this,'GrabEmailFromComment'));
+			}
+			// on/off registration form
+			if ( get_option($this->GrOptionDbPrefix . 'registration_on')) {
+				add_action('register_form',array(&$this,'AddCheckboxToRegistrationForm'));
+				add_action('register_post',array(&$this,'GrabEmailFromRegistrationForm'));
 			}
 
 			// on/off checkout for WooCommerce
@@ -78,6 +83,12 @@ class Gr_Integration {
 		}
 		// register widget and css file
 		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
+		add_action( 'plugins_loaded', array( $this, 'GrLangs') );
+		add_action( 'init', array( $this, 'GrButtons') );
+		add_action( 'admin_head', array( $this, 'GrJsShortcodes'));
+
+		// register shortcode
+		add_shortcode( 'grwebform', array( $this, 'showWebformShortCode') );
 	}
 
 	/**
@@ -125,11 +136,35 @@ class Gr_Integration {
 	}
 
 	/**
+	 * Sort method
+	 * @param $data
+	 * @param $sortKey
+	 * @param int $sort_flags
+	 * @return array
+	 */
+	static function SortByKeyValue($data, $sortKey, $sort_flags=SORT_ASC) {
+		if (empty($data) or !is_object($data) or empty($sortKey)) return $data;
+
+		$ordered = array();
+		foreach ($data as $key => $value) {
+			$ordered[$value->$sortKey] = $value;
+			$ordered[$value->$sortKey]->id = $key;
+		}
+
+		ksort($ordered, $sort_flags);
+
+		return array_values($ordered);
+	}
+
+	/**
 	 * Admin page settings
 	 */
 	function AdminOptionsPage() {
-		$woocommerce = 'off';
 
+		//Check if curl extension is set and curl_init method is callable
+		$this->checkCurlExtension();
+
+		$woocommerce = 'off';
 		if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 			$woocommerce = 'on';
 		}
@@ -137,20 +172,30 @@ class Gr_Integration {
 		$apikey = isset($_POST['api_key']) ? $_POST['api_key'] : get_option($this->GrOptionDbPrefix . 'api_key');
 
 		if ( !empty($apikey)) {
-			$api = new GetResponse($apikey);
+			$api = new GetResponseIntegration($apikey);
 
-			if ($api->ping()) {
+			// api errors
+			$ping = $api->ping();
+			if (is_array($ping) && isset($ping['type']) && $ping['type'] == 'error')
+			{
+				echo $ping['msg'];
+				return;
+			}
+
+			if (isset($ping->result->ping)) {
 				update_option($this->GrOptionDbPrefix . 'api_key', $apikey);
 
 				// admin page settings
 				if ( isset($_POST['comment_campaign']) || isset($_POST['checkout_campaign']) )
 				{
 					$post_fields = array(
-						'comment_campaign', 'checkout_campaign', 'comment_on', 'comment_label', 'comment_checked', 'checkout_checked', 'sync_order_data', 'fields_prefix'
+						'comment_campaign', 'checkout_campaign', 'comment_on', 'comment_label', 'comment_checked', 'checkout_checked', 'sync_order_data', 'fields_prefix',
+						'registration_campaign', 'registration_campaign', 'registration_on', 'registration_label', 'registration_checked'
 					);
 
 					foreach ($post_fields as $field) {
-						update_option($this->GrOptionDbPrefix . $field, $_POST[$field]);
+						$val = isset($_POST[$field]) ? $_POST[$field] : null;
+						update_option($this->GrOptionDbPrefix . $field, $val);
 					}
 
 					// woocommerce settings
@@ -162,8 +207,7 @@ class Gr_Integration {
 					<div id="message" class="updated fade" style="margin: 2px; 0px; 0px;">
 						<p><strong><?php _e('Settings saved', 'Gr_Integration'); ?></strong></p>
 					</div>
-				<?php
-
+					<?php
 					// sync order data - custom fields
 					if ( isset($_POST['custom_field']) ) {
 						foreach ($this->biling_fields as $value => $bf) {
@@ -185,9 +229,7 @@ class Gr_Integration {
 			else {
 				?>
 				<div id="message" class="error " style="margin: 2px; 0px; 0px;">
-					<p><strong><?php _e('Settings error', 'Gr_Integration'); ?></strong> <?php _e(' - Invalid API Key', 'Gr_Integration') ?>
-						<?php if ( !empty($_POST['api_crypto'])) { _e(', or crypto', 'Gr_Integration'); } ?>
-					</p>
+					<p><strong><?php _e('Settings error', 'Gr_Integration'); ?></strong> <?php _e(' - Invalid API Key', 'Gr_Integration') ?></p>
 				</div>
 			<?php
 			}
@@ -201,7 +243,6 @@ class Gr_Integration {
 			</div>
 		<?php
 			update_option($this->GrOptionDbPrefix . 'api_key', $apikey);
-			update_option($this->GrOptionDbPrefix . 'api_crypto', null);
 		}
 
 		?>
@@ -238,11 +279,11 @@ class Gr_Integration {
 
 									<!-- WEBFORM SETTINGS -->
 									<div id="settings" <?php if (get_option($this->GrOptionDbPrefix . 'api_key') == '') {?>style="display: none;"<?php }?>>
+										<!-- SUBSCRIBE VIA WEB FORM -->
 										<h3>
 											<?php _e('Subscribe via Web Form', 'Gr_Integration'); ?>
 										</h3>
 
-										<!-- WIDGET SITE -->
 										<p>
 											<?php _e('To activate a GetResponse Web Form widget drag it to a sidebar or click on it.', 'Gr_Integration'); ?>
 											<?php echo '<a href="' . admin_url( 'widgets.php') . '"><strong>' . __('Go to Widgets site', 'Gr_Integration') . '</strong></a>';?>
@@ -256,6 +297,7 @@ class Gr_Integration {
 										<!-- COMMENT INTEGRATION SWITCH ON/OFF -->
 										<?php
 										$comment_type = get_option($this->GrOptionDbPrefix . 'comment_on');
+										$registration_type = get_option($this->GrOptionDbPrefix . 'registration_on');
 										?>
 										<p>
 											<label class="GR_label" for="comment_on"><?php _e('Comment integration:', 'Gr_Integration'); ?></label>
@@ -268,9 +310,12 @@ class Gr_Integration {
 										<?php
 											$comment_campaign = get_option($this->GrOptionDbPrefix . 'comment_campaign');
 											$checkout_campaign = get_option($this->GrOptionDbPrefix . 'checkout_campaign');
+											$registration_campaign = get_option($this->GrOptionDbPrefix . 'registration_campaign');
 											// API Instance
 											$api = $this->GetApiInstance();
-											$campaigns = $api->getCampaigns();
+											if ($api) {
+												$campaigns = $api->getCampaigns();
+											}
 										?>
 
 										<div id="comment_show" <?php if (get_option($this->GrOptionDbPrefix . 'comment_on') != 1) {?>style="display: none;"<?php }?>>
@@ -278,13 +323,21 @@ class Gr_Integration {
 											<p>
 												<label class="GR_label"for="comment_campaign"><?php _e( 'Target Campaign:', 'Gr_Integration'); ?></label>
 												<?php
+												// sort campaigns by name
 												if ( !empty($campaigns)) {
+													$campaigns = $this->SortByKeyValue($campaigns, 'name');
+												}
+												// check if no errors
+												if ( !empty($campaigns) and false === (is_array($campaigns) and isset($campaigns['type']) and $campaigns['type'] == 'error')) {
 												?>
 												<select name="comment_campaign" id="comment_campaign" class="GR_select">
 													<?php
-														foreach ($campaigns as $cid => $campaign) {
-															echo '<option value="' . $cid . '" id="' . $cid . '"', $comment_campaign == $cid ? ' selected="selected"' : '', '>', $campaign->name, '</option>';
-														} ?>
+														foreach ($campaigns as $campaign) {
+															if (is_object($campaign)) {
+																echo '<option value="' . $campaign->id . '" id="' . $campaign->id . '"', $comment_campaign == $campaign->id ? ' selected="selected"' : '', '>', $campaign->name, '</option>';
+															}
+														}
+													?>
 												</select>
 												<?php }
 												else {
@@ -318,6 +371,65 @@ class Gr_Integration {
 											});
 										</script>
 
+										<!-- SUBSCRIBE VIA REGISTRATION PAGE-->
+										<h3>
+											<?php _e('Subscribe via Registration Page', 'Gr_Integration'); ?>
+										</h3>
+
+										<p>
+											<label class="GR_label" for="registration_on"><?php _e('Registration integration:', 'Gr_Integration'); ?></label>
+											<select class="GR_select2" name="registration_on" id="registration_integration">
+												<option value="0" <?php selected($registration_type, 0); ?>><?php _e('Off', 'Gr_Integration'); ?></option>
+												<option value="1" <?php selected($registration_type, 1); ?>><?php _e('On', 'Gr_Integration'); ?></option>
+											</select> <?php _e('(allow subscriptions at the registration page)', 'Gr_Integration'); ?>
+										</p>
+
+										<div id="registration_show" <?php if (get_option($this->GrOptionDbPrefix . 'registration_on') != 1) {?>style="display: none;"<?php }?>>
+											<!-- CAMPAIGN TARGET -->
+											<p>
+												<label class="GR_label"for="registration_campaign"><?php _e( 'Target Campaign:', 'Gr_Integration'); ?></label>
+												<?php
+												// check if no errors
+												if ( !empty($campaigns) and false === (is_array($campaigns) and isset($campaigns['type']) and $campaigns['type'] == 'error')) {
+													?>
+													<select name="registration_campaign" id="registration_campaign" class="GR_select">
+														<?php
+														foreach ($campaigns as $campaign) {
+															echo '<option value="' . $campaign->id . '" id="' . $campaign->id . '"', $registration_campaign == $campaign->id ? ' selected="selected"' : '', '>', $campaign->name, '</option>';
+														} ?>
+													</select>
+												<?php }
+												else {
+													_e('No Campaigns.', 'Gr_Integration');
+												}
+												?>
+											</p>
+
+											<!-- ADDITIONAL TEXT - REGISTRATION SUBSCRIPTION-->
+											<p>
+												<label class="GR_label" for="registration_label"><?php _e('Additional text:', 'Gr_Integration'); ?></label>
+												<input class="GR_input2" type="text" name="registration_label" value="<?php echo get_option($this->GrOptionDbPrefix . 'registration_label', __( 'Sign up to our newsletter!', 'Gr_Integration')) ?>" />
+											</p>
+
+											<!-- DEFAULT CHECKED - REGISTRATION SUBSCRIPTION -->
+											<p>
+												<label class="GR_label" for="registration_checked"><?php _e('Subscribe checkbox checked by default', 'Gr_Integration'); ?></label>
+												<input class="GR_checkbox" type="checkbox" name="registration_checked" value="1" <?php if (get_option($this->GrOptionDbPrefix . 'registration_checked', '') == 1) { ?>checked="checked"<?php }?>/>
+											</p>
+										</div>
+
+										<script>
+											jQuery('#registration_integration').change(function() {
+												var value = jQuery(this).val();
+												if (value == '1') {
+													jQuery('#registration_show').show('slow');
+												}
+												else {
+													jQuery('#registration_show').hide('slow');
+												}
+											});
+										</script>
+
 										<!-- SUBSCRIPTION VIA CHECKOUT PAGE -->
 										<?php if ( $woocommerce == 'on' ) {
 											$checkout_type = get_option($this->GrOptionDbPrefix . 'checkout_on');
@@ -339,12 +451,13 @@ class Gr_Integration {
 													<label class="GR_label" for="checkout_campaign"><?php _e( 'Target campaign:', 'Gr_Integration' ); ?></label>
 
 													<?php
-													if ( !empty($campaigns)) {
+													// check if no errors
+													if ( !empty($campaigns) and false === (is_array($campaigns) and isset($campaigns['type']) and $campaigns['type'] == 'error')) {
 														?>
 														<select name="checkout_campaign" id="checkout_campaign" class="GR_select">
 															<?php
-															foreach ($campaigns as $cid => $campaign) {
-																echo '<option value="' . $cid . '" id="' . $cid . '"', $checkout_campaign == $cid ? ' selected="selected"' : '', '>', $campaign->name, '</option>';
+															foreach ($campaigns as $campaign) {
+																echo '<option value="' . $campaign->id . '" id="' . $campaign->id . '"', $checkout_campaign == $campaign->id ? ' selected="selected"' : '', '>', $campaign->name, '</option>';
 															} ?>
 														</select>
 													<?php }
@@ -521,10 +634,9 @@ class Gr_Integration {
 	function AddCheckboxToComment() {
 		if (!is_user_logged_in() ) {
 			$checked = get_option($this->GrOptionDbPrefix . 'comment_checked');
-			var_dump($checked);
 			?>
 			<p>
-			<input class="GR_checkbox" value="1" id="comment_checkbox" type="checkbox" name="comment_checkbox" <?php if ($checked) {?>checked="checked"<?php }?>/>
+			<input class="GR_checkbox" value="1" id="gr_comment_checkbox" type="checkbox" name="gr_comment_checkbox" <?php if ($checked) {?>checked="checked"<?php }?>/>
 				<?php echo get_option($this->GrOptionDbPrefix . 'comment_label');?>
 			</p><br />
 		<?php
@@ -538,8 +650,8 @@ class Gr_Integration {
 		$checked = get_option($this->GrOptionDbPrefix . 'checkout_checked');
 		?>
 		<p class="form-row form-row-wide">
-			<input class="input-checkbox GR_checkoutbox" value="1" id="checkout_checkbox" type="checkbox" name="checkout_checkbox" <?php if ($checked) {?>checked="checked"<?php }?> />
-			<label for="checkout_checkbox" class="checkbox">
+			<input class="input-checkbox GR_checkoutbox" value="1" id="gr_checkout_checkbox" type="checkbox" name="gr_checkout_checkbox" <?php if ($checked) {?>checked="checked"<?php }?> />
+			<label for="gr_checkout_checkbox" class="checkbox">
 				<?php echo get_option($this->GrOptionDbPrefix . 'checkout_label');?>
 			</label>
 		</p>
@@ -547,16 +659,33 @@ class Gr_Integration {
 	}
 
 	/**
+	 * Add Checkbox to registration form
+	 */
+	function AddCheckboxToRegistrationForm() {
+		if (!is_user_logged_in() ) {
+			$checked = get_option($this->GrOptionDbPrefix . 'registration_checked');
+			?>
+			<p class="form-row form-row-wide">
+				<input class="input-checkbox GR_registrationbox" value="1" id="gr_registration_checkbox" type="checkbox" name="gr_registration_checkbox" <?php if ($checked) {?>checked="checked"<?php }?> />
+				<label for="gr_registration_checkbox" class="checkbox">
+					<?php echo get_option($this->GrOptionDbPrefix . 'registration_label');?>
+				</label>
+			</p><br/>
+			<?php
+		}
+	}
+
+	/**
 	 * Grab email from checkout form
 	 */
 	function GrabEmailFromCheckoutPage() {
-		if ($_POST['checkout_checkbox'] == 1 ) {
+		if ($_POST['gr_checkout_checkbox'] == 1 ) {
 			$name = $_POST['billing_first_name'] . " " . $_POST['billing_last_name'];
 			$api = $this->GetApiInstance();
 			if ($api) {
 				$customs = array();
+				$campaign = get_option($this->GrOptionDbPrefix . 'checkout_campaign');
 				if (get_option($this->GrOptionDbPrefix . 'sync_order_data') == true) {
-					$campaign = get_option($this->GrOptionDbPrefix . 'checkout_campaign');
 					foreach ($this->biling_fields as $custom_name => $custom_field) {
 						$custom = get_option($this->GrOptionDbPrefix . $custom_name);
 						if ($custom && !empty($_POST[$custom_field['value']])) {
@@ -573,7 +702,7 @@ class Gr_Integration {
 	 * Grab email from checkout form - paypal express
 	 */
 	function GrabEmailFromCheckoutPagePE() {
-		if ($_POST['checkout_checkbox'] == 1 ) {
+		if ($_POST['gr_checkout_checkbox'] == 1 ) {
 			$api = $this->GetApiInstance();
 			if ($api) {
 				$campaign = get_option($this->GrOptionDbPrefix . 'checkout_campaign');
@@ -586,7 +715,7 @@ class Gr_Integration {
 	 * Grab email from comment form
 	 */
 	function GrabEmailFromComment() {
-		if ( $_POST['comment_checkbox'] == 1 AND isset($_POST['email']) ) {
+		if ( $_POST['gr_comment_checkbox'] == 1 AND isset($_POST['email']) ) {
 			$api = $this->GetApiInstance();
 			if ($api) {
 				$campaign = get_option($this->GrOptionDbPrefix . 'comment_campaign');
@@ -594,7 +723,20 @@ class Gr_Integration {
 			}
 		}
 	}
-	
+
+	/**
+	 * Grab email from registration form
+	 */
+	function GrabEmailFromRegistrationForm() {
+		if ( $_POST['gr_registration_checkbox'] == 1 AND isset($_POST['user_email']) ) {
+			$api = $this->GetApiInstance();
+			if ($api) {
+				$campaign = get_option($this->GrOptionDbPrefix . 'registration_campaign');
+				$api->addContact($campaign, $_POST['user_login'], $_POST['user_email']);
+			}
+		}
+	}
+
 	/**
 	 * Display GetResponse blog 10 RSS links
 	 */
@@ -603,7 +745,7 @@ class Gr_Integration {
 		$lang = get_bloginfo("language") == 'pl-PL' ? 'pl' : 'com';
 		$feed_url = 'http://blog.getresponse.' . $lang . '/feed';
 
-		$num = 10;	// numbers of feeds:
+		$num = 12; // numbers of feeds:
 		include_once(ABSPATH . WPINC . '/feed.php');
 		$rss = fetch_feed( $feed_url );
 
@@ -643,15 +785,21 @@ class Gr_Integration {
 	 * GetResponse MCE buttons
 	 */
 	function GrButtons() {
-		add_filter( "mce_external_plugins", array('Gr_Integration', 'GrAddButtons') );
-		add_filter( 'mce_buttons', array('Gr_Integration', 'GrRegisterButtons') );
+		add_filter( 'mce_buttons', array(&$this, 'GrRegisterButtons') );
+		add_filter( "mce_external_plugins", array(&$this, 'GrAddButtons') );
 	}
 
 	/**
 	 * GetResponse MCE plugin
 	 */
 	function GrAddButtons( $plugin_array ) {
-		$plugin_array['gr'] = untrailingslashit( plugins_url( '/', __FILE__ ) ) . '/js/gr-plugin.js';
+		global $wp_version;
+
+		if ($wp_version >= 3.9)
+			$plugin_array['GrShortcodes'] = untrailingslashit( plugins_url( '/', __FILE__ ) ) . '/js/gr-plugin.js';
+		else
+			$plugin_array['GrShortcodes'] = untrailingslashit( plugins_url( '/', __FILE__ ) ) . '/js/gr-plugin_3_8.js';
+
 		return $plugin_array;
 	}
 
@@ -659,7 +807,11 @@ class Gr_Integration {
 	 * Display GetResponse MCE buttons
 	 */
 	function GrRegisterButtons( $buttons ) {
-		array_push( $buttons, 'webform' );
+		array_push(
+			$buttons,
+			'separator',
+			'GrShortcodes'
+		);
 		return $buttons;
 	}
 
@@ -667,24 +819,29 @@ class Gr_Integration {
 	 * Display GetResponse MCE buttons
 	 */
 	function GrJsShortcodes() {
-
 		$GrOptionDbPrefix = 'GrIntegrationOptions_';
 		$api_key = get_option($GrOptionDbPrefix . 'api_key');
 
-		$api = new GetResponse($api_key);
-		$campaigns = $api->getCampaigns();
-
-		if ( !empty($campaigns)) {
+		if (!empty($api_key)) {
+			$api = new GetResponseIntegration($api_key);
+			$campaigns = $api->getCampaigns();
 			$webforms = $api->getWebforms();
-		}
-		$my_campaigns = json_encode($campaigns);
-		$my_webforms = json_encode($webforms);
-		?>
-		<script type="text/javascript">
-			var my_webforms = <?php echo $my_webforms; ?>;
-			var my_campaigns = <?php echo $my_campaigns; ?>;
-		</script>
-	<?php
+			// check if no errors
+			if ( !empty($webforms) and false === (is_array($webforms) and isset($webforms['type']) and $webforms['type'] == 'error')) {
+				$webforms = $this->SortByKeyValue($webforms, 'name');
+			}
+			else {
+				$campaigns = null;
+				$webforms = null;
+			}
+			$my_campaigns = json_encode($campaigns);
+			$my_webforms = json_encode($webforms);
+			?>
+			<script type="text/javascript">
+				var my_webforms = <?php echo $my_webforms; ?>;
+				var my_campaigns = <?php echo $my_campaigns; ?>;
+			</script>
+	<?php }
 	}
 
 	/**
@@ -692,8 +849,13 @@ class Gr_Integration {
 	 */
 	function GetApiInstance() {
 		$api_key = get_option($this->GrOptionDbPrefix . 'api_key');
-		$apiInstance = new GetResponse($api_key);
-		return $apiInstance;
+		if ( !empty($api_key)) {
+			$apiInstance = new GetResponseIntegration($api_key);
+			return $apiInstance;
+		}
+		else {
+			return false;
+		}
 	}
 
 	/**
@@ -702,13 +864,18 @@ class Gr_Integration {
 	function GrLangs() {
 		load_plugin_textdomain( 'Gr_Integration', false, plugin_basename( dirname( __FILE__ ) ) . "/langs" );
 	}
-}
 
-add_shortcode( 'grwebform', array('Gr_Integration', 'showWebformShortCode') );
-
-add_action( 'plugins_loaded', array('Gr_Integration', 'GrLangs') );
-add_action( 'init', array('Gr_Integration', 'GrButtons') );
-add_action( 'admin_head', array('Gr_Integration', 'GrJsShortcodes'));
+	/**
+	 * Check if curl extension is set and curl_init method is callable
+	 */
+	function checkCurlExtension() {
+		if ( !extension_loaded('curl') or !is_callable('curl_init')) {
+			echo "<h3>cURL Error !</h3>";
+			echo '<h4>GetResponse Integration Plugin requires PHP cURL extension</h4>';
+			return;
+		}
+	}
+} //Gr_Integration
 
 /**
  * Init plugin
