@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.44.0, 2014-05-09 [changelog](#changelog)
+version 1.45.0, 2014-05-12 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -939,44 +939,46 @@ _JSON response:_
 ```json
     {
         "MESSAGE_ID" : {
-            "campaign"      : "CAMPAIGN_ID",
-            "type"          : "autoresponder",
-            "status"        : "active",
-            "subject"       : "My autoresponder",
-            "content_types" : ["plain", "html"],
-            "name"          : "Second week start",
-            "based_on"      : "time",
-            "day_of_cycle"  : 8,
-            "days_of_week"  : ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-            "delay_hours"   : 4,
-            "time_travel"   : "yes",
-            "flags"         : ["clicktrack", "openrate"],
-            "created_on"    : "2010-01-01 00:00:00"
+            "campaign"              : "CAMPAIGN_ID",
+            "type"                  : "autoresponder",
+            "status"                : "active",
+            "subject"               : "Hello",
+            "content_types"         : ["plain", "html"],
+            "name"                  : "My message 1",
+            "autoresponder_name"    : "My autoresponder 1",
+            "based_on"              : "time",
+            "day_of_cycle"          : 8,
+            "days_of_week"          : ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "delay_hours"           : 4,
+            "time_travel"           : "yes",
+            "flags"                 : ["clicktrack", "openrate"],
+            "created_on"            : "2010-01-01 00:00:00"
         },
         "MESSAGE_ID" : {
-            "campaign"      : "CAMPAIGN_ID",
-            "type"          : "autoresponder",
-            "status"        : "active",
-            "subject"       : "My autoresponder",
-            "content_types" : ["plain", "html"],
-            "name"          : "Second week start",
-            "based_on"      : "action",
-            "action"        : {
+            "campaign"              : "CAMPAIGN_ID",
+            "type"                  : "autoresponder",
+            "status"                : "active",
+            "subject"               : "Hi",
+            "content_types"         : ["plain", "html"],
+            "name"                  : "My message 2",
+            "autoresponder_name"    : "My autoresponder 2",
+            "based_on"              : "action",
+            "action"                : {
                 "event"     : "custom_changed",
                 "custom"    : "CUSTOM_ID",
                 "value"     : "New value",
                 "recurrent" : "no"
             },
-            "days_of_week"  : ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-            "at_hour"       : 16,
-            "time_travel"   : "no",
-            "flags"         : ["clicktrack", "openrate"],
-            "created_on"    : "2010-01-01 00:00:00"
+            "days_of_week"          : ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+            "at_hour"               : 16,
+            "time_travel"           : "no",
+            "flags"                 : ["clicktrack", "openrate"],
+            "created_on"            : "2010-01-01 00:00:00"
         },
         "MESSAGE_ID" : {
             "campaign"      : "CAMPAIGN_ID",
             "type"          : "newsletter",
-            "subject"       : "My newsletter",
+            "subject"       : "Welcome",
             "name"          : null,
             "flags"         : [],
             "send_on"       : "2010-01-01 00:00:00",
@@ -1030,19 +1032,20 @@ _JSON response:_
 ```json
     {
         "MESSAGE_ID" : {
-            "campaign"      : "CAMPAIGN_ID",
-            "type"          : "autoresponder",
-            "status"        : "active",
-            "subject"       : "My autoresponder",
-            "content_types" : ["plain", "html"],
-            "name"          : "Second week start",
-            "based_on"      : "time",
-            "day_of_cycle"  : 8,
-            "days_of_week"  : ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-            "delay_hours"   : 4,
-            "time_travel"   : "yes",
-            "flags"         : ["clicktrack", "openrate"],
-            "created_on"    : "2010-01-01 00:00:00"
+            "campaign"              : "CAMPAIGN_ID",
+            "type"                  : "autoresponder",
+            "status"                : "active",
+            "subject"               : "Hello",
+            "content_types"         : ["plain", "html"],
+            "name"                  : "My message 1",
+            "autoresponder_name"    : "My autoresponder 1",
+            "based_on"              : "time",
+            "day_of_cycle"          : 8,
+            "days_of_week"          : ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "delay_hours"           : 4,
+            "time_travel"           : "yes",
+            "flags"                 : ["clicktrack", "openrate"],
+            "created_on"            : "2010-01-01 00:00:00"
         }
     }
 ```
@@ -4202,6 +4205,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.45.0, 2014-05-12
+
+* [get_messages](#get_messages) and [get_message](#get_message) have `autoresponder_name` attribute
 
 version 1.44.0, 2014-05-09
 
