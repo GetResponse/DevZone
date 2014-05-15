@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.45.0, 2014-05-12 [changelog](#changelog)
+version 1.46.0, 2014-05-15 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -1745,6 +1745,12 @@ _JSON request:_
             "segmentation"  : {
                 "split" : split_value,
                 "pack"  : pack_value
+            },
+            "pager"  : {
+                "order_by"  : "order_value",
+                "direction" : "direction_value",
+                "limit"     : limit_value,
+                "offset"    : offset_value
             }
         }
     ]
@@ -1764,7 +1770,8 @@ Conditions:
 * `clicks` / `get_clicks` (optional) – Use to narrow down search results to the contacts that clicked specific links. Uses AND logic. See [IDs in conditions](#ids) for detailed explanation.
 * `opens` / `get_opens` (optional) – Use to narrow down search results to contacts that opened specific messages. Uses AND logic. See [IDs in conditions](#ids) for detailed explanation.
 * `goals` / `get_goals` (optional) – Use to narrow down search results to contacts that reached specific goals. Uses AND logic. See [IDs in conditions](#ids) for detailed explanation.
-* `segmentation` (optional) – Allows to fetch big results in smaller packs. Split value defines the number of packs to which contacts will be split. Group defines which pack will be returned in results. For example to get all results in 10 packs call [get_contacts](#get_contacts) 10 times. Set split to 10 and increase pack from 1 to 10.
+* `segmentation` (optional) – Allows to fetch big results in smaller packs. Split value defines the number of packs to which contacts will be split. Group defines which pack will be returned in results. Check [result chunks](#result_chunks) to understand difference between `segmentation` and `paging`.
+* `pager` (optional) – Allows to fetch big results in equal, semi-sorted chunks. Allowed values for `order_by` are "name", "email", "origin", "created_on". Allowed values for `direction` are "ascending", "descending". Check [result chunks](#result_chunks) to understand difference between `segmentation` and `paging`.
 
 _JSON response:_
 
@@ -1794,12 +1801,24 @@ _JSON response:_
 
 **Warning**: Email is unique within a campaign, but if search is performed on multiple campaigns, one email address may occur multiple times in results.
 
-**Hint**: Segmentation does not work as pager (LIMIT x, OFFSET y behavior in SQL) and packs are “almost equal”. That means if you perform split = 10 on result that has 1000 contacts, you will get packs containing about 100 contacts. But segmentation has two very important properties that LIMIT x, OFFSET y approach doesn’t have:
-
-* Contacts stay in their packs forever. Contact once found in the pack 23/100 will always be located in it no matter if the list was altered. This property can be used for shard-oriented synchronization.
-* Packs don’t overlap. The sum of contacts in packs 1/3, 2/3 and 3/3 is the same as in search without segmentation. This property is important if you want to parallelize operation on contacts.
-
 **Hint**: Value of `cycle_day` is approximate. To count contacts for specific time-based autoresponder message use [get_autoresponder_contacts_amount](#get_autoresponder_contacts_amount).
+
+<a name="result_chunks"/>
+**Hint**: Result Chunks:
+
+If you want to synchronize data in multiple parallel threads/processes use `segmentation`. For example first process/thread calls `get_contacts` with `split` = 3 and `pack` = 1. Second process/thread calls `get_contacts` with `split` = 3 and `pack` = 2. And third process/thread calls `get_contacts` with `split` = 3 and `pack` = 3. Segmentation has following properties:
+
+* Odd value MUST be used as split.
+* Amount of contacts in each pack is almost equal.
+* Packs don’t overlap. The sum of contacts in packs 1/3, 2/3 and 3/3 is the same as in method call without `segmentation`.
+* Contacts stay in their packs forever. If specific contact is in pack 23/55 it will always be located in it no matter if the contacts list has changed.
+
+If you want to display paged output use `pager`. It has the same effect as `ORDER BY ... ASC|DESC LIMIT ... OFFSET` syntax in SQL. Paging has following properties:
+
+* It is vulnerable to contacts list changes. For example `get_contact` with `order_by` = "email", `direction` = "ascending", `limit` = 2, `offset` = 0 returned "a@example.com" and "c@example.com" contacts. Then "b@example.com" subscribed. Now when you fetch next page with `order_by` = "email", `direction` = "ascending", `limit` = 2, `offset` = ***2*** you will get "c@example.com" email again because now it is third email on your list.
+* Each chunk is returned as unordered hash so you should re-sort it using the same criteria as in `order_by`/`direction`. Use UTF-8 aware and case/accent insensitive algorithm.
+
+Use the right tool for your job - `segmentation` is not suitable for creating pagers (contacts are unordered and each chunk may have slightly different amount of elements) and `pager` is not suitable for parallel synchronization (chunks are not guaranteed to be mutually exclusive).
 
 ---
 
@@ -4205,6 +4224,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.46.0, 2014-05-15
+
+* [get_contacts](#get_contacts) support `pager`
 
 version 1.45.0, 2014-05-12
 
