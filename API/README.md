@@ -4227,7 +4227,7 @@ Errors not included in spec:
 
 version 1.46.0, 2014-05-15
 
-* [get_contacts](#get_contacts) support `pager`
+* [get_contacts](#get_contacts) supports `pager`
 
 version 1.45.0, 2014-05-12
 
