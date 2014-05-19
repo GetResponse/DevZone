@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.46.0, 2014-05-15 [changelog](#changelog)
+version 1.48.0, 2014-05-19 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -150,6 +150,11 @@ If you run into an error or you have difficulties with using the API please cont
 
 * [get_webforms](#get_webforms)
 * [get_webform](#get_webform)
+
+####A/B Tests
+
+* [get_ab_tests](#get_ab_tests)
+* [get_ab_test](#get_ab_test)
 
 ####Imports
 
@@ -927,7 +932,7 @@ _JSON request:_
 Conditions:
 
 * `campaigns` / `get_campaigns` (optional) – Search only in given campaigns. Uses OR logic. If those params are not given search, is performed in all campaigns in the account. Check [IDs in conditions](#ids) for detailed explanation.
-* `type` (optional) – Use "newsletter", "autoresponder" or "draft" to narrow down search results to specific message types. If not given newsletters and autoresponders are returned in the result.
+* `type` (optional) – Use "newsletter", "autoresponder", "ab_test" or "draft" to narrow down search results to specific message types. If not given newsletters and autoresponders are returned in the result.
 * `subject` (optional) – Use [text operators](#operators) to narrow down search results to specific message subjects.
 * `name` (optional) – Use [text operators](#operators) to narrow down search results to specific message names.
 * `send_on` (optional) – Use [time operators](#operators) to narrow down search results to specific sending date. Multiple operators are allowed and logic AND is used so date range can also be expressed. Works only for newsletters because other message types do not have fixed sending point in time. If message was sent with Time Travel then it may appear in search results for two different days as sending period equals 24 hours.
@@ -984,6 +989,16 @@ _JSON response:_
             "send_on"       : "2010-01-01 00:00:00",
             "content_types" : ["plain"],
             "created_on"    : "2010-01-01 00:00:00"
+        },
+        "MESSAGE_ID" : {
+            "campaign"      : "CAMPAIGN_ID",
+            "type"          : "ab_test",
+            "subject"       : "Which?",
+            "name"          : null,
+            "flags"         : [],
+            "ab_test"       : "AB_TEST_ID",
+            "content_types" : ["plain"],
+            "created_on"    : "2010-01-01 00:00:00"
         }
     }
 ```
@@ -1000,6 +1015,7 @@ Array `flags` may be present with following items:<a name="message_flags"/>
 ***Hint***: Additional fields:
 
 * When `type` is "newsletter" then `send_on` is also returned.
+* When `type` is "ab_test" then `ab_test` is also returned, more information about it can be obtained from [get_ab_test](#get_ab_test) method
 * When `type` is "autoresponder" then `status` ("active"/"inactive"), `based_on` ("time"/"action"), `time_travel` ("yes"/"no") and `days_of_week` are also returned. Optional `at_hour` and `delay_hours` may also be returned and they are mutually exclusive.
 * When `type` is "autoresponder" and `based_on` is "time" then `day_of_cycle` is also returned.
 * When `type` is "autoresponder" and `based_on` is "action" then `action` object is also returned. It always contains `event` and more fields that depends on its value: "contact_subscribed" = `day_of_cycle`, "mail_opened" = `message` + `recurrent`, "link_clicked" = `link` + `recurrent`, "goal_reached" = `goal` + `recurrent`, "custom_changed" = `custom` + `value` (optional) + `recurrent`, "autoresponder_action_happened" = `recurrent`, "birthday" = `custom`.
@@ -3091,6 +3107,133 @@ _JSON response:_
 
 ---
 
+####get_ab_tests<a name="get_ab_tests"/>
+
+Get A/B tests.
+
+_JSON request:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "name"          : { "OPERATOR" : "value" },
+            "created_on"    : { "OPERATOR" : "value" }
+        }
+    ]
+```
+
+Conditions:
+
+* `name` (optional) – Use [text operators](#operators) to narrow down search results to specific A/B test names.
+* `created_on` (optional) – Use [time operators](#operators) to narrow down search results to specific A/B test creation date. Multiple operators are allowed and logic AND is used so date range can also be expressed.
+
+_JSON response:_
+
+```json
+    {
+        "AB_TEST_ID"    : {
+            "name"                  : "My A/B test",
+            "type"                  : "subject",
+            "winning_criteria"      : "open",
+            "sampling_percentage"   : 16,
+            "sampling_time"         : 86400,
+            "mode"                  : "automatic",
+            "stage"                 : "finished",
+            "candidates"    : {
+                "MESSAGE_ID"    : {
+                    "status"    : "chosen"
+                },
+                "MESSAGE_ID"    : {
+                    "status"    : "rejected"
+                },
+                "MESSAGE_ID"    : {
+                    "status"    : "rejected"
+                }
+            },
+            "created_on"    : "2014-01-01 00:00:00"
+        },
+        "AB_TEST_ID"    : {
+            "name"                  : "My other A/B test",
+            "type"                  : "day",
+            "winning_criteria"      : "click",
+            "sampling_percentage"   : 32,
+            "sampling_time"         : 345600,
+            "mode"                  : "manual",
+            "stage"                 : "choose_winning",
+            "candidates"    : {
+                "MESSAGE_ID"    : {
+                    "status"    : "sampled"
+                },
+                "MESSAGE_ID"    : {
+                    "status"    : "sampled"
+                },
+                "MESSAGE_ID"    : {
+                    "status"    : "sampled"
+                }
+            },
+            "created_on"    : "2014-01-02 00:00:00"
+        }
+    }
+```
+
+Where:
+* `type` - what is the distinction between candidates, can be one of: 'content', 'subject', 'day', 'hour', 'from_field'.
+* `winning_criteria` - what is the condition that determines winning candidate, can be one of: "open", "click".
+* `sampling_percentage` - what percentage of contacts were used to determine winner.
+* `sampling_time` - for how long statistics are collected before winner is determined, expressed in seconds.
+* `mode` - should winner message be determined and sent to remaining subscribers automatically after `sampling_time` or should user decide, can be one of: 'automatic', 'manual'.
+* `stage` - what is the current stage, can be one of: 'queued', 'schedule_sampling', 'evaluate_sampling', 'choose_winning', 'schedule_winning', 'send_winning', 'canceled_queued', 'canceled_sampling', 'canceled_winning', 'finished'.
+* `candidates` - messages that are tested, additional informations about each of them can be obtained by using [get_message](#get_message) method.
+
+
+---
+
+####get_ab_test<a name="get_ab_test"/>
+
+Get single A/B test using AB_TEST_ID.
+
+_JSON request:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "ab_test"  : "AB_TEST_ID"
+        }
+    ]
+```
+
+_JSON response:_
+
+```json
+    {
+        "AB_TEST_ID"    : {
+            "name"                  : "My other A/B test",
+            "type"                  : "day",
+            "winning_criteria"      : "click",
+            "sampling_percentage"   : 32,
+            "sampling_time"         : 345600,
+            "mode"                  : "manual",
+            "stage"                 : "choose_winning",
+            "candidates"    : {
+                "MESSAGE_ID"    : {
+                    "status"    : "sampled"
+                },
+                "MESSAGE_ID"    : {
+                    "status"    : "sampled"
+                },
+                "MESSAGE_ID"    : {
+                    "status"    : "sampled"
+                }
+            },
+            "created_on"    : "2014-01-02 00:00:00"
+        }
+    }
+```
+
+---
+
 ####get_imports<a name="get_imports"/>
 
 Get imports.
@@ -4224,6 +4367,11 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.48.0, 2014-05-19
+
+* [get_ab_tests](#get_ab_tests) / [get_ab_test](#get_ab_test) methods added
+* [get_messages](#get_messages) returns messages with "ab_test" type
 
 version 1.46.0, 2014-05-15
 
