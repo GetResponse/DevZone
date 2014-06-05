@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.48.0, 2014-05-19 [changelog](#changelog)
+version 1.49.0, 2014-06-05 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -89,6 +89,9 @@ If you run into an error or you have difficulties with using the API please cont
 * [delete_campaign_domain](#delete_campaign_domain)
 * [get_campaign_postal_address](#get_campaign_postal_address)
 * [set_campaign_postal_address](#set_campaign_postal_address)
+* [get_campaign_predefines](#get_campaign_predefines)
+* [add_campaign_predefine](#add_campaign_predefine)
+* [delete_campaign_predefine](#delete_campaign_predefine)
 
 ####Messages
 
@@ -907,6 +910,107 @@ _JSON response:_
 ```
 
 _JSON error messages (if any):_ `Missing campaign`, `Token missing in design`.
+
+---
+
+####get_campaign_predefines<a name="get_campaign_predefines"/>
+
+Get predefined fields in campaign.
+
+_JSON request:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "campaign"  : "CAMPAIGN_ID"
+        }
+    ]
+```
+
+Conditions:
+
+* `campaigns` (mandatory) – `CAMPAIGN_ID` obtained from [get_campaigns](#get_campaigns).
+
+_JSON response:_
+
+```json
+    {
+        "name1" : "content1",
+        "name2" : "content2"
+    }
+```
+
+_JSON error messages (if any):_ `Missing campaign`.
+
+
+---
+
+####add_campaign_predefine<a name="add_campaign_predefine"/>
+
+Add predefined field to campaign.
+
+_JSON request:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "campaign"  : "CAMPAIGN_ID",
+            "name"      : "my_field",
+            "content"   : "My field"
+        }
+    ]
+```
+
+Conditions:
+
+* `campaigns` (mandatory) – `CAMPAIGN_ID` obtained from [get_campaigns](#get_campaigns).
+* `name` (mandatory) – Name must be composed using up to 32: lowercase a-z letters, digits or underscores.
+* `content` (mandatory) - Content maximum length is 350 characters.
+
+_JSON response:_
+
+```json
+    {
+        "added" : 1
+    }
+```
+
+_JSON error messages (if any):_ `Missing campaign`, `Name already taken`.
+
+---
+
+####delete_campaign_predefine<a name="delete_campaign_predefine"/>
+
+Delete predefined field in campaign.
+
+_JSON request:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "campaign"  : "CAMPAIGN_ID",
+            "name"      : "my_field"
+        }
+    ]
+```
+
+Conditions:
+
+* `campaigns` (mandatory) – `CAMPAIGN_ID` obtained from [get_campaigns](#get_campaigns).
+* `name` (mandatory) – Name must be composed using up to 32: lowercase a-z letters, digits or underscores.
+
+_JSON response:_
+
+```json
+    {
+        "deleted" : 1
+    }
+```
+
+_JSON error messages (if any):_ `Missing campaign`, `Missing predefine`.
 
 ---
 
@@ -4369,6 +4473,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.49.0, 2014-06-05
+
+* [get_campaign_predefines](#get_campaign_predefines), [add_campaign_predefine](#add_campaign_predefine), [delete_campaign_predefine](#delete_campaign_predefine) methods added
 
 version 1.48.0, 2014-05-19
 
