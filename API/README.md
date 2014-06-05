@@ -123,6 +123,8 @@ If you run into an error or you have difficulties with using the API please cont
 * [get_contact_clicks](#get_contact_clicks)
 * [get_contact_goals](#get_contact_goals)
 * [get_contact_surveys](#get_contact_surveys)
+* [get_contact_note](#get_contact_note)
+* [set_contact_note](#set_contact_note)
 * [set_contact_cycle](#set_contact_cycle)
 * [add_contact](#add_contact)
 * [move_contact](#move_contact)
@@ -2323,6 +2325,68 @@ Meaning of every `QUESTION_ID` and `OPTION_ID` can be found by calling [get_surv
 
 ---
 
+####get_contact_note<a name="get_contact_note"/>
+
+Get contact note.
+
+_JSON request:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "contact"   : "CONTACT_ID"
+        }
+    ]
+```
+
+Conditions:
+
+* `contact` (mandatory) – `CONTACT_ID` obtained from [get_contacts](#get_contacts).
+
+_JSON response:_
+
+```json
+	"Some note"
+```
+
+_JSON error messages (if any):_ `Missing contact`.
+
+---
+
+####set_contact_note<a name="set_contact_note"/>
+
+Set contact note. Overwrites previous one.
+
+_JSON request:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "contact"   : "CONTACT_ID",
+            "content"   : "Some new note"
+        }
+    ]
+```
+
+Conditions:
+
+* `contact` (mandatory) – `CONTACT_ID` obtained from [get_contacts](#get_contacts).
+* `content` (mandatory) - Content maximum length is 255 characters.
+
+_JSON response:_
+
+```json
+	{
+        "updated" : 1
+    }
+```
+
+_JSON error messages (if any):_ `Missing contact`.
+
+---
+
 ####set_contact_cycle<a name="set_contact_cycle"/>
 
 Place a contact on a desired day of the autoresponder cycle or deactivate a contact.
@@ -4477,6 +4541,7 @@ Errors not included in spec:
 version 1.49.0, 2014-06-05
 
 * [get_campaign_predefines](#get_campaign_predefines), [add_campaign_predefine](#add_campaign_predefine), [delete_campaign_predefine](#delete_campaign_predefine) methods added
+* [get_contact_note](#get_contact_note), [set_contact_note](#set_contact_note) methods added
 
 version 1.48.0, 2014-05-19
 
