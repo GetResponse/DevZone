@@ -1,6 +1,6 @@
 #GetResponse API
 
-version 1.49.0, 2014-06-05 [changelog](#changelog)
+version 1.50.0, 2014-06-13 [changelog](#changelog)
 
 ##GETTING STARTED
 
@@ -125,6 +125,7 @@ If you run into an error or you have difficulties with using the API please cont
 * [get_contact_surveys](#get_contact_surveys)
 * [get_contact_note](#get_contact_note)
 * [set_contact_note](#set_contact_note)
+* [delete_contact_note](#delete_contact_note)
 * [set_contact_cycle](#set_contact_cycle)
 * [add_contact](#add_contact)
 * [move_contact](#move_contact)
@@ -2387,6 +2388,36 @@ _JSON error messages (if any):_ `Missing contact`.
 
 ---
 
+####delete_contact_note<a name="delete_contact_note"/>
+
+Delete contact note.
+
+_JSON request:_
+
+```json
+    [
+        "API_KEY",
+        {
+            "contact"   : "CONTACT_ID"
+        }
+    ]
+```
+
+Conditions:
+
+* `contact` (mandatory) – `CONTACT_ID` obtained from [get_contacts](#get_contacts).
+
+_JSON response:_
+```json
+	{
+        "deleted" : 1
+    }
+```
+
+_JSON error messages (if any):_ `Missing contact`.
+
+---
+
 ####set_contact_cycle<a name="set_contact_cycle"/>
 
 Place a contact on a desired day of the autoresponder cycle or deactivate a contact.
@@ -4537,6 +4568,10 @@ Errors not included in spec:
 
 
 ##CHANGELOG<a name="changelog"/>
+
+version 1.50.0, 2014-06-13
+
+* [delete_contact_note](#delete_contact_note) method added
 
 version 1.49.0, 2014-06-05
 
