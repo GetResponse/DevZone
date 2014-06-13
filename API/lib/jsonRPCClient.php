@@ -309,6 +309,9 @@ class jsonRPCClient
                 return array_key_exists($error, $errors) ? $errors[$error] : 'Unknown error (' . $error . ')';
             }
         }
-        return json_last_error() ? json_last_error_msg() : null;
+        if (function_exists('json_last_error'))
+            return json_last_error() ? json_last_error_msg() : null;
+        else
+            return null;
     }
 }
