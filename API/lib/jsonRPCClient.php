@@ -272,7 +272,7 @@ class jsonRPCClient
         // get starttime
         $startTime = empty($startTime) ? array_sum(explode(' ', microtime())) : $startTime;
         if (true === $pShow and !empty($debug))
-        {
+        {
             // get endtime
             $endTime = array_sum(explode(' ', microtime()));
             // performance summary
@@ -309,6 +309,15 @@ class jsonRPCClient
                 return array_key_exists($error, $errors) ? $errors[$error] : 'Unknown error (' . $error . ')';
             }
         }
-        return json_last_error() ? json_last_error_msg() : null;
+        
+        // Fix PHP 5.2 error caused by missing json_last_error function
+        if (function_exists('json_last_error'))
+        {
+            return json_last_error() ? json_last_error_msg() : null;
+        }
+        else
+        {
+            return null;
+        }
     }
 }
