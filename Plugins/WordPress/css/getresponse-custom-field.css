@@ -1,0 +1,520 @@
+/*
+ * This module hooks into the newOrder to add the customers
+ * @author   GetResponse
+ * @copyright  GetResponse
+ * @license http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/*
+Theme Name:GetResponse - Wordpress Integration v.2013
+Theme URI:http://implix.com/
+Description:The 2013 theme for Wordpress is stylish, customizable, simple, and readable
+Author:the Implix Front- End
+Version:0.096
+License:GNU General Public License
+License URI:license.txt
+*/
+
+/*------------------------------------*\
+    GR CUSTOM FIELD
+\*------------------------------------*/
+.gr-custom-field {
+    float:left;
+    width:100%;
+}
+
+.gr-custom-field ul {
+    margin:0;
+    padding:0;
+}
+
+.gr-custom-field li {
+    list-style-type:none;
+    float:left;
+    width:100%;
+    /*margin-bottom:25px;*/
+}
+
+.gr-custom-field li li {
+    width:auto;
+    margin-bottom:0;
+}
+
+/*------------------------------------*\
+    FORM
+\*------------------------------------*/
+.gr-custom-field input, 
+.gr-custom-field button, 
+.gr-custom-field select {
+    font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size:14px;
+    line-height:20px;
+	width: 180px;
+}
+
+.gr-custom-field input[type="text"] {
+    border:1px solid #BEBEBE;
+    background:#FDFDFD;
+    border-radius:2px;
+    margin:0 10px 0 0;
+    padding:3px 8px;
+    box-shadow:inset 1px 1px 0 0 rgba(190, 190, 190, 0.3);
+    width:215px;
+}
+
+.gr-custom-field input[type="text"]:focus {
+    border:1px solid #00afec;
+    outline:0;
+}
+
+.gr-custom-field .disabledFields input[type="text"],
+.gr-custom-field .disabledFields input[type="text"]:hover,
+.gr-custom-field .disabledFields .FullSelectLcContainerDefault .FullSelectLcButton,
+.gr-custom-field input[type="text"][disabled], 
+.gr-custom-field input[type="text"][disabled]:hover {
+    color:#BEBEBE;
+    background:#F5F5F5;
+}
+
+.gr-custom-field input[type="text"][disabled], 
+.gr-custom-field input[type="text"][disabled]:hover {
+    border:1px solid #D1D1D1;
+}
+
+
+/*------------------------------------*\
+    BUTTON
+\*------------------------------------*/
+.gr-custom-field .button {
+    font-size:14px;
+    font-weight:bold;
+    text-decoration:none !important;
+    text-shadow:0px -1px 0 rgba(0, 0, 0, 0.2);
+    text-align:center;
+    color:#fff !important;
+    border-radius:8px;
+    border-color:transparent;
+    border-color:rgba(255, 255, 255, 0.2) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.3) rgba(0, 0, 0, 0.1);
+    border-style:solid;
+    border-width:1px;
+    display:inline-block;
+    padding:6px 18px;
+    margin:auto;
+    width:auto;
+    background:#0189c1;
+    background:-moz-linear-gradient(top, #25bdfd 0%, #0189c1 100%);
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#25bdfd), color-stop(100%,#0189c1));
+    background:-o-linear-gradient(top, #25bdfd 0%,#0189c1 100%);
+    box-shadow:inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.gr-custom-field .button:hover {
+    cursor:pointer;
+    text-decoration:none;
+    color:#fff;
+    background:#1fa5dd;
+    background:-moz-linear-gradient(top, #34c2fd 0%, #1b9fd6 100%);
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#34c2fd), color-stop(100%,#1b9fd6));
+    background:-o-linear-gradient(top, #34c2fd 0%,#1b9fd6 100%);
+}
+
+.gr-custom-field .orange {
+    background:rgb(255,110,4);
+    background:-moz-linear-gradient(top, rgba(255,150,0,1) 0%, rgba(255,141,0,1) 23%, rgba(255,108,0,1) 73%, rgba(255,95,0,1) 100%);
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,150,0,1)), color-stop(23%,rgba(255,141,0,1)), color-stop(73%,rgba(255,108,0,1)), color-stop(100%,rgba(255,95,0,1)));
+    background:-webkit-linear-gradient(top, rgba(255,150,0,1) 0%,rgba(255,141,0,1) 23%,rgba(255,108,0,1) 73%,rgba(255,95,0,1) 100%);
+    background:-o-linear-gradient(top, rgba(255,150,0,1) 0%,rgba(255,141,0,1) 23%,rgba(255,108,0,1) 73%,rgba(255,95,0,1) 100%);
+    background:-ms-linear-gradient(top, rgba(255,150,0,1) 0%,rgba(255,141,0,1) 23%,rgba(255,108,0,1) 73%,rgba(255,95,0,1) 100%);
+    background:linear-gradient(top, rgba(255,150,0,1) 0%,rgba(255,141,0,1) 23%,rgba(255,108,0,1) 73%,rgba(255,95,0,1) 100%);
+}
+
+.gr-custom-field .orange:hover {
+    color:#fff;
+    background:#ff801f;
+    background:-moz-linear-gradient(top, #ffa432 0%, #ff781c 100%);
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffa432), color-stop(100%,#ff781c));
+    background:-o-linear-gradient(top, #ffa432 0%,#ff781c 100%);
+}
+
+.gr-custom-field .green {
+    background:#43C03A;
+}
+
+.gr-custom-field .green:hover {
+    background:#61CA5A;
+}
+
+.gr-custom-field .red {
+    background:#F12929;
+}
+
+.gr-custom-field .red:hover {
+    background:#F55151;
+}
+
+.gr-custom-field .button.small {
+    line-height:25px;
+    min-height:16px;
+    min-width:24px;
+    border-radius:4px;
+    padding:0;
+    margin:0px 4px;
+}
+
+/*------------------------------------*\
+    FULLSELECT
+\*------------------------------------*/
+.gr-custom-field .FullSelectLcContainerDefault {
+    width:232px;
+    background:#FFF;
+    float:left;
+    position:relative;
+    margin-right:10px;
+    z-index:100;
+    border:1px solid #bebebe;
+    border-radius:2px;
+}
+
+.gr-custom-field .FullSelectLcContainerDefault.disabled,
+.gr-custom-field .FullSelectLcContainerDefault.disabled .FullSelectLcInput,
+.gr-custom-field .FullSelectLcContainerDefault.disabled .FullSelectLcButton {
+    background:#E6E6E6;    
+}
+
+.gr-custom-field .FullSelectLcContainerDefault div.FullSelectLcContainerList ul.list {
+    max-height:160px;
+}
+
+.gr-custom-field .FullSelectLcContainerDefault.open {
+    border:1px solid #0093D0;
+}
+
+.gr-custom-field .FullSelectLcContainerDefault ul {
+    padding:5px 0 0;
+    margin:0;
+    float:left;
+    width:100%;
+    position:relative;
+}
+
+.gr-custom-field .FullSelectLcContainerDefault ul li {
+    color:#373737;
+    cursor:pointer;
+    display:block;
+    float:none;
+    font-size:1.1em;
+    margin-bottom:2px;
+    padding:0 0 0 7px;
+    position:relative;
+    z-index:2;
+    width:auto;
+}
+
+.gr-custom-field .FullSelectLcContainerDefault ul li:hover {
+    background-color:#f1f7ff;
+    color:#0093d0;
+}
+
+.gr-custom-field .FullSelectLcContainerDefault ul li.hover {
+    background-color:#f1f7ff;
+    color:#0093d0;
+}
+
+.gr-custom-field .FullSelectLcContainerDefault ul li.selected {
+    background-color:#f1f7ff;
+    color:#0093d0;
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .FullSelectLcContainerList {
+    position:absolute;
+    left:-1px;
+    top:25px;
+    width:232px;
+    border:1px solid #0093D0;
+    border-top:none;
+    border-radius:0 0 2px 2px;
+    background-color:#FFF;
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .FullSelectLcInput {
+    -webkit-appearance:caret;
+    width:204px;
+    float:left;
+    margin:0;
+    padding:3px 0 3px 8px;
+    font-size:1.2em;
+    display:block;
+    text-align:left;
+    height:20px;
+    cursor:pointer;
+    color:#5B5B5B;
+    border:0;
+    background:#FFF;
+    box-shadow:none;
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .FullSelectLcInput:focus {
+    border:none;
+}
+
+.gr-custom-field .focus .FullSelectLcContainerDefault .FullSelectLcInput {
+    color:#373737
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .searchLc {
+    position:absolute;
+    left:6px;
+    z-index:-1;
+    display:none;
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .FullSelectLcButton {
+    -webkit-appearance:none;
+    width:20px;
+    float:left;
+    margin:0;
+    padding:0;
+    font-size:0.9em;
+    display:block;
+    text-align:center;
+    height:26px;
+    cursor:pointer;
+    color:#00afec;
+    border:0;
+    background:#FFF;
+    outline:none;
+    border-radius:4px;
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .FullSelectLcInput:focus
+.gr-custom-field .FullSelectLcContainerDefault .FullSelectLcButton:focus {
+    border:none;
+    outline:none
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .FullSelectLcContainerList {
+    opacity:0;
+    display:none;
+    height:0;
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .none {
+    display:none
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .more {
+    border-top:1px solid #E6EDF8
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .more li {
+    padding:7px 0 0 38px
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .more .paging {
+    padding:7px 0 0 7px;
+    border-bottom:1px solid #E6EDF8;
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .more .paging:hover {
+    background:none
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .more a {
+    text-indent:5px;
+    width:auto;
+    color:#373737;
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .list li {
+    height:auto;
+    line-height:1em;
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .list li span,
+.gr-custom-field .FullSelectLcContainerDefault .list li em {
+    display:block;
+    width:94%;
+    padding:0 5px;
+    position:relative;
+    z-index:999;
+    font-size:1.1em;
+    line-height:20px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .list li em {
+    font-family:Helvetica,Arial;
+    font-size:1em;
+    color:#737373;
+    line-height:15px;
+    overflow:hidden;
+    
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .list li .date {
+    display:block;
+    padding-top:3px;
+    color:#737373;
+    font-size:0.9em;
+    position:absolute;
+    bottom:3px;
+    left:5px;
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .list li .noDataRange {
+    display:inline-block;
+    padding-left:5px;
+    color:#737373;
+    font-size:0.9em;
+    text-decoration:none;
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .list li a {
+    display:none
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .list li:hover a {
+    display:block
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .list li.selected a {
+    display:block
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .list li {
+    z-index:1;
+    padding:5px;
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .separator {
+    border-bottom:1px solid #C8C8C8
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .searchlist li {
+    position:relative;
+    padding-right:15px;
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .searchlist .searchCountResults {
+    font-weight:bold
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .searchlist .searchRemoveResults {
+    position:absolute;
+    top:0;
+    right:0;
+    display:block;
+    z-index:1;
+    width:10px;
+    height:10px;
+    line-height:10px;
+    text-align:center;
+    font-size:10px;
+    cursor:pointer;
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .prev {
+    float:left;
+    display:block;
+    width:50%;
+    text-align:center;
+    cursor:pointer;
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .next {
+    float:left;
+    display:block;
+    width:50%;
+    text-align:center;
+    cursor:pointer;
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .enabled {
+    opacity:1
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .disabled {
+    opacity:0.3
+}
+
+.gr-custom-field .FullSelectLcContainerDefault .loadingLc {
+    width:100%;
+    text-align:center;
+    position:absolute;
+    top:0;
+    left:0;
+    padding:7px 0;
+    background:#FFFFFF;
+}
+
+.gr-custom-field .FullSelectLcMoveLeft {
+    display:block;
+    float:left;
+    margin-right:5px;
+    padding:4px;
+    height:20px;
+    line-height:18px;
+    width:20px;
+    text-align:center;
+    background:#FFFFFF;
+    font-size:13px;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+    border-radius:4px;
+}
+
+.gr-custom-field .FullSelectLcMoveRight {
+    display:block;
+    float:left;
+    margin-left:5px;
+    padding:4px;
+    height:20px;
+    line-height:18px;
+    width:20px;
+    text-align:center;
+    background:#FFFFFF;
+    font-size:13px;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+    border-radius:4px;
+}
+
+.gr-custom-field .FullSelectLcMoveLeft.inactive {
+    background:#d7d7d7;
+    color:#9e9e9e;
+    cursor:default;
+}
+
+.gr-custom-field .FullSelectLcMoveRight.inactive {
+    background:#d7d7d7;
+    color:#9e9e9e;
+    cursor:default;
+}
+
+.gr-custom-field input::-moz-focus-inner {
+    border:0
+}
+
+/* wide select */
+.gr-custom-field .select-wide .FullSelectLcContainerDefault {
+    width:311px;
+}
+
+.gr-custom-field .select-wide .FullSelectLcContainerDefault .FullSelectLcInput {
+    width:282px;
+}
+
+.gr-custom-field .select-wide .FullSelectLcContainerDefault .FullSelectLcContainerList {
+    width:311px;
+}
+
+/* iframe select */
+.sel-h126 .FullSelectLcContainerDefault ul {
+    max-height:126px !important; 
+}
+
+.sel-h95 .FullSelectLcContainerDefault ul {
+    max-height:95px !important; 
+}
