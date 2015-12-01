@@ -1,6 +1,6 @@
 #ZenCart plugin
 
-version 1.1, 2012-05-22 [changelog](#changelog)
+version 1.2, 2015-12-01 [changelog](#changelog)
 
 ##INFO
 
@@ -8,7 +8,7 @@ Seamlessly enter email communication with all your new customers by adding them 
 
 ##AUTHORS
 
-Sylwester Okrój
+Sylwester Okrï¿½j
 
 [Implix](http://implix.com)
 [Dev Getresponse](http://dev.getresponse.com)
@@ -39,7 +39,7 @@ Download module for your osCommerce version from [Downloads](https://github.com/
 
 	Copy the entire code chunk below and paste before ```</head>``` tag:
 
-        <!– GetResponse Plugin –>
+        <!ï¿½ GetResponse Plugin ï¿½>
         <?php
         if (MODULE_ORDER_TOTAL_GETRESPONSE_STATUS == 'true') {		
             echo '<script type="text/javascript" src="includes/getresponse/jquery-1.7.1.min.js"></script>';
@@ -51,21 +51,25 @@ Download module for your osCommerce version from [Downloads](https://github.com/
             } 
         }
         ?>
-        <!- GetResponse Plugin –>
+        <!- GetResponse Plugin ï¿½>
 
 
-3.	In the administration panel go to “Modules”=>”Order total” setting. <br/><br/>![Screenshot 2](https://github.com/GetResponse/DevZone/raw/master/Plugins/ZenCart/zencart_02.gif)
-4.	Click on “GetResponse” plugin and click “Install” button. <br/><br/>
+3.	In the administration panel go to ï¿½Modulesï¿½=>ï¿½Order totalï¿½ setting. <br/><br/>![Screenshot 2](https://github.com/GetResponse/DevZone/raw/master/Plugins/ZenCart/zencart_02.gif)
+4.	Click on ï¿½GetResponseï¿½ plugin and click ï¿½Installï¿½ button. <br/><br/>
 	![Screenshot 3](https://github.com/GetResponse/DevZone/raw/master/Plugins/ZenCart/zencart_03.gif)
-5.	Click “Edit” button and set required params: [API key](https://app.getresponse.com/my_api_key.html) and campaign name. <br/><br/>
+5.	Click ï¿½Editï¿½ button and set required params: [API key](https://app.getresponse.com/my_api_key.html) and campaign name. <br/><br/>
 	![Screenshot 4](https://github.com/GetResponse/DevZone/raw/master/Plugins/ZenCart/zencart_04.gif)
-6.	Save settings. Click “Export to campaign” you’ll add all your existing ZenCart contacts to campaign.
+6.	Save settings. Click ï¿½Export to campaignï¿½ youï¿½ll add all your existing ZenCart contacts to campaign.
 
 Done!
 
-From now on when a customer makes an order he/she is automatically added to GetResponse campaign together with their contact details (city, country and telephone values) that will be added as contact custom fields.
- 
+From now on whenï¿½a customer makes an order he/she is automatically added to GetResponse campaign together with their contact details (city, country and telephone values) that will be added as contact custom fields.
+ï¿½
 ##CHANGELOG<a name="changelog">
+
+version 1.2, 2015-12-01
+
+* Replace jsonRPCClient.php with GetResponseAPI3.class.php API/lib. New GetResponse API version 3.
 
 version 1.1, 2012-05-22
 
