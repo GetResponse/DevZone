@@ -21,8 +21,11 @@ $(api_key_element).focusout(function() {
 						$(campaign_element).html(content);
 					},
 					type : "POST",
-					async : false,
-					dataType : "json"
+					async : true,
+					dataType : "json",
+					error : function(data) {
+						$('.rollling').html(' Something went wrong. Please let us know at getresponse-devzone@cs.getresponse.com')
+					}
 				});
 });
 // GetResponse Plugin

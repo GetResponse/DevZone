@@ -6,7 +6,7 @@
  * http://dev.getresponse.com
  */
 // includowanie clasy json
-require_once(DIR_FS_CATALOG.'includes/classes/jsonRPCClient.php');
+require_once(DIR_FS_CATALOG.'includes/classes/GetResponseAPI3.class.php');
 
 // funkcja install - select
 function gr_edit($id, $key = '') {
@@ -15,12 +15,12 @@ function gr_edit($id, $key = '') {
 	$api_key = MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY;
 	if ( !empty($api_key) ) {
 		try {
-			$client = new jsonRPCClient('http://api2.getresponse.com');
-			$result = $client->get_campaigns( $api_key );
+			$client = new GetResponseAPI3($api_key);
+			$result = $client->getCampaigns();
 			foreach ($result as $k) {
 				$gr_campaig[] = array(
-						'id' => $k['name'],
-						'text' => $k['name'],
+						'id' => $k->name,
+						'text' => $k->name,
 				);
 			}
 		}
@@ -73,9 +73,9 @@ class ot_getresponse {
 					bo.entry_city AS city,
 					bo.entry_state AS state,
 					ca.countries_name AS country
-					FROM customers cu
-					JOIN address_book bo ON cu.customers_id = bo.customers_id
-					JOIN countries ca ON ca.countries_id = bo.entry_country_id
+					FROM ' . DB_PREFIX . 'customers cu
+					JOIN ' . DB_PREFIX . 'address_book bo ON cu.customers_id = bo.customers_id
+					JOIN ' . DB_PREFIX . 'countries ca ON ca.countries_id = bo.entry_country_id
 					WHERE cu.customers_newsletter = 1
 					');
 
@@ -83,53 +83,79 @@ class ot_getresponse {
 			{
 				// sprawdzam polaczenie do api i kampanie
 				try {
-					$client = new jsonRPCClient('http://api2.getresponse.com');
-					$result = $client->get_campaigns(MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY,
-							array ('name' => array ('EQUALS' => MODULE_ORDER_TOTAL_GETRESPONSE_CAMPAIGN))
+					$client = new GetResponseAPI3(MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY);
+					$result = $client->getCampaigns(array ('query' => array ('name' => MODULE_ORDER_TOTAL_GETRESPONSE_CAMPAIGN))
 					);
+
+					$customs = $client->getCustomFields();
+
+					foreach($customs as $custom) {
+						if ($custom->name == 'ref') {
+							$refCustomId = $custom->customFieldId;
+						}
+						if ($custom->name == 'zencart_phone') {
+							$phoneCustomId = $custom->customFieldId;
+						}
+						if ($custom->name == 'country') {
+							$countryCustomId = $custom->customFieldId;
+						}
+						if ($custom->name == 'city') {
+							$cityCustomId = $custom->customFieldId;
+						}
+					}
+
+					if (empty($phoneCustomId)) {
+						$response = $client->addCustomField(array('name' => 'zencart_phone', 'type' => 'text', 'hidden' => 'false', 'values' => array()));
+						$phoneCustomId = $response->customFieldId;
+					}
 
 					if (empty($result))
 					{
-						$json = array( 'status' => 2, 'response' =>'No campaign with the specified name' );
+						echo json_encode(array( 'status' => 2, 'response' =>'No campaign with the specified name' )); die;
 					}
 					else {
 						$duplicated = 0;
 						$queued = 0;
 						$contact = 0;
+						$campaignId = reset($result)->campaignId;
 						while (!$query->EOF) {
-							$r = $client->add_contact(MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY,
-									array (
-											'campaign'  => array_pop(array_keys($result)),
-											'name'      => $query->fields['firstname'] . ' ' . $query->fields['lastname'],
-											'email'     => $query->fields['email'],
-											'cycle_day' => '0',
-											'customs' => array(
-													array(
-															'name'       => 'ref',
-															'content'    => STORE_NAME
-													),
-													array(
-															'name'       => 'telephone',
-															'content'    => $query->fields['telephone']
-													),
-													array(
-															'name'       => 'country',
-															'content'    => $query->fields['country']
-													),
-													array(
-															'name'       => 'city',
-															'content'    => $query->fields['city']
-													)
+							$params = array (
+									'email'      => $query->fields['email'],
+									'name'       => $query->fields['firstname'] . ' ' . $query->fields['lastname'],
+									'campaign'   => array('campaignId' => $campaignId),
+									'dayOfCycle' => '0',
+									'customFieldValues' => array(
+											array(
+													'customFieldId' => $refCustomId,
+													'value'         => array(STORE_NAME)
+											),
+											array(
+													'customFieldId' => $phoneCustomId,
+													'value'         => array($query->fields['telephone'])
+											),
+											array(
+													'customFieldId' => $countryCustomId,
+													'value'         => array($query->fields['country'])
+											),
+											array(
+													'customFieldId' => $cityCustomId,
+													'value'         => array($query->fields['city'])
 											)
 									)
 							);
+
+							$r = $client->addContact($params);
 							$contact++;
 
-							if ($r['duplicated']==1)
+							if ($r->message=='Contact already added')
 							{
+								$currentUserParams = array('query' => array('email' => $query->fields['email'], 'campaignId' => $campaignId));
+								$contactId = $client->getContacts($currentUserParams);
+								$contactId = reset($contactId)->contactId;
+								$client->updateContact($contactId, $params);
 								$duplicated++;
 							}
-							else if ($r['queued']==1)
+							else if ($r->message=='Contact in queue')
 							{
 								$queued++;
 							}
@@ -160,12 +186,12 @@ class ot_getresponse {
 					'text' => TEXT_NONE,
 			);
 			try {
-				$client = new jsonRPCClient('http://api2.getresponse.com');
-				$result = $client->get_campaigns( $api_key );
+				$client = new GetResponseAPI3($api_key);
+				$result = $client->getCampaigns();
 				foreach ($result as $k) {
 					$results[] = array(
-							'id' => $k['name'],
-							'text' => $k['name'],
+							'id' => $k->name,
+							'text' => $k->name,
 					);
 				}
 			}
@@ -184,17 +210,9 @@ class ot_getresponse {
 			return;
 		}
 
-		$client = new jsonRPCClient('http://api2.getresponse.com');
-		$result = NULL;
-
 		try {
-			$result = $client->get_campaigns(
-					MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY,
-					array (
-							'name' => array (
-									'EQUALS' => MODULE_ORDER_TOTAL_GETRESPONSE_CAMPAIGN
-							)
-					)
+			$client = new GetResponseAPI3(MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY);
+			$result = $client->getCampaigns(array('query' => array('name' => MODULE_ORDER_TOTAL_GETRESPONSE_CAMPAIGN))
 			);
 
 			if (empty($result)) {
@@ -204,33 +222,56 @@ class ot_getresponse {
 				);
 			}
 
-			$client->add_contact(
-					MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY,
-					array (
-							'campaign'  => array_pop(array_keys($result)),
-							'name'      => $order->customer['firstname'] . ' ' . $order->customer['lastname'],
-							'email'     => $order->customer['email_address'],
-							'cycle_day' => '0',
-							'customs' => array(
-									array(
-											'name'       => 'ref',
-											'content'    => STORE_NAME
-									),
-									array(
-											'name'       => 'telephone',
-											'content'    => $order->customer['telephone']
-									),
-									array(
-											'name'       => 'country',
-											'content'    => $order->customer['country']['title']
-									),
-									array(
-											'name'       => 'city',
-											'content'    => $order->customer['city']
-									)
+			$customs = $client->getCustomFields();
+
+			foreach($customs as $custom) {
+				if ($custom->name == 'ref') {
+					$refCustomId = $custom->customFieldId;
+				}
+				if ($custom->name == 'zencart_phone') {
+					$phoneCustomId = $custom->customFieldId;
+				}
+				if ($custom->name == 'country') {
+					$countryCustomId = $custom->customFieldId;
+				}
+				if ($custom->name == 'city') {
+					$cityCustomId = $custom->customFieldId;
+				}
+			}
+
+			if (empty($phoneCustomId)) {
+				$response = $client->addCustomField(array('name' => 'zencart_phone', 'type' => 'text', 'hidden' => 'false', 'values' => array()));
+				$phoneCustomId = $response->customFieldId;
+			}
+
+			$campaignId = reset($result)->campaignId;
+
+			$params = array (
+					'email'      => $order->customer['email_address'],
+					'name'       => $order->customer['firstname'] . ' ' . $order->customer['lastname'],
+					'campaign'   => array('campaignId' => $campaignId),
+					'dayOfCycle' => '0',
+					'customFieldValues' => array(
+							array(
+									'customFieldId' => $refCustomId,
+									'value'         => array(STORE_NAME)
+							),
+							array(
+									'customFieldId' => $phoneCustomId,
+									'value'         => array($order->customer['telephone'])
+							),
+							array(
+									'customFieldId' => $countryCustomId,
+									'value'         => array($order->customer['country']['title'])
+							),
+							array(
+									'customFieldId' => $cityCustomId,
+									'value'         => array($order->customer['city'])
 							)
 					)
 			);
+
+			$result = $client->addContact($params);
 		}
 		catch (Exception $e) {
 			error_log($e->getMessage());
@@ -262,7 +303,7 @@ class ot_getresponse {
 
 		$db->Execute("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Sort Order', 'MODULE_ORDER_TOTAL_GETRESPONSE_SORT_ORDER', '1000', 'Sort order of display.', '6', '2', now())");
 
-		$db->Execute("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('API key', 'MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY', '', 'Click <a href=\http://www.getresponse.com/my_api_key.html\>HERE</a> to get your API key',  '6', '2', now())");
+		$db->Execute("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('API key', 'MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY', '', 'Click <a href=\https://app.getresponse.com/manage_api.html\>HERE</a> to get your API key',  '6', '2', now())");
 
 		$db->Execute("insert into " . TABLE_CONFIGURATION . "(configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Campaign', 'MODULE_ORDER_TOTAL_GETRESPONSE_CAMPAIGN', '0', 'Select the campaign to which customers will be added', '6', '0', 'gr_title', 'gr_edit(', now())");
 
