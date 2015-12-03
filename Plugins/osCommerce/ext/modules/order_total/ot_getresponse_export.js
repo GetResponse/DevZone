@@ -13,8 +13,11 @@ $('.export_btn').click(function() {
 			$('.info').html(data.response);
 		},
 		type : "POST",
-		async : false,
-		dataType : "json"
+		async : true,
+		dataType : "json",
+		error : function(data) {
+			$('.info').html('Something went wrong. Please let us know at getresponse-devzone@cs.getresponse.com');
+		}
 	});	
 });
 // GetResponse Plugin

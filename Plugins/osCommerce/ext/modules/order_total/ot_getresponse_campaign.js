@@ -1,7 +1,7 @@
 $(function() {
 // GetResponse Plugin
-var api_key_element = $('input[name=configuration[MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY]]');
-var campaign_element = $('select[name=configuration[MODULE_ORDER_TOTAL_GETRESPONSE_CAMPAIGN]]');
+var api_key_element = $('input[name="configuration[MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY]"]');
+var campaign_element = $('select[name="configuration[MODULE_ORDER_TOTAL_GETRESPONSE_CAMPAIGN]"]');
 $(campaign_element).after('<span class="rollling"></span>');
 $(api_key_element).focusout(function() {
 	var api_key = $(api_key_element).val();
@@ -20,8 +20,11 @@ $(api_key_element).focusout(function() {
 						$(campaign_element).html(content);
 					},
 					type : "POST",
-					async : false,
-					dataType : "json"
+					async : true,
+					dataType : "json",
+					error : function(data) {
+					  $('.rollling').html(' Something went wrong. Please let us know at getresponse-devzone@cs.getresponse.com')
+					}
 				});
 });
 // GetResponse Plugin

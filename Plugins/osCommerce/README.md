@@ -1,6 +1,6 @@
 #osCommerce plugin
 
-version 0.6, 2013-02-21 [changelog](#changelog)
+version 0.7, 2015-03-12 [changelog](#changelog)
 
 ##INFO
 
@@ -64,6 +64,10 @@ From now on it's all automated: a REF number will be allocated to your osCommerc
 This is all available now with just one click.
 
 ##CHANGELOG<a name="changelog">
+
+version 0.7, 2015-03-12
+
+* Changed API version
 
 version 0.6, 2013-02-21
 

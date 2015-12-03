@@ -8,7 +8,7 @@
  */
 
 // includowanie clasy json
-require_once(DIR_FS_CATALOG.'includes/classes/jsonRPCClient.php');
+require_once(DIR_FS_CATALOG.'includes/classes/GetResponseAPI3.class.php');
 
 // funkcja install - select
 function gr_edit($id, $key = '') {
@@ -17,12 +17,12 @@ function gr_edit($id, $key = '') {
 	$api_key = MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY;
 	if ( !empty($api_key) ) {
 		try {
-			$client = new jsonRPCClient('http://api2.getresponse.com');
-			$result = $client->get_campaigns( $api_key );
+			$client = new GetResponseAPI3($api_key);
+			$result = $client->getCampaigns();
 			foreach ($result as $k) {
 				$gr_campaig[] = array(
-						'id' => $k['name'],
-						'text' => $k['name'],
+						'id' => $k->name,
+						'text' => $k->name,
 				);
 			}
 		}
@@ -85,68 +85,81 @@ class ot_getresponse {
 
 				// sprawdzam polaczenie do api i kampanie
 				try {
-					$client = new jsonRPCClient('http://api2.getresponse.com');
-					$result = $client->get_campaigns(MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY,
-							array ('name' => array ('EQUALS' => MODULE_ORDER_TOTAL_GETRESPONSE_CAMPAIGN))
+					$client = new GetResponseAPI3(MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY);
+					$result = $client->getCampaigns(array ('query' => array ('name' => MODULE_ORDER_TOTAL_GETRESPONSE_CAMPAIGN))
 					);
+
+					$customs = $client->getCustomFields();
+
+					foreach($customs as $custom) {
+						if ($custom->name == 'ref') {
+							$refCustomId = $custom->customFieldId;
+						}
+						if ($custom->name == 'oscommerce_phone') {
+							$phoneCustomId = $custom->customFieldId;
+						}
+						if ($custom->name == 'country') {
+							$countryCustomId = $custom->customFieldId;
+						}
+						if ($custom->name == 'city') {
+							$cityCustomId = $custom->customFieldId;
+						}
+					}
+
+					if (empty($phoneCustomId)) {
+						$response = $client->addCustomField(array('name' => 'oscommerce_phone', 'type' => 'text', 'hidden' => 'false', 'values' => array()));
+						$phoneCustomId = $response->customFieldId;
+					}
+
 					if (empty($result)) {
 						$json = array( 'status' => 2, 'response' =>'No campaign with the specified name' );
 					} else {
 						$duplicated = 0;
 						$queued = 0;
 						$contact = 0;
-                        $campaign_id = array_pop(array_keys($result));
-
+                        $campaign_id = reset($result)->campaignId;
 						while ($row = tep_db_fetch_array($query))
 						{
-                            $check_cycle_day = $client->get_contacts(
-                                MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY,
-                                array (
-                                    'campaigns' => array($campaign_id),
-                                    'email' => array (
-                                        'EQUALS' => $row['email']
-                                    )
-                                )
-                            );
-
-                            $cycle_day = (!empty($check_cycle_day) and isset($check_cycle_day[$campaign_id]['cycle_day'])) ? "'cycle_day' => ".$check_cycle_day[$campaign_id]['cycle_day']."," : '0';
-
-                            $r = $client->add_contact(MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY,
-									array (
-											'campaign'  => $campaign_id,
-											'name'      => $row['firstname'] . ' ' . $row['lastname'],
-											'email'     => $row['email'],
-											'cycle_day' => $cycle_day,
-											'customs' => array(
-													array(
-															'name'       => 'ref',
-															'content'    => STORE_NAME
-													),
-													array(
-															'name'       => 'telephone',
-															'content'    => $row['telephone']
-													),
-													array(
-															'name'       => 'country',
-															'content'    => $row['country']
-													),
-													array(
-															'name'       => 'city',
-															'content'    => $row['city']
-													)
+							$params = array (
+									'email'      => $row['email'],
+									'name'       => $row['firstname'] . ' ' . $row['lastname'],
+									'campaign'   => array('campaignId' => $campaign_id),
+									'dayOfCycle' => '0',
+									'customFieldValues' => array(
+											array(
+													'customFieldId' => $refCustomId,
+													'value'         => array(STORE_NAME)
+											),
+											array(
+													'customFieldId' => $phoneCustomId,
+													'value'         => array($row['telephone'])
+											),
+											array(
+													'customFieldId' => $countryCustomId,
+													'value'         => array($row['country'])
+											),
+											array(
+													'customFieldId' => $cityCustomId,
+													'value'         => array($row['city'])
 											)
 									)
 							);
+
+							$r = $client->addContact($params);
 							$contact++;
-							if ($r['duplicated']==1)
+
+							if ($r->message=='Contact already added')
 							{
+								$currentUserParams = array('query' => array('email' => $row['email'], 'campaignId' => $campaign_id));
+								$contactId = $client->getContacts($currentUserParams);
+								$contactId = reset($contactId)->contactId;
+								$client->updateContact($contactId, $params);
 								$duplicated++;
 							}
-							else if ($r['queued']==1)
+							else if ($r->message=='Contact in queue')
 							{
 								$queued++;
 							}
-
 						}
 						$json = array('status' => 1,
 								'response' =>'export completed. <br /> Contacts: ' .$contact. '. Queued:' .$queued. '. Updated: ' .$duplicated. '.');
@@ -174,12 +187,12 @@ class ot_getresponse {
 			);
 
 			try {
-				$client = new jsonRPCClient('http://api2.getresponse.com');
-				$result = $client->get_campaigns( $api_key );
+				$client = new GetResponseAPI3($api_key);
+				$result = $client->getCampaigns();
 				foreach ($result as $k) {
 					$results[] = array(
-							'id' => $k['name'],
-							'text' => $k['name'],
+							'id' => $k->name,
+							'text' => $k->name,
 					);
 				}
 			}
@@ -190,7 +203,6 @@ class ot_getresponse {
 			//KONIEC
 			header('Content-type: application/json');	echo json_encode($results);		die();
 		}
-
 	}
 
 	function process() {
@@ -200,17 +212,9 @@ class ot_getresponse {
 			return;
 		}
 
-		$client = new jsonRPCClient('http://api2.getresponse.com');
-		$result = NULL;
-
 		try {
-			$result = $client->get_campaigns(
-					MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY,
-					array (
-							'name' => array (
-									'EQUALS' => MODULE_ORDER_TOTAL_GETRESPONSE_CAMPAIGN
-							)
-					)
+			$client = new GetResponseAPI3(MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY);
+			$result = $client->getCampaigns(array('query' => array('name' => MODULE_ORDER_TOTAL_GETRESPONSE_CAMPAIGN))
 			);
 
 			if (empty($result)) {
@@ -220,47 +224,56 @@ class ot_getresponse {
 				);
 			}
 
-            $campaign_id = array_pop(array_keys($result));
+			$customs = $client->getCustomFields();
 
-            $check_cycle_day = $client->get_contacts(
-                MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY,
-                array (
-                    'campaigns' => array($campaign_id),
-                    'email' => array (
-                        'EQUALS' => $order->customer['email_address']
-                    )
-                )
-            );
+			foreach($customs as $custom) {
+				if ($custom->name == 'ref') {
+					$refCustomId = $custom->customFieldId;
+				}
+				if ($custom->name == 'oscommerce_phone') {
+					$phoneCustomId = $custom->customFieldId;
+				}
+				if ($custom->name == 'country') {
+					$countryCustomId = $custom->customFieldId;
+				}
+				if ($custom->name == 'city') {
+					$cityCustomId = $custom->customFieldId;
+				}
+			}
 
-            $cycle_day = (!empty($check_cycle_day) and isset($check_cycle_day[$campaign_id]['cycle_day'])) ? "'cycle_day' => ".$check_cycle_day[$campaign_id]['cycle_day']."," : '0';
+			if (empty($phoneCustomId)) {
+				$response = $client->addCustomField(array('name' => 'oscommerce_phone', 'type' => 'text', 'hidden' => 'false', 'values' => array()));
+				$phoneCustomId = $response->customFieldId;
+			}
 
-            $client->add_contact(
-					MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY,
-					array (
-							'campaign'  => $campaign_id,
-							'name'      => $order->customer['firstname'] . ' ' . $order->customer['lastname'],
-							'email'     => $order->customer['email_address'],
-							'cycle_day' => $cycle_day,
-							'customs' => array(
-									array(
-											'name'       => 'ref',
-											'content'    => STORE_NAME
-									),
-									array(
-											'name'       => 'telephone',
-											'content'    => $order->customer['telephone']
-									),
-									array(
-											'name'       => 'country',
-											'content'    => $order->customer['country']['title']
-									),
-									array(
-											'name'       => 'city',
-											'content'    => $order->customer['city']
-									)
+			$campaign_id = reset($result)->campaignId;
+
+			$params = array (
+					'email'      => $order->customer['email_address'],
+					'name'       => $order->customer['firstname'] . ' ' . $order->customer['lastname'],
+					'campaign'   => array('campaignId' => $campaign_id),
+					'dayOfCycle' => '0',
+					'customFieldValues' => array(
+							array(
+									'customFieldId' => $refCustomId,
+									'value'         => array(STORE_NAME)
+							),
+							array(
+									'customFieldId' => $phoneCustomId,
+									'value'         => array($order->customer['telephone'])
+							),
+							array(
+									'customFieldId' => $countryCustomId,
+									'value'         => array($order->customer['country']['title'])
+							),
+							array(
+									'customFieldId' => $cityCustomId,
+									'value'         => array($order->customer['city'])
 							)
 					)
 			);
+
+			$result = $client->addContact($params);
 		}
 		catch (Exception $e) {
 			error_log($e->getMessage());
@@ -316,7 +329,7 @@ class ot_getresponse {
 				'API key',
 				'MODULE_ORDER_TOTAL_GETRESPONSE_API_KEY',
 				'',
-				'Click <a href=\"http://www.getresponse.com/my_api_key.html\">HERE</a> to get your API key',
+				'Click <a href=\"http://www.getresponse.com/manage_api.html\">HERE</a> to get your API key',
 				'6',
 				'2',
 				NULL,
